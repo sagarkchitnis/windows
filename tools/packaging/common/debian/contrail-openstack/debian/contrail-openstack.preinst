@@ -1,0 +1,9 @@
+echo "Running Preinst for contrail-openstack"
+for svc in keystone nova-api nova-scheduler nova-conductor nova-console\
+           nova-consoleauth nova-novncproxy glance-api\
+           glance-registry cinder-api cinder-scheduler heat-engine heat-api heat-api-cfn\
+           barbican-api barbican-worker ; do
+    echo "manual" > /etc/init/$svc.override
+done
+
+echo "Preinst for contrail-openstack done"

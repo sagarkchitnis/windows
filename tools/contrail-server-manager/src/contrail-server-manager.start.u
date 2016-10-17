@@ -1,0 +1,32 @@
+#!/bin/bash
+
+setenforce 0 &> /dev/null
+setsebool -P httpd_can_network_connect_cobbler 1 &> /dev/null
+iptables -F &> /dev/null
+
+echo ""
+echo "Restarting Apache2"
+echo ""
+service apache2 restart &> /dev/null
+
+echo ""
+echo "Restarting Cobbler"
+echo ""
+service cobblerd restart &> /dev/null
+
+echo ""
+echo "Doing Cobbler Sync"
+echo ""
+cobbler sync &> /dev/null
+
+echo ""
+echo "Restarting Xinetd"
+echo ""
+service xinetd restart &> /dev/null
+
+mkdir -p /var/run/contrail-server-manager/
+echo ""
+echo "Starting SMgr"
+echo ""
+nohup /opt/contrail/server_manager/server_mgr_main.py -c /opt/contrail/server_manager/sm-config.ini 0<&- &> /var/run/contrail-server-manager/contrail-server-manager.log&
+

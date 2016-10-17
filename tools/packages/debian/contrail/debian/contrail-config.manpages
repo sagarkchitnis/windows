@@ -1,0 +1,3 @@
+debian/manpages/contrail-api.1
+debian/manpages/contrail-schema.1
+debian/manpages/contrail-discovery.1

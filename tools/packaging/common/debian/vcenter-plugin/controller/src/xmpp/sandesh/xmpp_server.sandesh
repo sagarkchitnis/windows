@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+ */
+ 
+include "io/io.sandesh"
+
+response sandesh ShowXmppServerResp {
+    3: u32 current_connections;
+    4: u32 max_connections;
+    1: io.SocketIOStats rx_socket_stats;
+    2: io.SocketIOStats tx_socket_stats;
+}
+
+request sandesh ShowXmppServerReq {
+}
+
+struct ShowXmppConnection {
+    1: string name;
+    2: bool deleted;
+    3: string remote_endpoint;
+    4: string local_endpoint;
+    5: string state;
+    6: string last_event;
+    7: string last_state;
+    8: string last_state_at;
+    9: list<string> receivers;
+    10: string server_auth_type;
+}
+
+response sandesh ShowXmppConnectionResp {
+    1: list<ShowXmppConnection> connections;
+}
+
+request sandesh ShowXmppConnectionReq {
+}
+
+response sandesh ClearXmppConnectionResp {
+    1: bool success;
+}
+
+request sandesh ClearXmppConnectionReq {
+    1: string hostname_or_all;
+}

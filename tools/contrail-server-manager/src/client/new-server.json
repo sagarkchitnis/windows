@@ -1,0 +1,51 @@
+{
+    "server": [
+        {
+            "cluster_id": "new-cluster",
+            "domain": "demo.juniper.net",
+            "id": "newserver12",
+            "parameters" : {
+                "provision": {
+                    "contrail": {
+                        "compute": {
+                            "dpdk": {
+                                "core_mask": "",
+                                "huge_pages": ""
+                            }
+                        },
+                        "storage": {
+                            "storage_repo_id": "",
+                            "storage_osd_disks": [],
+                            "storage_chassis_id":""
+                        }
+                    }
+                }
+            },
+            "network": {
+                "interfaces": [
+                    {
+                        "default_gateway": "10.84.51.254",
+                        "ip_address": "10.84.51.12/24",
+                        "mac_address": "00:25:90:a9:1b:6c",
+                        "name": "eth1"
+                    }
+                ],
+                "management_interface": "eth1",
+                "provisioning": "kickstart"
+            },
+            "password": "juniper",
+            "roles": [
+                "control",
+                "webui",
+                "openstack",
+                "collector",
+                "compute",
+                "database",
+                "config"
+            ],
+            "ipmi_address": "10.84.6.62",
+            "ipmi_username": "ADMIN",
+            "ipmi_password": "ADMIN"
+        }
+    ]
+}

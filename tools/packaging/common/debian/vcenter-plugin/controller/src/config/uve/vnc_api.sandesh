@@ -1,0 +1,79 @@
+//
+// vnc_api.sandesh
+//
+// VNC API Object Log
+//
+// Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+//
+
+struct VncApiCommon {
+    1: string identifier_uuid // object identifier
+    2: string object_type (key="ConfigObjectTable") // object type
+    3: string identifier_name (key="ConfigObjectTable") // object name
+    4: string url;             // The object URL
+    5: string operation;       // get/post/update/delete
+    6: string useragent;       // which program is doing operation
+    7: string remote_ip;       // which host is doing operation
+    8: optional string params;
+    9: optional string body;
+
+    // The below are re-arranged for index of <domain:project:user>
+    10: optional string domain (key="ConfigObjectTableByUser");
+    11: optional string project (key="ConfigObjectTableByUser");
+    12: optional string user (key="ConfigObjectTableByUser");
+    13: optional string error;
+}
+
+traceobject sandesh VncApiReadLog {
+    1: VncApiCommon api_log;
+}
+
+/**
+ * @description: Object log for API server config
+ * @action: No action needed
+ */
+objectlog sandesh VncApiConfigLog {
+    1: VncApiCommon api_log;
+}
+
+/**
+ * @description: System log for API server errors
+ * @severity: ERROR
+ * @cause: An internal software failure occurred
+ * @action: Contact your technical support representative
+ */
+systemlog sandesh VncApiError {
+    1: string api_error_msg;
+}
+
+struct ContrailConfig {
+    1: string name (key="none")
+    2: map<string,string> elements
+    3: bool deleted
+}
+
+dynamicuve sandesh ContrailConfigTrace {
+    1: ContrailConfig data
+}
+
+struct VncApiStats {
+    1: string operation_type // (GET, PUT, POST, DELETE)
+    2: string user
+    3: string useragent
+    4: string remote_ip
+    5: string domain_name
+    6: string project_name
+    7: string object_type (key="ConfigObjectTable")
+    8: double response_time_in_usec
+    9: u64 response_size
+    10: string resp_code
+}
+
+/**
+ * @description: Object log for API server statistics
+ * @severity: INFO
+ * @action: No action needed
+ */
+objectlog sandesh VncApiStatsLog {
+1: VncApiStats api_stats (tags=".operation_type,.user,.useragent,.remote_ip,.domain_name:.project_name,.object_type,.response_time_in_usec,.response_size,.resp_code")
+}

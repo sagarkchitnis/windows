@@ -1,0 +1,11 @@
+{
+    "roles" : {
+        "database" : ["demo2-server"],
+        "openstack" : ["demo2-server"],
+        "config" : ["demo2-server"],
+        "control" : ["demo2-server"],
+        "collector" : ["demo2-server"],
+        "webui" : ["demo2-server"],
+        "compute" :  ["demo2-server"]
+    }
+}

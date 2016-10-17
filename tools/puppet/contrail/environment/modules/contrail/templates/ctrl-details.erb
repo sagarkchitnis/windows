@@ -1,0 +1,20 @@
+AUTH_PROTOCOL=<%= @keystone_auth_protocol %>
+QUANTUM_PROTOCOL=<%= @quantum_service_protocol %>
+CONTROLLER=<%= @keystone_ip_to_use %>
+AMQP_SERVER=<%= @amqp_server_ip_to_use %>
+QUANTUM=<%= @quantum_ip %>
+QUANTUM_PORT=<%= @quantum_port %>
+COMPUTE=<%= @host_control_ip %>
+CONTROLLER_MGMT=<%= @openstack_mgmt_ip %>
+VMWARE_IP=<%= @vmware_ip %>
+VMWARE_USERNAME=<%= @vmware_username%>
+VMWARE_PASSWD=<%= @vmware_password%>
+VMWARE_VMPG_VSWITCH=<%= @vmware_vswitch %>
+INTERNAL_VIP=<%= @internal_vip %>
+CONTRAIL_INTERNAL_VIP=<%= @contrail_internal_vip %>
+EXTERNAL_VIP=<%= @external_vip %>
+<% if @enable_dpdk == true -%>
+DPDK_MODE=True
+<% else -%>
+DPDK_MODE=False
+<% end -%>

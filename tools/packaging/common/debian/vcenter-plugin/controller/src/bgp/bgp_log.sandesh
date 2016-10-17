@@ -1,0 +1,1065 @@
+/*
+ * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+ */
+
+/**
+ *  Message definitions for BGP and XMPP modules
+ *
+ *  This modules provides BGP functionality.
+ */
+
+/**
+ * @description: Generic BGP message
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpMessageTrace {
+    1: string Message;
+}
+
+/**
+ * @description: Generic BGP message
+ * @severity: ERROR / DEBUG
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpMessageLog {
+    1: string Message;
+}
+
+/**
+ * @description: BGP Table message
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpTableTrace {
+    1: string Table;
+    2: ":";
+    3: string Message;
+}
+
+/**
+ * @description: BGP Table message
+ * @severity: ERROR / DEBUG
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpTableLog {
+    1: string Table;
+    2: ":";
+    3: string Message;
+}
+
+/**
+ * @description: Message about BGP Configuration
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigTrace {
+    1: string Message;
+}
+
+/**
+ * @description: Message about BGP Configuration
+ * @severity: ERROR / DEBUG
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigLog {
+    1: string Message;
+}
+
+/**
+ * @description: Message about a bgp package sent to a group of peers
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpMessageBuilderTrace {
+    1: string Message;
+    2: "in message of size";
+    3: i32 Length;
+    4: "bytes for route";
+    5: string Route;
+}
+
+/**
+ * @description: Message about a bgp package sent to a group of peers
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpMessageBuilderLog {
+    1: string Message;
+    2: "in message of size";
+    3: i32 Length;
+    4: "bytes for route";
+    5: string Route;
+}
+
+/**
+ * @description: Message about routing-instance creation configuration
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigInstanceCreateTrace {
+    1: "Routing Instance";
+    2: string name;
+    3: "Import Targets";
+    4: list<string> import_rt;
+    5: "Export Targets";
+    6: list<string> export_rt;
+    7: "Virtual Network";
+    8: string virtual_network;
+    9: "VN Index";
+    10: i32 index;
+}
+
+/**
+ * @description: Routing instance creation configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigInstanceCreateLog {
+    1: "Routing Instance";
+    2: string name;
+    3: "Import Targets";
+    4: list<string> import_rt;
+    5: "Export Targets";
+    6: list<string> export_rt;
+    7: "Virtual Network";
+    8: string virtual_network;
+    9: "VN Index";
+    10: i32 index;
+}
+
+/**
+ * @description: Routing instance creation configuration processing
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigInstanceDeleteTrace {
+    1: "Routing Instance";
+    2: string name;
+}
+
+/**
+ * @description: Routing instance deletion configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigInstanceDeleteLog {
+    1: "Routing Instance";
+    2: string name;
+}
+
+/**
+ * @description: Routing instance update configuration processing
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigInstanceUpdateTrace {
+    1: "Routing Instance";
+    2: string name;
+    3: "Import Targets";
+    4: list<string> import_rt;
+    5: "Export Targets";
+    6: list<string> export_rt;
+    7: "Virtual Network";
+    8: string virtual_network;
+    9: "VN Index";
+    10: i32 index;
+}
+
+/**
+ * @description: Routing instance update configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigInstanceUpdateLog {
+    1: "Routing Instance";
+    2: string name;
+    3: "Import Targets";
+    4: list<string> import_rt;
+    5: "Export Targets";
+    6: list<string> export_rt;
+    7: "Virtual Network";
+    8: string virtual_network;
+    9: "VN Index";
+    10: i32 index;
+}
+
+/**
+ * @description: BGP Neighbor create configuration processing
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigNeighborCreateTrace {
+    1: "Neighbor";
+    2: string name;
+    16: "AdminDown";
+    17: bool admin_down;
+    18: "Passive";
+    19: bool passive;
+    9: "Local Identifier";
+    10: string local_identifier;
+    11: "Local AS";
+    12: i32 local_as;
+    7: "Peer Address";
+    8: string address;
+    3: "Peer AS";
+    4: i32 as_number;
+    5: "Address Families";
+    6: list<string> families;
+    13: "Keys";
+    14: string key_type;
+    15: list<string> keys;
+}
+
+/**
+ * @description: BGP Neighbor create configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigNeighborCreateLog {
+    1: "Neighbor";
+    2: string name;
+    16: "AdminDown";
+    17: bool admin_down;
+    18: "Passive";
+    19: bool passive;
+    9: "Local Identifier";
+    10: string local_identifier;
+    11: "Local AS";
+    12: i32 local_as;
+    7: "Peer Address";
+    8: string address;
+    3: "Peer AS";
+    4: i32 as_number;
+    5: "Address Families";
+    6: list<string> families;
+    13: "Keys";
+    14: string key_type;
+    15: list<string> keys;
+}
+
+/**
+ * @description: BGP Neighbor delete configuration processing
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigNeighborDeleteTrace {
+    1: "Neighbor";
+    2: string name;
+}
+
+/**
+ * @description: BGP Neighbor delete configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigNeighborDeleteLog {
+    1: "Neighbor";
+    2: string name;
+}
+
+/**
+ * @description: BGP Neighbor update configuration processing
+ * @severity: ERROR / DEBUG
+ */
+trace sandesh BgpConfigNeighborUpdateTrace {
+    1: "Neighbor";
+    2: string name;
+    16: "AdminDown";
+    17: bool admin_down;
+    18: "Passive";
+    19: bool passive;
+    9: "Local Identifier";
+    10: string local_identifier;
+    11: "Local AS";
+    12: i32 local_as;
+    7: "Peer Address";
+    8: string address;
+    3: "Peer AS";
+    4: i32 as_number;
+    5: "Address Families";
+    6: list<string> families;
+    13: "Keys";
+    14: string key_type;
+    15: list<string> keys;
+}
+
+/**
+ * @description: BGP Neighbor update configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigNeighborUpdateLog {
+    1: "Neighbor";
+    2: string name;
+    16: "AdminDown";
+    17: bool admin_down;
+    18: "Passive";
+    19: bool passive;
+    9: "Local Identifier";
+    10: string local_identifier;
+    11: "Local AS";
+    12: i32 local_as;
+    7: "Peer Address";
+    8: string address;
+    3: "Peer AS";
+    4: i32 as_number;
+    5: "Address Families";
+    6: list<string> families;
+    13: "Keys";
+    14: string key_type;
+    15: list<string> keys;
+}
+
+/**
+ * @description: BGP peering create configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigPeeringCreateTrace {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP peering create configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigPeeringCreateLog {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP peering delete configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigPeeringDeleteTrace {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP peering delete configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigPeeringDeleteLog {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP peering update configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigPeeringUpdateTrace {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP peering update configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigPeeringUpdateLog {
+    1: "Peering";
+    2: string name;
+}
+
+/**
+ * @description: BGP protocol create configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigProtocolCreateTrace {
+    1: "Routing Instance";
+    2: string name;
+    13: "AdminDown";
+    14: bool admin_down;
+    3: "Local AS";
+    4: i32 as_number;
+    5: "Router ID";
+    6: string identifier;
+    7: "Address";
+    8: string address;
+    11: "Hold Time";
+    12: i32 hold_time;
+    9: "Address Families";
+    10: list<string> families;
+}
+
+/**
+ * @description: BGP protocol create configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigProtocolCreateLog {
+    1: "Routing Instance";
+    2: string name;
+    13: "AdminDown";
+    14: bool admin_down;
+    3: "Local AS";
+    4: i32 as_number;
+    5: "Router ID";
+    6: string identifier;
+    7: "Address";
+    8: string address;
+    11: "Hold Time";
+    12: i32 hold_time;
+    9: "Address Families";
+    10: list<string> families;
+}
+
+/**
+ * @description: BGP protocol delete configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigProtocolDeleteTrace {
+    1: "Routing Instance";
+    2: string name;
+}
+
+/**
+ * @description: BGP protocol delete configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigProtocolDeleteLog {
+    1: "Routing Instance";
+    2: string name;
+}
+
+/**
+ * @description: BGP protocol update configuration processing
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpConfigProtocolUpdateTrace {
+    1: "Routing Instance";
+    2: string name;
+    13: "AdminDown";
+    14: bool admin_down;
+    3: "Local AS";
+    4: i32 as_number;
+    5: "Router ID";
+    6: string identifier;
+    7: "Address";
+    8: string address;
+    11: "Hold Time";
+    12: i32 hold_time;
+    9: "Address Families";
+    10: list<string> families;
+}
+
+/**
+ * @description: BGP protocol update configuration processing
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error
+ */
+systemlog sandesh BgpConfigProtocolUpdateLog {
+    1: "Routing Instance";
+    2: string name;
+    13: "AdminDown";
+    14: bool admin_down;
+    3: "Local AS";
+    4: i32 as_number;
+    5: "Router ID";
+    6: string identifier;
+    7: "Address";
+    8: string address;
+    11: "Hold Time";
+    12: i32 hold_time;
+    9: "Address Families";
+    10: list<string> families;
+}
+
+/**
+ * @description: BGP Peer received/sent message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerMessageTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer received/sent message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerMessageLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer Timer related message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerTimerTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer Timer related message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerTimerLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer specific routing table membership manager message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerMembershipTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer specific routing table membership manager message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerMembershipLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer event message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerEventTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer event message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerEventLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer Notification message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerNotificationTrace {
+    1 : "Bgp Peer";
+    2 : string BgpPeer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3 : string Direction;
+    4 : "Notification with Code";
+    5 : i32 ErrorCode;
+    6 : "and SubCode"
+    7 : i32 ErrorSubCode;
+    8 : "(";
+    9 : string Message;
+    10: ")";
+}
+
+/**
+ * @description: BGP Peer Notification message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: In case of error, please refer to BGP protocol documentation and contact your technical support representative. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerNotificationLog {
+    1 : "Bgp Peer";
+    2 : string BgpPeer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3 : string Direction;
+    4 : "Notification with Code";
+    5 : i32 ErrorCode;
+    6 : "and SubCode"
+    7 : i32 ErrorSubCode;
+    8 : "(";
+    9 : string Message;
+    10: ")";
+}
+
+/**
+ * @description: BGP Peer Table message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerTableTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in table";
+    5: string Table;
+    6: "in instance";
+    7: string Instance;
+    8: ":";
+    9: string Message;
+}
+
+/**
+ * @description: BGP Peer Table message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerTableLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in table";
+    5: string Table;
+    6: "in instance";
+    7: string Instance;
+    8: ":";
+    9: string Message;
+}
+
+/**
+ * @description: BGP Peer routing-instance message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerInstanceTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in instance";
+    5: string Instance;
+    6: ":";
+    7: string Message;
+}
+
+/**
+ * @description: BGP Peer routing-instance message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerInstanceLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in instance";
+    5: string Instance;
+    6: ":";
+    7: string Message;
+}
+
+/**
+ * @description: BGP Peer outboud scheduling-group message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerSchedulingGroupTrace {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: BGP Peer outboud scheduling-group message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerSchedulingGroupLog {
+    1: "BGP Peer"
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: BGP Peer State Machine related message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerStateMachineTrace {
+    1: "Bgp Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer State Machine related message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerStateMachineLog {
+    1: "Bgp Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: BGP Peer route releated message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerRouteTrace {
+    1: "BGP Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+    5: string Route;
+    6: "in table"
+    7: string Table;
+}
+
+/**
+ * @description: BGP Peer route releated message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerRouteLog {
+    1: "BGP Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+    5: string Route;
+    6: "in table"
+    7: string Table;
+}
+
+/**
+ * @description: BGP Peer Configuration message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh BgpPeerConfigTrace {
+    1: "Bgp Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: BGP Peer Configuration message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh BgpPeerConfigLog {
+    1: "Bgp Peer";
+    2: string Peer (key="ObjectBgpPeer");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: Xmpp Peer specific generic message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerMessageTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp Peer specific generic message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerMessageLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp Peer Timer message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerTimerTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp Peer Timer message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerTimerLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp peer event message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerEventTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp peer event message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerEventLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp peer table message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerTableTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in table";
+    5: string Table;
+    6: "in instance";
+    7: string Instance;
+    8: ":";
+    9: string Message;
+}
+
+/**
+ * @description: Xmpp peer table message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerTableLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in table";
+    5: string Table;
+    6: "in instance";
+    7: string Instance;
+    8: ":";
+    9: string Message;
+}
+
+/**
+ * @description: Xmpp peer routing instance message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerInstanceTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in instance";
+    5: string Instance;
+    6: ":";
+    7: string Message;
+}
+
+/**
+ * @description: Xmpp peer routing instance message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerInstanceLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: "in instance";
+    5: string Instance;
+    6: ":";
+    7: string Message;
+}
+
+/**
+ * @description: Xmpp peer outbound scheduling group message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerSchedulingGroupTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: Xmpp peer outbound scheduling group message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerSchedulingGroupLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: Xmpp peer route message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerRouteTrace {
+    1: "XMPP Peer";
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+    5: string Route;
+    6: "in table"
+    7: string Table;
+}
+
+/**
+ * @description: Xmpp peer route message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerRouteLog {
+    1: "XMPP Peer";
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+    5: string Route;
+    6: "in table"
+    7: string Table;
+}
+
+/**
+ * @description: Xmpp peer configuration message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerConfigTrace {
+    1: "Xmpp Peer";
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: Xmpp peer configuration message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error.
+ */
+systemlog sandesh XmppPeerConfigLog {
+    1: "Xmpp Peer";
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: ":";
+    5: string Message;
+}
+
+/**
+ * @description: Xmpp Peer membership to a table message
+ * @severity: DEBUG / ERROR
+ */
+trace sandesh XmppPeerMembershipTrace {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
+
+/**
+ * @description: Xmpp Peer membership to a table message
+ * @severity: DEBUG / ERROR
+ * @cause: Normal operation / An internal software failure occurred
+ * @action: Contact your technical support representative in case of Error. Peer clear might also help as a work around.
+ */
+systemlog sandesh XmppPeerMembershipLog {
+    1: "XMPP Peer"
+    2: string Peer (key="ObjectVRouter");
+    /** Direction is send '>' or receive '<' */
+    3: string Direction;
+    4: string Message;
+}
