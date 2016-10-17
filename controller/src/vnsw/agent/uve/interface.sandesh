@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2015 Juniper Networks, Inc. All rights reserved.
+ */
+
+include "vnsw/agent/uve/port_bmap.sandesh"
+include "sandesh/library/common/derived_stats_results.sandesh"
+
+/**
+ * Uve definitions for interface
+ */
+
+/**
+ * Sandesh definition for vm floatingip in agent
+ */
+struct VmFloatingIPAgent {                                                      
+    1: string virtual_network;                                                  
+    2: string ip_address;                                                       
+}    
+
+/**
+ * Sandesh definition for vm floating ip stats
+ */
+struct VmFloatingIPStats {
+    1: string virtual_network;
+    2: string ip_address;
+    3: u64 in_pkts;
+    4: u64 in_bytes;
+    5: u64 out_pkts;
+    6: u64 out_bytes;
+}
+
+/**
+ * VM's interfaces' stats samples (diff stats)
+ */
+struct VmInterfaceStats {
+    1: u64 in_pkts;
+    2: u64 in_bytes;
+    3: u64 out_pkts;
+    4: u64 out_bytes;
+}
+
+struct VmHealthCheckInstance {
+    1: string name;
+    2: string uuid;
+    3: bool is_running;
+    4: string status;
+}
+
+/**
+ * Number of flow hits for a given SG ACL Rule
+ */
+struct SgAclRuleStats {
+    1: string rule;
+    2: u64 count;
+}
+
+/**
+ * Sandesh definition for vm interface in agent
+ */
+struct UveVMInterfaceAgent {
+    1: string                name (key="ObjectVMITable")
+    2: optional bool         deleted
+    3: optional string ip_address;
+    4: string virtual_network;
+    5: optional string mac_address;
+    6: optional u32 label;
+    7: optional bool active;
+    8: string vm_name;
+    9: optional string gateway;
+   10: optional bool l2_active;
+   11: optional string uuid;
+   12: optional string ip6_address;
+   13: optional bool ip6_active;
+   14: optional port_bmap.PortBucketBitmap port_bucket_bmap;
+   15: optional list<VmFloatingIPAgent> floating_ips;
+       /* List of Floating Ips along with total stats */
+   16: optional list<VmFloatingIPStats> fip_agg_stats;
+   17: optional list<VmFloatingIPStats> fip_diff_stats (tags=".virtual_network,.ip_address")
+   18: optional VmInterfaceStats raw_if_stats (hidden="yes")
+   30: optional VmInterfaceStats if_stats     (stats="raw_if_stats:DSNon0:", tags="vm_name,vm_uuid")
+   31: optional derived_stats_results.AnomalyResult if_in_pkts_ewm 
+                    (stats="raw_if_stats.in_pkts:DSAnomaly:EWM:0.2")
+   32: optional derived_stats_results.AnomalyResult if_out_pkts_ewm
+                    (stats="raw_if_stats.out_pkts:DSAnomaly:EWM:0.2")
+   19: string vm_uuid;
+   20: optional u64 in_bw_usage;
+   21: optional u64 out_bw_usage;
+   22: optional bool ip4_active;
+   23: optional bool is_health_check_active;
+   24: optional list<VmHealthCheckInstance> health_check_instance_list;
+   25: optional list<SgAclRuleStats> sg_rule_stats (tags=".rule");
+}
+
+/**
+ * @description: uve for vm interface in agent
+ * @type: uve
+ * @object:Interface
+ */
+uve sandesh UveVMInterfaceAgentTrace {
+    1: UveVMInterfaceAgent data;
+}

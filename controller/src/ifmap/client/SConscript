@@ -1,0 +1,29 @@
+#
+# Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+#
+# -*- mode: python; -*-
+
+Import('BuildEnv')
+
+env = BuildEnv.Clone()
+env.Append(CPPPATH = env['TOP'])
+env.Append(CPPPATH = [env['TOP'] + '/ifmap'])
+env.Append(CPPPATH = [env['TOP'] + '/base/sandesh'])
+env.Prepend(LIBS=['io', 'base'])
+
+except_env = BuildEnv.Clone()
+except_env.CppEnableExceptions()
+except_env.Append(CPPPATH = env['TOP'])
+
+libifmapio = env.Library('ifmapio',
+                         ['ifmap_manager.cc',
+                          'ifmap_state_machine.cc',
+                          'ifmap_channel.cc',
+                          'peer_server_finder.cc'
+                         ])
+
+env.Install(env['TOP_LIB'], libifmapio)
+
+client_unit_tests = env.SConscript('test/SConscript', exports='BuildEnv',
+                                   duplicate = 0)
+Return('client_unit_tests')

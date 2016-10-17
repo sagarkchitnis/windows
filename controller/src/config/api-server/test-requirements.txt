@@ -1,0 +1,9 @@
+ipdb
+python-subunit
+testrepository
+flexmock
+coverage
+webtest
+pyaml
+keystonemiddleware
+junitxml

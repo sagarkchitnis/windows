@@ -1,0 +1,350 @@
+/*
+ * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+ */
+
+/**
+ * This UVE provides information associated with a vRouter such as
+ *
+ * virtual networks present on this vRouter,
+ * virtual machines spawned on the server of this vRouter,
+ * statistics of the traffic flowing through this vRouter
+ *
+ */
+include "base/sandesh/cpuinfo.sandesh"
+include "base/sandesh/process_info.sandesh"
+include "sandesh/library/common/derived_stats_results.sandesh"
+include "vnsw/agent/oper/agent.sandesh"
+
+/**
+ * Sandesh definition for agent's xen server config
+ */
+struct AgentXenConfig {
+    1: string            xen_ll_port;
+    2: string            xen_ll_ip;
+    3: i32               xen_ll_prefix_len;
+}
+
+/**
+ * Sandesh definition for agent's vmware server config
+ */
+struct AgentVmwareConfig {
+    1: string            vmware_port;
+}
+
+/**
+ * Sandesh definition for agent's vgw config
+ */
+struct AgentVgwConfig {
+    1: string            interface_name;
+    2: string            vrf_name;
+    3: list<string>      ip_blocks_list; 
+    4: optional list<string> route_list; 
+}
+
+/**
+ * Sandesh definition for agent's vhost config
+ */
+struct AgentVhostConfig {
+    1: string    name;
+    2: string    ip;
+    3: i32       ip_prefix_len;
+    4: string    gateway;
+}
+
+/**
+ * Sandesh definition for agent's vmware xmpp peer
+ */
+struct AgentXmppPeer {
+    1: string        ip (aggtype="listkey")
+    2: bool          status;
+    3: u64           setup_time;
+    4: bool          primary;
+}
+
+/**
+ * Sandesh definition for agent interface
+ */
+struct AgentInterface {
+    1: string name (aggtype="listkey")
+    2: string mac_address;
+}
+
+/**
+ * Sandesh definition for agent
+ */
+struct VrouterAgent {  // Agent info
+    1: string name (key="ObjectVRouter")
+    2: optional bool                deleted
+    3: optional list<string> connected_networks; 
+    4: optional list<string> interface_list; 
+    5: optional list<string> virtual_machine_list; 
+    6: optional list<AgentXmppPeer> xmpp_peer_list;
+    7: optional string collector;
+    8: optional list<string> self_ip_list;
+    9: optional string build_info;
+   10: optional list<string> core_files_list; 
+   11: optional list<string> error_intf_list; 
+   12: optional list<AgentInterface> phy_if;
+   13: optional AgentInterface vhost_if;
+   14: optional i32 collector_port;
+   15: optional string log_file;
+   16: optional string config_file;
+   17: optional bool  log_local;
+   18: optional string log_level;
+   19: optional string log_category;
+   20: optional i32 sandesh_http_port;
+   21: optional list<string> dns_servers;
+   22: optional AgentVhostConfig vhost_cfg;
+   23: optional string eth_name;
+   24: optional string tunnel_type;
+   25: optional string hypervisor;
+   26: optional AgentXenConfig xen_cfg;
+   27: optional string ds_addr;
+   28: optional i32 ds_xs_instances;
+   29: optional string control_ip; 
+   30: optional list<string> no_config_intf_list;
+   31: optional u16 total_interface_count;
+   32: optional u16 down_interface_count;
+   33: optional AgentVmwareConfig vmware_cfg;
+   34: optional list<string> dns_server_list_cfg;
+   35: optional list<string> control_node_list_cfg;
+   36: optional string hostname_cfg; 
+   37: optional u16 flow_cache_timeout_cfg;
+   38: optional u32 ll_max_system_flows_cfg;
+   39: optional u32 ll_max_vm_flows_cfg;
+   40: optional u32 max_vm_flows_cfg;
+   41: optional list<AgentVgwConfig> gateway_cfg_list;
+   42: optional bool headless_mode_cfg;
+   43: optional list<string> collector_server_list_cfg;
+   44: optional bool log_flow;
+   45: optional list<string> tsn_prouter_list; 
+   46: optional list<string> tor_prouter_list;
+   47: optional list<string> embedded_prouter_list;
+   48: optional string mode;
+   49: optional list<string> unmanaged_if_list;
+   50: optional u32 vn_count; //being sent for UI dashboard optimization
+   51: optional string platform;
+   52: optional agent.VrouterObjectLimits vr_limits;
+}
+
+/**
+ * @description: uve for vrouter agent
+ * @object: Agent
+ */
+uve sandesh UveVrouterAgent {
+    1: VrouterAgent data;
+}
+
+/**
+ * Sandesh definition for agent drop stats
+ */
+struct AgentDropStats {
+    1:  u64   ds_discard;
+    2:  u64   ds_pull;
+    3:  u64   ds_invalid_if;
+    5:  u64   ds_garp_from_vm;
+    6:  u64   ds_invalid_arp;
+    7:  u64   ds_trap_no_if;
+    8:  u64   ds_nowhere_to_go;
+    9:  u64   ds_flow_queue_limit_exceeded;
+    10: u64   ds_flow_no_memory;
+    11: u64   ds_flow_invalid_protocol;
+    12: u64   ds_flow_nat_no_rflow;
+    13: u64   ds_flow_action_drop;
+    14: u64   ds_flow_action_invalid;
+    15: u64   ds_flow_unusable;
+    16: u64   ds_flow_table_full;
+    17: u64   ds_interface_tx_discard;
+    18: u64   ds_interface_drop;
+    19: u64   ds_duplicated;
+    20: u64   ds_push;
+    21: u64   ds_ttl_exceeded;
+    22: u64   ds_invalid_nh;
+    23: u64   ds_invalid_label;
+    24: u64   ds_invalid_protocol;
+    25: u64   ds_interface_rx_discard;
+    26: u64   ds_invalid_mcast_source;
+    27: u64   ds_head_alloc_fail;
+    28: u64   ds_head_space_reserve_fail;
+    29: u64   ds_pcow_fail;
+    30: u64   ds_flood;
+    31: u64   ds_mcast_clone_fail;
+    33: u64   ds_rewrite_fail;
+    34: u64   ds_misc;
+    35: u64   ds_invalid_packet;
+    36: u64   ds_cksum_err;
+    37: u64   ds_clone_fail;
+    38: u64   ds_no_fmd;
+    39: u64   ds_cloned_original;
+    40: u64   ds_invalid_vnid;
+    41: u64   ds_frag_err;
+    42: u64   ds_invalid_source;
+    43: u64   ds_mcast_df_bit;
+    44: u64   ds_arp_no_where_to_go;
+    45: u64   ds_arp_no_route;
+    46: u64   ds_l2_no_route;
+    48: u64   ds_vlan_fwd_tx;
+    49: u64   ds_vlan_fwd_enq;
+}
+
+/**
+ ** Sandesh definition for agent xmpp connection
+ */
+struct AgentXmppStats {
+    1: string   ip (aggtype="listkey")
+    2: optional u16 reconnects; 
+    3: optional u64 in_msgs; 
+    4: optional u64 out_msgs; 
+}
+
+/**
+ * Sandesh definition for vrouter agent vhost interface
+ */
+struct AgentIfStats {
+    1: string name (aggtype="listkey")
+    2: u64 in_pkts;
+    3: u64 in_bytes; 
+    4: u64 out_pkts; 
+    5: u64 out_bytes; 
+    6: i32 speed;
+    7: i32 duplexity;
+}
+
+/**
+ * Sandesh definition for agent vhost interface bandwidth
+ */
+struct AgentIfBandwidth {
+    1: string name (aggtype="listkey")
+    2: u64 in_bandwidth_usage;
+    3: u64 out_bandwidth_usage;
+}
+
+/**
+ * Sandesh definition for vrouter flow rate
+ */
+struct VrouterFlowRate {
+    1: u32 added_flows;
+    2: u32 max_flow_adds_per_second;
+    3: u32 min_flow_adds_per_second;
+    4: u32 deleted_flows;
+    5: u32 max_flow_deletes_per_second;
+    6: u32 min_flow_deletes_per_second;
+    7: optional u64 active_flows; //'dial' type. So no diff. Always aggregate
+}
+
+/**
+ * Sandesh definition for vrouter
+ */
+struct VrouterStatsAgent {  // Agent stats
+    1: string name (key="ObjectVRouter")
+    2: optional bool                deleted
+
+       //traffic stats
+    3: optional u64 in_tpkts; 
+    4: optional u64 in_bytes; 
+    5: optional u64 out_tpkts;
+    6: optional u64 out_bytes; 
+
+       //xmpp stats
+    7: optional list<AgentXmppStats> xmpp_stats_list;
+
+        //Process stats
+    12: optional cpuinfo.CpuLoadInfo cpu_info;
+
+        //Nexthop stats
+    14: optional u32 nexthops; 
+
+        //Flow stats
+    15: optional u64 exception_packets; 
+    16: optional u64 exception_packets_dropped; 
+    17: optional u64 exception_packets_no_route; 
+    18: optional u64 exception_packets_denied; 
+    19: optional u64 exception_packets_allowed; 
+    20: optional u64 total_flows; 
+    22: optional u64 aged_flows; 
+    23: optional u64 aged_flows_dp; 
+    24: optional u64 active_flows_dp; 
+    47: optional u64 flow_export_disable_drops; /* Number of flow samples dropped because of disable of flow exports */ 
+    48: optional u64 flow_export_sampling_drops; /* Number of flow samples dropped after subjecting them to sampling algorithm */
+    49: optional u64 flow_export_drops; /* Number of flows which are never exported */
+
+        //Dataplane stats
+    25: optional u64 in_kernel_ipc_msgs; 
+    26: optional u64 out_kernel_ipc_msgs; 
+    27: optional u64 hash_collisions_dp; 
+    28: optional u64 packets_denied_dp; 
+    29: optional u64 packets_no_route_dp; 
+    30: optional u64 packets_no_mpls_dp; 
+    31: optional u64 packets_no_flow_dp; 
+    32: optional u64 uptime;
+    33: optional list<AgentIfStats> phy_if_stats_list;
+    34: optional AgentIfStats vhost_stats;
+    36: optional list<AgentIfBandwidth> phy_if_5min_usage; 
+    38: optional list<u32>   udp_sport_bitmap;
+    39: optional list<u32>   udp_dport_bitmap;
+    40: optional list<u32>   tcp_sport_bitmap;
+    41: optional list<u32>   tcp_dport_bitmap;
+
+    42: optional AgentDropStats raw_drop_stats (metric="agg", hidden="yes")
+    60: optional AgentDropStats drop_stats     (stats="raw_drop_stats:DSNon0:")
+    61: optional AgentDropStats drop_stats_1h  (stats="raw_drop_stats:DSSum:120")
+
+    43: optional double total_in_bandwidth_utilization;
+    44: optional double total_out_bandwidth_utilization;
+
+    45: optional VrouterFlowRate flow_rate (tags="")
+    65: optional derived_stats_results.AnomalyResult added_flows_ewm
+                     (stats="flow_rate.added_flows:DSAnomaly:EWM:0.2")
+    66: optional derived_stats_results.AnomalyResult deleted_flows_ewm
+                     (stats="flow_rate.deleted_flows:DSAnomaly:EWM:0.2")
+    67: optional derived_stats_results.AnomalyResult active_flows_ewm
+                     (stats="flow_rate.active_flows:DSAnomaly:EWM:0.2")
+
+    50: optional map<string,u64> phy_band_in_bps  (tags="name:.__key")
+    51: optional map<string,u64> phy_band_out_bps (tags="name:.__key")
+    52: optional map<string,derived_stats_results.EWMResult> in_bps_ewm
+                     (mstats="phy_band_in_bps:DSEWM:0.2")
+    53: optional map<string,derived_stats_results.EWMResult> out_bps_ewm
+                     (mstats="phy_band_out_bps:DSEWM:0.2")
+    54: optional map<string, u64> raw_ifmap_stats (metric="agg", hidden="yes")
+    /** @display_name:Vrouter IFMAP Parse Error Statistics*/
+    55: optional map<string, u64> ifmap_stats
+                     (mstats="raw_ifmap_stats:DSNon0:", tags=".__key")
+    56: optional map<string, u64> ifmap_stats_1h
+                     (mstats="raw_ifmap_stats:DSSum:120")
+}
+
+/**
+ * Vrouter statistics uve
+ */
+uve sandesh VrouterStats {
+    1: VrouterStatsAgent data;
+}
+
+/**
+ * Sandesh definition for vrouter cpu usage
+ */
+struct VrouterCpuInfo {
+    1: u32                            mem_virt
+    2: double                         cpu_share
+    3: u32                            used_sys_mem
+    4: double                         one_min_cpuload
+    5: u32                            mem_res
+}
+
+/**
+ * Sandesh definition for compute node cpu stats
+ */
+struct ComputeCpuState {
+    1: string                         name (key="ObjectVRouter")
+    2: optional bool                  deleted
+    3: optional list<VrouterCpuInfo>  cpu_info (tags=".mem_virt,.cpu_share,.mem_res", aggtype="union")
+}
+
+/**
+ * @description: uve for compute node cpu stats
+ * @severity: DEBUG
+ */
+uve sandesh ComputeCpuStateTrace {
+    1: ComputeCpuState data
+}

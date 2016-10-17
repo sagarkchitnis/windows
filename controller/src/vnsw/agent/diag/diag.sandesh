@@ -1,0 +1,123 @@
+/*
+ * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+ */
+
+/**
+ *  Message definitions for diagnostic module
+ * This module is responsible for generating network diagnostic for agent
+ */
+
+/**
+ * Request message to get ping statistics in agent introspect
+ * 
+ */ 
+request sandesh PingReq {
+    1: string source_ip;
+    2: i32    source_port;
+    3: string dest_ip;
+    4: i32    dest_port;
+    5: i16    protocol;
+    6: string vrf_name;
+    7: optional i16 packet_size = 100;
+    8: optional i16 count = 10;
+    9: optional i32 interval = 1;
+}
+
+/**
+ * Request message to get trace route in agent introspect
+ *
+ */
+request sandesh TraceRouteReq {
+    1: string source_ip;
+    2: i32    source_port;
+    3: string dest_ip;
+    4: i32    dest_port;
+    5: i16    protocol;
+    6: string vrf_name;
+    7: optional i16 max_hops = 30;
+    8: optional i16 max_attempts = 3;
+    9: optional i32 interval = 1;
+}
+
+/**
+ * Request for Overlay ping statistics in agent introspect 
+ *
+ */
+
+request sandesh OverlayPingReq {
+    1: string source_ip;
+    2: string dest_ip;
+    3: string   vn_uuid;
+    4: string vm_remote_mac;
+    5: i32 source_port;
+    6: i32    dest_port;
+    7: optional i16    protocol = 17;
+    8: optional i16 packet_size = 100;
+    9: optional i16 count = 10;
+    10: optional i32 interval = 1;
+}
+
+/**
+ * Request message to get Overlay trace route in agent introspect  
+ *
+ */
+
+request sandesh OverlayTraceReq {
+    1: string source_ip;
+    2: string dest_ip;
+    3: i16    protocol;
+    4: string   vn_uuid;
+    5: string vm_remote_mac;
+    6: i32 source_port;
+    7: i32    dest_port;
+    8: optional i16 max_hops = 30;
+    9: optional i16 max_attempts = 3;
+    10: optional i32 interval = 1;
+}
+
+/**
+ * Ping response statistics
+ */
+response sandesh PingResp {
+    1: i16 seq_no;
+    2: optional string rtt;
+    3: string resp;
+}
+
+/**
+ * Ping summary
+ */
+response sandesh PingSummaryResp {
+    1: i16 request_sent;
+    2: i16 response_received;
+    3: i16 pkt_loss;
+    4: optional string average_rtt;
+}
+
+/**
+ * Ping error message
+ */
+response sandesh PingErrResp {
+    1: string error_response;
+}
+
+/**
+ * Trace route for the address
+ */ 
+struct TraceRouteHop {
+    1: string address;
+}
+
+/**
+ * Response message for traceroute
+ */
+response sandesh TraceRouteResp {
+    1: string hop;
+}
+
+/**
+ * Trace route error message
+ */
+response sandesh TraceRouteErrResp {
+    1: string error_response;
+}

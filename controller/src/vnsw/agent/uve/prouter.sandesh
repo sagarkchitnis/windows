@@ -1,0 +1,69 @@
+/*
+ * Copyright (c) 2014 Juniper Networks, Inc. All rights reserved.
+ */
+
+/**
+ * Uve definitions for physical device for agent
+ */
+
+/**
+ * Statistics for physical device
+ */
+struct ProuterData {
+    1: string name (key="ObjectPRouter")
+    2: optional bool deleted
+    3: string uuid
+    4: optional list<string> physical_interface_list
+    5: optional list<string> logical_interface_list
+    6: optional string agent_name
+    /* The following list can atmost have one element. It is defined as list
+       to support aggregation. Backup agent will send empty list for the
+       following field while master agent will send its name as the only
+       element in the list */
+    7: optional list<string>  connected_agent_list (aggtype="union")
+}
+
+/**
+ * @description: uve for physical device
+ * @object: PhysicalDevice
+ */
+uve sandesh UveProuterAgent {
+    1: ProuterData data
+}
+
+/**
+ * Statistics for logical interface for agent
+ */
+struct UveLogicalInterfaceAgent {
+    1: string                name (key="ObjectLogicalInterfaceTable")
+    2: optional bool         deleted
+    3: optional string config_name
+    4: optional u16 vlan
+    5: optional list<string> vm_interface_list
+}
+
+/**
+ * @description: uve for logical interface for agent
+ * @object: LogicalInterface
+ */
+uve sandesh UveLogicalInterfaceAgentTrace {
+    1: UveLogicalInterfaceAgent data;
+}
+
+/**
+ * Statistics for physical interface for agent
+ */
+struct UvePhysicalInterfaceAgent {
+    1: string                name (key="ObjectPhysicalInterfaceTable")
+    2: optional bool         deleted
+    3: optional string uuid
+    4: optional list<string> logical_interface_list
+}
+
+/**
+ * @description: uve for physical interface for agent
+ * @object: PhysicalInterface
+ */
+uve sandesh UvePhysicalInterfaceAgentTrace {
+    1: UvePhysicalInterfaceAgent data;
+}
