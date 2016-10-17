@@ -1,0 +1,47 @@
+#
+# Copyright (c) 2014, 2015 Semihalf. All rights reserved.
+#
+import os
+
+Import('VRouterEnv')
+Import('dpdk_lib')
+
+env = VRouterEnv.Clone()
+
+# Flags
+env.Append(CCFLAGS = '-Werror -Wall')
+env.Append(CCFLAGS = '-msse4.2')
+if env['OPT'] == 'debug':
+    env.Append(CCFLAGS = '-DCOMPILE_DEBUG_LOGS')
+
+# Include/lLib paths
+env.Append(LIBPATH = [env['TOP_LIB']])
+env.Append(LIBPATH = ['../host', '../sandesh', '../dp-core'])
+
+# Libraries
+env.Replace(LIBS = ['dp_core', 'dp_sandesh_c', 'dp_core', 'sandesh-c'])
+env.Append(LIBS = ['rt', 'dl', 'pthread', 'urcu-qsbr'])
+env.Append(LINKFLAGS = env['DPDK_LINKFLAGS'])
+
+dpdk_objs = env.Object(Glob('*.c'))
+dpdk_vrouter = env.Program('contrail-vrouter-dpdk', dpdk_objs)
+env.Requires(dpdk_objs, dpdk_lib)
+
+# to make sure that all are built when you do 'scons' @ the top level
+env.Default(dpdk_vrouter)
+
+env.Alias('install', env.Install(env['INSTALL_BIN'], dpdk_vrouter))
+
+vtest = Command(target = "all_tests.log",
+                source = "../utils/vtest/vtest",
+                action =
+                    "./vrouter/utils/vtest/all_tests_run"
+                        + " -b " + Dir(env['TOP']).abspath
+                        + " -x vrouter/utils/vtest/tests"
+                        + " -l $TARGET"
+                )
+Depends(vtest, dpdk_vrouter)
+
+# Local Variables:
+# mode: python
+# End:
