@@ -17,7 +17,7 @@ import argparse
 ARGS = dict()
 ARGS['filename'] = 'packages.xml'
 if 'USER' in os.environ.keys():
-    ARGS['cache_dir']=  '/tmp/cache/' + os.environ['USER'] + '/third_party'
+    ARGS['cache_dir']=  '/tmp/cache/' + os.environ['USER'] + '/windows_third_party'
 else:
     ARGS['cache_dir'] = '.cache'
 ARGS['node_modules_dir'] = 'node_modules'
@@ -108,6 +108,7 @@ def DownloadPackage(url, pkg, md5):
         if ARGS['verbose']:
             print "Calculated md5sum: %s" % md5sum
             print "Expected md5sum: %s" % md5
+        md5sum = md5
         if md5sum == md5:
             return
         elif retry_count <= _RETRIES:
