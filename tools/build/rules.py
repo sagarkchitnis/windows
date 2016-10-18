@@ -1056,7 +1056,7 @@ def SetupBuildEnvironment(conf):
     try:
         build_host = env['HOSTNAME'] if 'HOSTNAME' in env else os.environ['HOSTNAME']
     except KeyError:
-        build_host = os.uname()[1]
+        build_host = platform.uname()
     env['HOSTNAME'] = build_host
 
     # Store repo projects in the environment
@@ -1068,7 +1068,13 @@ def SetupBuildEnvironment(conf):
         (path,repo) = l.split(" : ")
         repo_list[path] = repo
     env['REPO_PROJECTS'] = repo_list
-
+    env['CC'] = 'cl.exe'
+    env['CXX'] = 'cl.exe'
+    env['CCPDBFLAGS'] = '/Zi /Fd${TARGET}.pdb'
+    opt_level = env['OPT']
+	# /GS /analyze- /W3 /Zc:wchar_t /ZI /Gm /Od /Fd"Debug\vc140.pdb" /Zc:inline /fp:precise /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo /Fo"Debug\" /Fp"Debug\compilerproj.pch" 
+    env.Append(CCFLAGS = '/GS /analyze- /W3 /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
+    env.Append(LINKFLAGS= ['/DEBUG /PDB:${TARGET}.pdb'])
     opt_level = env['OPT']
     if opt_level == 'production':
         env.Append(CCFLAGS = '-g -O3')
@@ -1134,5 +1140,25 @@ def SetupBuildEnvironment(conf):
     env.AddMethod(UseCassandraCql, "UseCassandraCql")
     env.AddMethod(CppDisableExceptions, "CppDisableExceptions")
     env.AddMethod(CppEnableExceptions, "CppEnableExceptions")
+    if os.name == "nt":
+       def symlink_ms(source, link_name):
+           import ctypes
+           csl = ctypes.windll.kernel32.CreateSymbolicLinkW
+           csl.argtypes = (ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32)
+           csl.restype = ctypes.c_ubyte
+           source = source.replace('/', '\\')
+           print "Creating symbolic link:%s  ----> %s" % (source , link_name)
+           if not os.path.exists(source):
+              print "ERROR: dir %s does not exist" % source
+              quit()
+           print source, os.path.isdir(source)
+           IsDir = 1 if os.path.isdir(source) else 0
+           try:
+              if csl(link_name, source, IsDir) == 0:
+                 raise ctypes.WinError()
+              print "SUCCESS: created symbolic link:%s  ----> %s" % (source , link_name)
+           except:
+              print "ERROR: could not create symbolic link:%s  ----> %s" % (source , link_name)
+       os.symlink = symlink_ms
     return env
-# SetupBuildEnvironment
+  # SetupBuildEnvironment
