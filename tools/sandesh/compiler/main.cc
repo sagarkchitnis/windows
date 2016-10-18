@@ -41,8 +41,9 @@
 #include <errno.h>
 #include <limits.h>
 
-#ifdef MINGW
+#if defined(MINGW) || defined(_WINDOWS)
 # include <windows.h> /* for GetFullPathName */
+#define PATH_MAX (MAX_PATH)
 #endif
 
 // Careful: must include globals first for extern definitions
@@ -225,7 +226,7 @@ bool gen_recurse = false;
  * otherwise this just calls through to realpath
  */
 char *saferealpath(const char *path, char *resolved_path) {
-#ifdef MINGW
+#if defined(MINGW) || defined(_WINDOWS)
   char buf[MAX_PATH];
   char* basename;
   DWORD len = GetFullPathName(path, MAX_PATH, buf, &basename);
@@ -1110,7 +1111,11 @@ int main(int argc, char** argv) {
     char* arg;
 
     char *saveptr;
-    arg = strtok_r(argv[i], " ", &saveptr);
+#ifdef _WINDOWS
+	arg = strtok_s(argv[i], " ", &saveptr);
+#else
+	arg = strtok_r(argv[i], " ", &saveptr);
+#endif
     while (arg != NULL) {
       // Treat double dashes as single dashes
       if (arg[0] == '-' && arg[1] == '-') {

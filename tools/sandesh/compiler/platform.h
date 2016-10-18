@@ -22,15 +22,16 @@
  * is different for the non-POSIX MinGW
  */
 
-#ifdef MINGW
+#if defined(MINGW) || defined(_WINDOWS)
 #include <io.h>
+#include <direct.h>
 #else
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif
 
-#if defined MINGW
-#define MKDIR(x) mkdir(x)
+#if defined(MINGW) || defined(_WINDOWS)
+#define MKDIR(x) _mkdir(x)
 #else
 #define MKDIR(x) mkdir(x, S_IRWXU | S_IRWXG | S_IRWXO)
 #endif

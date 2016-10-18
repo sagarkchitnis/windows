@@ -15,6 +15,7 @@ import sys
 import time
 import commands
 import platform
+import getpass
 
 def GetPlatformInfo(env):
     '''
@@ -156,7 +157,7 @@ def setup_venv(env, target, venv_name, path=None):
         if ws_link: p = ws_link + "/build/" + env['OPT']
         else: p = env.Dir(env['TOP']).abspath
 
-    tdir = '/tmp/cache/%s/systemless_test' % os.environ['USER']
+    tdir = '/tmp/cache/%s/systemless_test' % getpass.getuser()
     shell_cmd = ' && '.join ([
         'cd %s' % p,
         'mkdir %s' % tdir,
@@ -193,7 +194,7 @@ def venv_add_pip_pkg(env, v, pkg_list):
         if name[0] != '/':
             targets.append(name)
 
-    tdir = '/tmp/cache/%s/systemless_test' % os.environ['USER']
+    tdir = '/tmp/cache/%s/systemless_test' % getpass.getuser()
     cmd = env.Command(targets, None, '/bin/bash -c "source %s/bin/activate; pip install --download-cache=%s %s"' %
                       (venv._path, tdir, ' '.join(pkg_list)))
     env.AlwaysBuild(cmd)
@@ -1081,8 +1082,8 @@ def SetupBuildEnvironment(conf):
         env.Append(LINKFLAGS= ['-g'])
         env['TOP'] = '#build/production'
     elif opt_level == 'debug':
-        env.Append(CCFLAGS = ['-g', '-O0', '-DDEBUG'])
-        env.Append(LINKFLAGS= ['-g'])
+        env.Append(CCFLAGS = ['/D "_DEBUG"'])
+        env.Append(LINKFLAGS= ['/DEBUG'])
         env['TOP'] = '#build/debug'
     elif opt_level == 'profile':
         # Enable profiling through gprof
