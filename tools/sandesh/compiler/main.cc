@@ -1220,14 +1220,31 @@ int main(int argc, char** argv) {
         }
         out_path = arg;
 
-#ifdef MINGW
+#if defined(MINGW) || defined(_WINDOWS)
         //strip out trailing \ on Windows
         int last = out_path.length()-1;
         if (out_path[last] == '\\')
         {
           out_path.erase(last);
         }
-#endif
+		DWORD fa = GetFileAttributesA(out_path.c_str());
+		if (fa == INVALID_FILE_ATTRIBUTES)
+		{
+			fprintf(stderr, "Output directory %s is unusable: %d\n", out_path.c_str(), GetLastError());
+			return -1;
+		}
+
+		if (!(fa & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			fprintf(stderr, "Output directory %s exists but is not a directory\n", out_path.c_str()); return -1;
+		}
+		else {
+			fprintf(stderr, "!!! Unrecognized option: %s\n", arg);
+			usage();
+		}
+	  }
+	  arg = strtok_s(NULL, " ", &saveptr);
+#else
 
         struct stat sb;
         if (stat(out_path.c_str(), &sb) < 0) {
@@ -1245,6 +1262,7 @@ int main(int argc, char** argv) {
 
       // Tokenize more
       arg = strtok_r(NULL, " ", &saveptr);
+#endif
     }
   }
 

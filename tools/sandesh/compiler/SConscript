@@ -21,6 +21,8 @@ env['CCFLAGS'] = cflags
 
 env.Append(CPPPATH = ['#tools/sandesh/compiler','#build/include'])
 
+env.Append(CPPPATH = ['#tools/sandesh/compiler/windows'])
+
 # Lex and Yacc
 env.Append(YACCFLAGS = '-d')
 env['YACCHXXFILESUFFIX'] = '.hh'
