@@ -3,7 +3,7 @@
 #
 
 import sys
-
+print 'building sandesh'
 SandeshEnv = DefaultEnvironment().Clone()
 
 SandeshEnv.Append(CPPDEFINES='SANDESH')
@@ -19,7 +19,7 @@ for dir in subdirs:
     SConscript(dir + '/SConscript', exports = 'SandeshEnv',
                variant_dir = SandeshEnv['TOP'] + '/tools/sandesh/' + dir,
                duplicate = 0)
-
+print 'done building sandesh'
 # Local Variables:
 # mode: python
 # End:

@@ -1210,39 +1210,40 @@ int main(int argc, char** argv) {
           usage();
         }
         g_incl_searchpath.push_back(arg);
-      } else if ((strcmp(arg, "-o") == 0) || (strcmp(arg, "-out") == 0)) {
-        out_path_is_absolute = (strcmp(arg, "-out") == 0) ? true : false;
-		  
-		arg = argv[++i];
-        if (arg == NULL) {
-          fprintf(stderr, "-o: missing output directory\n");
-          usage();
-        }
-        out_path = arg;
+	  }
+	  else if ((strcmp(arg, "-o") == 0) || (strcmp(arg, "-out") == 0)) {
+		  out_path_is_absolute = (strcmp(arg, "-out") == 0) ? true : false;
+
+		  arg = argv[++i];
+		  if (arg == NULL) {
+			  fprintf(stderr, "-o: missing output directory\n");
+			  usage();
+		  }
+		  out_path = arg;
 
 #if defined(MINGW) || defined(_WINDOWS)
-        //strip out trailing \ on Windows
-        int last = out_path.length()-1;
-        if (out_path[last] == '\\')
-        {
-          out_path.erase(last);
-        }
-		DWORD fa = GetFileAttributesA(out_path.c_str());
-		if (fa == INVALID_FILE_ATTRIBUTES)
-		{
-			fprintf(stderr, "Output directory %s is unusable: %d\n", out_path.c_str(), GetLastError());
-			return -1;
-		}
+		  //strip out trailing \ on Windows
+		  int last = out_path.length() - 1;
+		  if (out_path[last] == '\\')
+		  {
+			  out_path.erase(last);
+		  }
+		  DWORD fa = GetFileAttributesA(out_path.c_str());
+		  if (fa == INVALID_FILE_ATTRIBUTES)
+		  {
+			  fprintf(stderr, "Output directory %s is unusable: %d\n", out_path.c_str(), GetLastError());
+			  return -1;
+		  }
 
-		if (!(fa & FILE_ATTRIBUTE_DIRECTORY))
-		{
-			fprintf(stderr, "Output directory %s exists but is not a directory\n", out_path.c_str()); return -1;
-		}
+		  if (!(fa & FILE_ATTRIBUTE_DIRECTORY))
+		  {
+			  fprintf(stderr, "Output directory %s exists but is not a directory\n", out_path.c_str()); return -1;
+		  }
+	  }
 		else {
 			fprintf(stderr, "!!! Unrecognized option: %s\n", arg);
 			usage();
-		}
-	  }
+		     }
 	  arg = strtok_s(NULL, " ", &saveptr);
 #else
 

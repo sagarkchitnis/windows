@@ -14,7 +14,18 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#ifdef _WINDOWS
+#define LOG_ERR //fr now
+#define LOG_DEBUG
+#include <stdint.h>
+#include<WinSock2.h>
+#include<in6addr.h>
+typedef uint8_t u_int8_t;
+typedef uint16_t u_int16_t;
+typedef uint32_t u_int32_t;
+typedef uint64_t u_int64_t;
+#undef uuid_t
+#endif
 /* OS specific defines */
 #ifdef __KERNEL__
 #if defined(__linux__)
@@ -58,10 +69,14 @@ extern int vrouter_dbg;
 
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WINDOWS
 #include <syslog.h>
-#include <sys/types.h>
 #include <sys/errno.h>
 #include <arpa/inet.h>
+#endif
+#include <sys/types.h>
+
+
 
 #define OS_LOG_ERR LOG_ERR
 #define OS_LOG_DEBUG LOG_DEBUG
@@ -70,7 +85,7 @@ extern int vrouter_dbg;
 #define os_zalloc(size)                  calloc(1, size)
 #define os_realloc(ptr, size)            realloc(ptr, size)
 #define os_free(ptr)                     free(ptr)
-#define os_log(level, format, arg...)    syslog(level, format, ##arg)
+#define os_log(level, format, ...)       winsyslog(level format, __VA_ARGS__)  //only for now
 #endif /* __KERNEL__ */
 
 typedef unsigned char uuid_t[16];

@@ -6,7 +6,7 @@
 #
 
 Import('SandeshEnv')
-
+print 'building sandesh compiler'
 env = SandeshEnv.Clone();
 
 rmflags = ['-Wsign-compare', '-Werror', '-fno-exceptions',
@@ -45,3 +45,4 @@ sandesh = env.Program(target = 'sandesh',
                                 'parse/parse.cc',
                                ])
 env.Install(env['TOP_BIN'], sandesh)
+print 'done building sandesh compiler'
