@@ -4,7 +4,7 @@
 # Created by Megh Bhatt on 07/16/12.
 # Copyright (c) 2012 Contrail Systems. All rights reserved.
 #
-
+import os
 Import('SandeshEnv')
 print 'building sandesh compiler'
 env = SandeshEnv.Clone();
@@ -21,7 +21,8 @@ env['CCFLAGS'] = cflags
 
 env.Append(CPPPATH = ['#tools/sandesh/compiler','#build/include'])
 
-env.Append(CPPPATH = ['#tools/sandesh/compiler/windows'])
+if os.name == 'nt':
+ env.Append(CPPPATH = ['#tools/sandesh/compiler/windows'])
 
 # Lex and Yacc
 env.Append(YACCFLAGS = '-d')

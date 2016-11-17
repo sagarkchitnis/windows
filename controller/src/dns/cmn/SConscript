@@ -14,9 +14,9 @@ buildinfo_dep_libs = ['../../dns/cfg/libdns_cfg.a', '../../dns/mgr/libmgr.a', '.
                       '../../dns/bind/libbind_interface.a', 
                       '../../schema/libifmap_vnc.a', '../../ifmap/libifmap_server.a', '../../ifmap/libifmap_common.a', 
                       '../../net/libnet.a', '../../../lib/libifmapio.a', '../../xmpp/libxmpp.a', '../../../lib/libsandeshvns.a',
-                      '../../../lib/libsandesh.a', '../../../lib/libhttp.a', '../../../lib/libhttp_parser.a', 
+                      '../../../lib/libsandesh.a', '../../../lib/libhttp.a', '../../../lib/libhttp_parser.lib', 
                       '../../db/libdb.a', '../../io/libio.a', '../../base/libbase.a', 
-                      '../../xml/libxml.a', '../../../lib/libpugixml.a',
+                      '../../xml/libxml.a', '../../../lib/libpugixml.lib',
                       '../../dns/uve/libdns_uve.a'
                   ]
 

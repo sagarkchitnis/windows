@@ -22,14 +22,14 @@ cflags.append('-Wno-unused-variable')
 
 # Dependencies on external libraries first
 buildinfo_dep_libs = [
-    '#build/lib/libthrift.a',
-    '#build/lib/libthriftasio.a',
-    '#build/lib/libhttp.a',
-    '#build/lib/libhttp_parser.a',
-    '#build/lib/libpugixml.a',
-    '#build/lib/libsandesh.a',
-    '#build/lib/libsandeshflow.a',
-    '#build/lib/libsandeshvns.a'
+    '#build/lib/libthrift.lib',
+    '#build/lib/libthriftasio.lib',
+    '#build/lib/libhttp.lib',
+    '#build/lib/libhttp_parser.lib',
+    '#build/lib/libpugixml.lib',
+    '#build/lib/libsandesh.lib',
+    '#build/lib/libsandeshflow.lib',
+    '#build/lib/libsandeshvns.lib'
 ]
 
 def MapBuildCmnLib(list):

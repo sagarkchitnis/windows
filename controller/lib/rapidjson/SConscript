@@ -1,6 +1,6 @@
 import os
 import sys
-
+print 'install rapidjson'
 env = DefaultEnvironment()
 rapidjson_path = '#/third_party/rapidjson'
 
@@ -19,7 +19,7 @@ if not os.path.exists(libpath):
 
 Symlink([Dir('#/build/include/rapidjson')],
         [Dir(rapidjson_path + '/include/rapidjson')])
-
+print 'done installing rapidjson'
 # Local Variables:
 # mode: python
 # End:

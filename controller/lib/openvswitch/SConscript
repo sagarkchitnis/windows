@@ -2,8 +2,8 @@
 import os
 import subprocess
 import sys
-
-vpath = '#/third_party/openvswitch-2.3.0'
+print 'install openvswitch'
+vpath = '#/third_party/openvswitch-2.6.0'
 
 env = DefaultEnvironment()
 env['ENV']['CFLAGS'] = '-DOPEN_CONTRAIL_CLIENT -g'
@@ -33,3 +33,5 @@ def Symlink(target, source):
 
 Symlink([Dir('#/build/include/openvswitch/include')], [Dir(vpath + '/include')])
 Symlink([Dir('#/build/include/openvswitch/lib')], [Dir(vpath + '/lib')])
+
+print 'done installing openvswitch'

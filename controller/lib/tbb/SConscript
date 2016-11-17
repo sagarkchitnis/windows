@@ -5,6 +5,8 @@ import re
 import subprocess
 import sys
 
+print 'building windows tbb'
+
 vpath = '#/third_party/tbb2017_20160916oss'
 
 env = DefaultEnvironment()
@@ -20,6 +22,8 @@ cmd = make + ' -f ' + '$SOURCE'
 BUILD_ENV = {'PATH': env['ENV']['PATH'],
               'tbb_build_dir': Dir('.').abspath,'tbb_root': Dir(vpath).abspath,'runtime':'vc14'
             }
+os.chdir(Dir(vpath).abspath)
+print os.getcwd()
 
 #proc = subprocess.Popen([make, '-f', Dir(vpath).abspath + '/Makefile', 'info'],
 #                        stdout = subprocess.PIPE,
@@ -76,3 +80,5 @@ if not os.path.exists(libpath):
     sys.exit(1)
 
 Symlink([Dir('#/build/include/tbb')], [Dir(vpath + '/include/tbb')])
+
+print 'done building windows tbb'

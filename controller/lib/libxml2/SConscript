@@ -1,6 +1,6 @@
 # -*- mode: python; -*-
 import sys
-
+print 'installing libxml2'
 # path to the sources
 vpath = '#/third_party/libxml2-2.8.0'
 
@@ -35,3 +35,4 @@ products = ['#/build/lib/libxml2.a'] + headers
 do_install = env.Command(products, libs,
                          '(cd ' + Dir('.').abspath + '; ' + make + ' install)')
 
+print 'done installing libxml2'

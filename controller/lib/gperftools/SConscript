@@ -1,7 +1,7 @@
 # -*- mode: python; -*-
 
 import sys
-
+print 'building gperftools'
 env = DefaultEnvironment()
 
 vpath = '#/third_party/gperftools-2.1'
@@ -29,3 +29,4 @@ products = [ "#build/include/gperftools/heap-checker.h",
              str(File('#/build/lib/libtcmalloc' + env['LIBSUFFIX'])) ]
 
 env.SideEffect(products, gperftools_make)
+print 'done building gperftools'

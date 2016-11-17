@@ -96,7 +96,7 @@ env['QE_SANDESH_GEN_OBJS'] = SandeshGenObjs
 buildinfo_dep_libs = [
     '../../lib/libhiredis.a',
     '../../lib/libhttp.a',
-    '../../lib/libhttp_parser.a',
+    '../../lib/libhttp_parser.lib',
     '../../lib/libsandesh.a', 
     '../../lib/libsandeshvns.a', 
     '../base/libbase.a',

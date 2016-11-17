@@ -362,7 +362,7 @@ def GenerateBuildInfoPyCode(env, target, source, path):
     import subprocess
 
     try:
-        build_user = os.environ['USER']
+        build_user = getpass.getuser()
     except KeyError:
         build_user = "unknown"
 
@@ -376,8 +376,8 @@ def GenerateBuildInfoPyCode(env, target, source, path):
     build_time = unicode(datetime.datetime.utcnow())
 
     build_git_info, build_version = GetBuildVersion(env)
-
-    # build json string containing build information
+    print build_host #, build_user, build_time, build_version
+	# build json string containing build information
     build_info = "{\\\"build-info\\\" : [{\\\"build-version\\\" : \\\"" + str(build_version) + "\\\", \\\"build-time\\\" : \\\"" + str(build_time) + "\\\", \\\"build-user\\\" : \\\"" + build_user + "\\\", \\\"build-hostname\\\" : \\\"" + build_host + "\\\", "
     py_code ="build_info = \""+ build_info + "\";\n"
     py_file = file(path + '/buildinfo.py', 'w')
@@ -493,9 +493,11 @@ def ProtocGenCppFunc(env, file):
 def wait_for_sandesh_install(env):
     rc = 0
     while (rc != 1):
-        rc = os.system(env['SANDESH'] + ' -version >/dev/null 2>/dev/null') >> 8
-        if (rc != 1):
-            print 'scons: warning: sandesh -version returned %d, retrying' % rc
+        if os.path.isfile(env['SANDESH']):
+           print env['SANDESH']
+           rc = 1
+        else :
+            print 'scons: warning: sandesh.exe  retrying' % rc
             time.sleep(1)
 
 class SandeshWarning(SCons.Warnings.Warning):
@@ -508,8 +510,8 @@ class SandeshCodeGeneratorError(SandeshWarning):
 def SandeshDocBuilder(target, source, env):
     opath = target[0].dir.path
     wait_for_sandesh_install(env)
-    code = subprocess.call(env['SANDESH'] + ' --gen doc -I controller/src/ -I tools -out '
-                           + opath + " " + source[0].path, shell=True)
+    cmd = env['SANDESH'] + ' --gen doc -I controller/src/ -I tools -out '  + opath + " " + source[0].path
+    code = subprocess.call(cmd, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'SandeshDoc documentation generation failed')
@@ -555,7 +557,7 @@ def SandeshGenDocFunc(env, filepath, target=''):
     else:
         filename = path_split[0]
     targets = map(lambda suffix: target + 'gen-doc/' + filename + suffix, suffixes)
-    env.Depends(targets, '#build/bin/sandesh')
+    env.Depends(targets, '#build/bin/sandesh.exe')
     return env.SandeshDoc(targets, filepath)
 
 # SandeshGenOnlyCpp Methods
@@ -584,17 +586,18 @@ def SandeshGenOnlyCppFunc(env, file):
         '_html.cpp']
     basename = Basename(file)
     targets = map(lambda suffix: basename + suffix, suffixes)
-    env.Depends(targets, '#build/bin/sandesh')
+    env.Depends(targets, '#build/bin/sandesh.exe')
     return env.SandeshOnlyCpp(targets, file)
 
 # SandeshGenCpp Methods
 def SandeshCppBuilder(target, source, env):
+    print 'enter sandeshcppbuilder'
     opath = target[0].dir.path
     sname = os.path.join(opath, os.path.splitext(source[0].name)[0])
 
     wait_for_sandesh_install(env)
     code = subprocess.call(env['SANDESH'] + ' --gen cpp --gen html -I controller/src/ -I tools -out '
-                           + opath + " " + source[0].path, shell=True)
+                          + opath + " " + source[0].path, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'SandeshCpp code generation failed')
@@ -604,11 +607,17 @@ def SandeshCppBuilder(target, source, env):
     if not env.Detect('xxd'):
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'xxd not detected on system')
+    print '\nopath:' + opath + '\nsource[0]path:' + source[0].path + '\nsname:' + sname + '\ntname:'+ tname + '\nhname:' + hname + '\ncname:'+cname + '\nospthbasename:' + os.path.basename(cname)
     os.system("echo \"namespace {\"" + " >> " + cname)
-    os.system("(cd " + opath + " ; xxd -i " + hname + " >> " + os.path.basename(cname) + " )")
+    print 'after namespace'
+    opath = opath.replace("\\", "/")
+    print '\nexecuting:' + '(cd '+ opath + ' & xxd -i ' + hname + ' >> ' + os.path.basename(cname) + ' )'
+    os.system("(cd " + opath + " & xxd -i " + hname + " >> " + os.path.basename(cname) + " )")
+    print 'after xxd, before cat'
     os.system("echo \"}\"" + " >> " + cname)
     os.system("cat " + tname + " >> " + cname)
-
+    print 'after cat'
+    print 'leave sandeshcppbuilder'
 def SandeshSconsEnvCppFunc(env):
     cppbuild = Builder(action = Action(SandeshCppBuilder, 'SandeshCppBuilder $SOURCE -> $TARGETS'))
     env.Append(BUILDERS = {'SandeshCpp' : cppbuild})
@@ -622,7 +631,7 @@ def SandeshGenCppFunc(env, file):
         '_html.cpp']
     basename = Basename(file)
     targets = map(lambda suffix: basename + suffix, suffixes)
-    env.Depends(targets, '#build/bin/sandesh')
+    env.Depends(targets, '#build/bin/sandesh.exe')
     return env.SandeshCpp(targets, file)
 
 # SandeshGenC Methods
@@ -645,7 +654,7 @@ def SandeshGenCFunc(env, file):
     suffixes = ['_types.h', '_types.c']
     basename = Basename(file)
     targets = map(lambda suffix: 'gen-c/' + basename + suffix, suffixes)
-    env.Depends(targets, '#build/bin/sandesh')
+    env.Depends(targets, '#build/bin/sandesh.exe')
     return env.SandeshC(targets, file)
 
 # SandeshGenPy Methods
@@ -687,7 +696,7 @@ def SandeshGenPyFunc(env, path, target='', gen_py=True):
     else:
         targets = map(lambda module: target + mod_dir + module, modules)
 
-    env.Depends(targets, '#build/bin/sandesh')
+    env.Depends(targets, '#build/bin/sandesh.exe')
     return env.SandeshPy(targets, path)
 
 # ThriftGenCpp Methods
@@ -746,7 +755,7 @@ def ThriftGenPyFunc(env, path, target=''):
 
 def IFMapBuilderCmd(source, target, env, for_signature):
     output = Basename(source[0].abspath)
-    return './tools/generateds/generateDS.py -f -g ifmap-backend -o %s %s' % (output, source[0])
+    return '\"tools/generateds/generateDS.py\" -f -g ifmap-backend -o %s %s' % (output, source[0])
 
 def IFMapTargetGen(target, source, env):
     suffixes = ['_types.h', '_types.cc', '_parser.cc',
@@ -1051,11 +1060,11 @@ def SetupBuildEnvironment(conf):
         env['PYTESTARG'] = None
 
     # Store path to sandesh compiler in the env
-    env['SANDESH'] = os.path.join(env.Dir(env['TOP_BIN']).path, 'sandesh')
+    env['SANDESH'] = os.path.join(env.Dir(env['TOP_BIN']).path, 'sandesh.exe')
 
     # Store the hostname in env.
     try:
-        build_host = env['HOSTNAME'] if 'HOSTNAME' in env else os.environ['HOSTNAME']
+        build_host = env['HOSTNAME'] if 'HOSTNAME' in env else platform.node()
     except KeyError:
         build_host = platform.uname()
     env['HOSTNAME'] = build_host

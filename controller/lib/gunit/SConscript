@@ -41,4 +41,3 @@ subprocess.call("devenv gmock.sln /Build", shell=True)
 
 
 print 'done building gunit'
-Exit(1)

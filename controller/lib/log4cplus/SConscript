@@ -1,26 +1,33 @@
+import subprocess
+import os
 # -*- mode: python; -*-
-
-vpath = '#/third_party/log4cplus-1.1.1'
+print 'installing log4cplus'
+vpath = '#/third_party/log4cplus-1.1.3-rc7'
 
 env = DefaultEnvironment()
 
-config_opts = '--prefix=' + str(Dir('#/build'))
 
-cmd = ('(cd ' + Dir('.').abspath + '; ' + str(Dir(vpath)) +
-       '/configure' + ' ' + config_opts + '; make clean; make; make install)')
+#libs = [ str(File('#/build/lib/liblog4cplus' + env['LIBSUFFIX'])) ]
+#shlibs = [ str(File('#/build/lib/liblog4cplus-1.1' + env['SHLIBSUFFIX'] + version)) ]
+#products = libs + shlibs + [ str(File('#/build/include/log4cplus/logger.h')) ]
 
-version = '.7.0.0'
-libs = [ str(File('#/build/lib/liblog4cplus' + env['LIBSUFFIX'])) ]
-shlibs = [ str(File('#/build/lib/liblog4cplus-1.1' + env['SHLIBSUFFIX'] +
-                    version)) ]
-products = libs + shlibs + [ str(File('#/build/include/log4cplus/logger.h')) ]
+cmd = 'xcopy ' + Dir('.').srcnode().abspath + '\msvc15\* ' + Dir(vpath).abspath + '\msvc10 /e /y'
+subprocess.call(cmd, shell=True)
 
-log4cplus_cfg = env.Command('config.status', str(Dir(vpath)), cmd)
+#log4cplus_copy = env.Command('', str(Dir(vpath)), cmd)
+#log4cplusbld = env.Command("dummy", None, cmd)
 
-env.SideEffect(products, log4cplus_cfg)
+#env.SideEffect(products, log4cplus_copy)
 
-env.Alias('install', env.Install(env['INSTALL_LIB'], shlibs))
+#env.Alias('install', env.Install(env['INSTALL_LIB'], shlibs))
 
-env.Alias('install',
-          env.Symlink(env['INSTALL_LIB'] + '/liblog4cplus-1.1.so' + '.7',
-                      env['INSTALL_LIB'] + '/liblog4cplus-1.1.so' + version))
+#env.Alias('install',  env.Symlink(env['INSTALL_LIB'] + '/liblog4cplus-1.1.3-rc7.dll' , env['INSTALL_LIB'] + '/liblog4cplus-1.1.3-rc7.dll'))
+
+
+#build log4cplus
+os.chdir(Dir(vpath).abspath+ '\\msvc10')
+assert os.path.isdir(Dir(vpath).abspath+'\\msvc10')
+print os.getcwd()
+subprocess.call("msbuild log4cplus.sln", shell=True)
+
+print 'done installing log4cplus'

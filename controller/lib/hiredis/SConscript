@@ -1,5 +1,5 @@
 # -*- mode: python; -*-
-
+print 'building hiredis'
 default = DefaultEnvironment()
 env = default.Clone()
 
@@ -39,3 +39,5 @@ env.Install('#/build/include/hiredis', hiredis_path + '/hiredis.h')
 env.Install('#/build/include/hiredis', hiredis_path + '/async.h')
 env.Install('#/build/include/hiredis', 'base64.h')
 env.Install('#/build/include/hiredis', hiredis_asio_adapter_path + '/boostasio.hpp')
+
+print 'done building hiredis'
