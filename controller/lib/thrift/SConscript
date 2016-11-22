@@ -3,33 +3,56 @@ import os
 import subprocess
 import sys
 print 'installing thrift'
-vpath = '#/third_party/thrift-0.8.0'
-
+vpath = '#/third_party/thrift-0.9.3'
 env = DefaultEnvironment()
 
-version = '0.8.0'
-libs = [ str(File('#build/lib/libthrift.a')),
-         str(File('#build/lib/libthriftasio.a')) ]
-shlibs = [ str(File('#build/lib/libthrift-' + version + '.dll')),
-           str(File('#build/lib/libthriftasio.so.0.0.0')) ]
+version = '0.9.3'
+abs_vpath = Dir(vpath).abspath
+abs_toppath = Dir('#').abspath
+thriftcmd = env.Dir(env['TOP_BIN']).abspath + r'\thrift.exe'
+
+def build_thrift_exe_for_windows(target,source,env):
+   cmd = 'xcopy ' + Dir('.').srcnode().abspath + r'\msvc15\compiler\* ' + abs_vpath + r'\compiler\cpp /e /y'
+   subprocess.call(cmd, shell=True)
+   curdir = os.getcwd()
+   os.chdir(abs_vpath + r'\compiler\cpp')
+   print os.getcwd()
+   subprocess.call("msbuild Compiler.sln", shell=True)
+#   create_if_needed_dir(env.Dir(env['TOP_BIN']).abspath)
+   cmd = 'copy ' +  abs_vpath + r'\compiler\cpp' + r'\Debug' + r'\thrift.exe ' +  env.Dir(env['TOP_BIN']).abspath + r'\thrift.exe'
+   print cmd
+   subprocess.call(cmd, shell=True)
+   os.chdir(curdir)
+
+#build libraries
+def build_thrift_libs_for_windows(target,source,env):
+   cmd = 'xcopy ' + Dir('.').srcnode().abspath + r'\msvc15\lib\* ' + abs_vpath + r'\lib\cpp /e /y'
+   subprocess.call(cmd, shell=True)
+   curdir = os.getcwd()
+   os.chdir(abs_vpath + r'\lib\cpp')
+   print os.getcwd()
+   subprocess.call("msbuild thrift.sln", shell=True)
+#   create_if_needed_dir(env.Dir(env['TOP_LIB']).abspath)
+   cmd = 'copy ' +  abs_vpath + r'\lib\cpp' + r'\Debug' + r'\libthrift.lib ' +  env.Dir(env['TOP_BIN']).abspath + r'\libthrift.lib'
+   print cmd
+   subprocess.call(cmd, shell=True)
+   os.chdir(curdir)
 
 
-products = [ str(File('#build/bin/thrift')),
-             str(File('#build/include/thrift/Thrift.h')) ]
-products += libs + shlibs
 
-thrift_cfg = env.Command('config.status', str(Dir(vpath)), cmd)
 
-env.SideEffect(products, thrift_cfg)
-env.Requires(thrift_cfg, '#/build/include/boost')
 
-env.Alias('install', env.Install(env['INSTALL_LIB'], shlibs))
-env.Alias('install',
-          env.Symlink(env['INSTALL_LIB'] + '/libthriftasio.so' + '.0',
-                      env['INSTALL_LIB'] + '/libthriftasio.so' + '.0.0.0'))
+thrift_exe = '#/build/bin/thrift.exe'
+thrift_libs = ['#/build/lib/libthrift.lib', '#build/lib/libthriftnb.lib']
+env.Command(thrift_exe, str(Dir(vpath)) , build_thrift_exe_for_windows)
+env.Command(thrift_libs, str(Dir(vpath)) , build_thrift_libs_for_windows)
 
-async_files = ['TAsioAsync.h', 'TAsync.h', 'TFuture.h']
-for file in async_files:
-    env.Install('#build/include/thrift/async',
-                vpath + '/lib/cpp/src/async/' + file)
+#Default(thrift_exe)
+
+
+
+
+#async_files = ['TAsioAsync.h', 'TAsync.h', 'TFuture.h']
+#for file in async_files:
+#    env.Install('#build/include/thrift/async', vpath + '/lib/cpp/src/async/' + file)
 print 'done installing thrift'

@@ -11,88 +11,198 @@
         md5     : md5 checksum to compare, against the md5 checksum of the
                   downloaded file
         rename  : Rename the directory/downloaded file to this.
-        patches : Specify the patch files which will be applied on the files once
+        nopatch : Specify the patch files which will be applied on the files once
                   download and copy to currect directory is complete.
   -->
-
   <package>
-    <name>Windows Boost C++ libraries version 1.62</name>
-    <url>https://downloads.sourceforge.net/project/boost/boost/1.62.0/boost_1_62_0.zip</url>
-    <format>zip</format>
-    <md5></md5>
-  </package>
-
-
-  <package>
-    <name>curl 7.50</name>
-    <url>https://curl.haxx.se/download/curl-7.50.3.tar.gz</url>
+    <name>Boost C++ libraries version 1.62 for windows</name>
+    <url>http://sourceforge.net/projects/boost/files/boost/1.48.0/boost_1_48_0.tar.gz</url>
     <format>tgz</format>
-    <md5>b93420f80a2baaa61a0f45214eddc2ba</md5>
+    <md5>313a11e97eb56eb7efd18325354631be</md5>
+    <nopatch>
+      <patch strip="2">boost_1_48_patch1.diff</patch>
+      <patch strip="2">boost_1_48_patch2.diff</patch>
+      <patch strip="2">boost_1_48_patch3.diff</patch>
+      <patch strip="0">boost_time_utc.patch</patch>
+      <patch strip="1">boost_1_48_patch4.diff</patch>
+      <patch strip="1">boost_1_48_patch5.diff</patch>
+    </nopatch>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>centos</name>
+          <version>7.0+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-
-
+  <package>
+    <name>curl 7.51</name>
+    <url>https://curl.haxx.se/download/curl-7.51.0.zip</url>
+    <format>zip</format>
+    <md5>b93420f80a2baaa61a0f45214eddc2ba</md5>
+    <nopatch>
+      <patch strip="2">curl-7.24.0_patch1.diff</patch>
+    </nopatch>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>centos</name>
+          <version>7.0+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
+  </package>
   <package>
     <name>Google C++ Testing Framework 1.8.0</name>
     <url>https://github.com/google/googletest/archive/release-1.8.0.zip</url>
     <rename>gtest-1.8.0</rename>
+    <nopatch>
+      <patch strip="2">gtest-1.6.0_patch1.diff</patch>
+    </nopatch>
     <format>zip</format>
     <md5>c7fbb1ddde072afd938c25c65e94750e</md5>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-
   <package>
-    <name>Google C++ Mocking Framework 1.7.0</name>
-    <url>https://github.com/google/googlemock/releases/tag/release-1.7.0</url>
+    <name>Google perftools</name>
+    <url>https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.zip</url>
     <format>zip</format>
-    <rename>gmock-1.7.0</rename>
-    <md5>b51cc3e69a8ef16ac54cee9889b79646</md5>
-  </package>
-
-  <package>
-    <name>Google perftools 2.5</name>
-    <url>https://github.com/gperftools/gperftools/releases/download/gperftools-2.5/gperftools-2.5.tar.gz</url>
-    <format>tgz</format>
     <md5>5e5a981caf9baa9b4afe90a82dcf9882</md5>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-
-
   <package>
-    <name>Minimalistic C client for Redis v0.13.3</name>
-    <url>https://github.com/redis/hiredis/archive/v0.13.3.tar.gz</url>
-    <local-filename>hiredis-v0.13.3.tar.gz</local-filename>
+    <name>Minimalistic C client for Redis v0.11</name>
+    <url>https://github.com/Juniper/contrail-third-party-cache/raw/master/hiredis/hiredis-0.11.0.tar.gz</url>
+    <local-filename>hiredis-v0.11.0.tar.gz</local-filename>
     <format>tgz</format>
     <md5>e2ac29509823ccc96990b6fe765b5d46</md5>
+    <nopatch>
+      <patch strip="2">hiredis-patch1.diff</patch>
+    </nopatch>
   </package>
-
   <package>
     <name>Log4Cplus 1.1.3</name>
-    <url>https://sourceforge.net/projects/log4cplus/files/log4cplus-stable/1.1.3/log4cplus-1.1.3-rc7.tar.bz2</url>
-    <format>tbz</format>
+    <url>https://sourceforge.net/projects/log4cplus/files/log4cplus-stable/1.1.3/log4cplus-1.1.3-rc7.zip</url>
+    <format>zip</format>
     <md5>a6fbba1e4b021f301b98c7bc68a068cb</md5>
+    <nopatch>
+      <patch strip="2">log4cplus-1.1.1_patch1.diff</patch>
+    </nopatch>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-
   <package>
-    <name>Thread Building Blocks windows</name>
-    <url>https://www.threadingbuildingblocks.org/sites/default/files/software_releases/source/tbb2017_20160916oss_src.tgz</url>
+    <name>Thread Building Blocks 2017 Update 2</name>
+    <url>https://www.threadingbuildingblocks.org/sites/default/files/software_releases/source/tbb2017_20161004oss_src.tgz</url>
     <format>tgz</format>
     <md5>1e6926b21e865e79772119cd44fc3ad8</md5>
+    <nopatch>
+      <patch strip="2">tbb40_20111130oss_patch1.diff</patch>
+    </nopatch>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>centos</name>
+          <version>7.0+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-
   <package>
     <name>Pugi XML 1.7</name>
-    <url>http://github.com/zeux/pugixml/releases/download/v1.7/pugixml-1.7.tar.gz</url>
+    <url>https://github.com/zeux/pugixml/releases/download/v1.7/pugixml-1.7.zip</url>
     <unpack-directory>pugixml</unpack-directory>
-    <format>tgz</format>
+    <format>zip</format>
     <md5>477f4a7d75af0383f52ee6622b3f6035</md5>
   </package>
-
   <package>
-    <name>Apache Thrift 0.9</name>
-    <url>http://archive.apache.org/dist/thrift/0.9.3/thrift-0.9.3.tar.gz</url>
+    <name>Apache Thrift 0.9.3</name>
+    <url>http://www-us.apache.org/dist/thrift/0.9.3/thrift-0.9.3.tar.gz</url>
+    <nopatch>
+      <patch strip="2">thrift_patch1.diff</patch>
+      <patch strip="2">thrift_autoconf.patch</patch>
+    </nopatch>
     <format>tgz</format>
     <md5>d29dfcd38d476cbc420b6f4d80ab966c</md5>
+    <autoreconf>true</autoreconf>
   </package>
-
-  <!--
   <package>
     <name>hiredis boostasio-adapter</name>
     <url>https://github.com/Juniper/contrail-third-party-cache/raw/master/hiredis/hiredis-boostasio-adapter-master.zip</url>
@@ -100,8 +210,10 @@
     <format>zip</format>
     <md5>c3ba292cb8a6d84da3aae774a33d4356</md5>
     <rename>hiredis-boostasio-adapter</rename>
+    <nopatch>
+      <patch strip="2">hiredis-asio-patch1.diff</patch>
+    </nopatch>
   </package>
-  
   <package>
     <name>Joyent HTTP parser</name>
     <url>https://github.com/joyent/http-parser/archive/v2.1.tar.gz</url>
@@ -109,7 +221,6 @@
     <format>tgz</format>
     <md5>93d89867996b8077e0140692c55e997c</md5>
   </package>
-  
   <package>
     <name>IF-MAP Python Client Library</name>
     <url>https://github.com/ITI/ifmap-python-client/archive/master.zip</url>
@@ -117,53 +228,112 @@
     <rename>ifmap-python-client</rename>
     <format>zip</format>
     <md5>372d7700a8e2c429c51deb11131a896d</md5>
+    <nopatch>
+      <patch strip="2">ifmap-python-patch1.diff</patch>
+      <patch strip="2">ifmap-python-patch2.diff</patch>
+      <patch strip="2">ifmap-python-patch3.diff</patch>
+      <patch strip="0">ifmap-python-async.patch</patch>
+      <patch strip="0">ifmap-python-patch4.diff</patch>
+    </nopatch>
   </package>
-  
   <package>
     <name>Bottle Python Web Framework</name>
     <url>https://pypi.python.org/packages/source/b/bottle/bottle-0.11.6.tar.gz</url>
     <format>tgz</format>
     <md5>0bafdc4e13ea2b1a3bddf36b5af108c4</md5>
-   </package>
-  
+    <nopatch>
+      <patch strip="2">bottle_patch1.diff</patch>
+    </nopatch>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
+  </package>
   <package>
     <name>pYthOn Finite State Machine</name>
     <url>https://pypi.python.org/packages/source/f/fysom/fysom-1.0.8.tar.gz</url>
     <format>tgz</format>
     <md5>5c8532ebdbc151eb01531ab2c7404297</md5>
   </package>
-  
   <package>
     <name>Gnome XML C parser and toolkit</name>
     <url>http://xmlsoft.org/sources/libxml2-2.8.0.tar.gz</url>
     <format>tgz</format>
-    <md5>c62106f02ee00b6437f0fb9d370c1093</md5>   
+    <md5>c62106f02ee00b6437f0fb9d370c1093</md5>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>centos</name>
+          <version>7.0+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-  -->
-
   <package>
-    <name>1.1.0 JSON parser/generator for C++</name>
-    <url>https://github.com/miloyip/rapidjson/archive/v1.1.0.zip</url>
-    <rename>rapidjson</rename>
+    <name>JSON parser/generator for C++</name>
+    <url>https://github.com/Juniper/contrail-third-party-cache/raw/master/googlecode/rapidjson-0.11.zip</url>
     <format>zip</format>
     <md5>96a4b1b57ece8bc6a807ceb14ccaaf94</md5>
+    <nopatch>
+      <patch strip="2">rapidjson_patch1.diff</patch>
+    </nopatch>
   </package>
-
-  <!--
   <package>
     <name>ISC Bind</name>
     <url>http://www.mirrorservice.org/sites/ftp.isc.org/isc/bind9/9.9.2-P1/bind-9.9.2-P1.tar.gz</url>
     <format>tgz</format>
-    <md5>44b9d1feb11de09811160775f94c2554</md5>   
+    <md5>44b9d1feb11de09811160775f94c2554</md5>
+    <nopatch>
+      <patch strip="2">bind_patch1.diff</patch>
+      <patch strip="1">bind_patch2.diff</patch>
+    </nopatch>
   </package>
-  
   <package>
     <name>ICU - International Components for Unicode</name>
     <url>http://download.icu-project.org/files/icu4c/52.1/icu4c-52_1-src.tgz</url>
     <format>tgz</format>
-    <md5>9e96ed4c1d99c0d14ac03c140f9f346c</md5>    
+    <md5>9e96ed4c1d99c0d14ac03c140f9f346c</md5>
+    <platform>
+      <exclude>
+        <distribution>
+          <name>ubuntu</name>
+          <version>14.04+</version>
+        </distribution>
+        <distribution>
+          <name>centos</name>
+          <version>7.0+</version>
+        </distribution>
+        <distribution>
+          <name>fedora</name>
+          <version>20+</version>
+        </distribution>
+        <distribution>
+          <name>suse</name>
+          <version>12+</version>
+        </distribution>
+      </exclude>
+    </platform>
   </package>
-  
   <package>
     <name>vijava</name>
     <url>http://sourceforge.net/projects/vijava/files/vijava/VI%20Java%20API%205.5%20Beta/vijava55b20130927src.jar/download</url>
@@ -171,15 +341,18 @@
     <format>zip</format>
     <md5>3993c5bf9323e55fe9e6c14c974ea155</md5>
     <unpack-directory>vijava</unpack-directory>
-    
-  </package>\
-  -->
+    <nopatch>
+      <patch strip="2">vijava_patch1.diff</patch>
+    </nopatch>
+  </package>
   <package>
     <name>Open vSwitch version 2.3.0</name>
     <url>http://openvswitch.org/releases/openvswitch-2.3.0.tar.gz</url>
     <local-filename>openvswitch-2.3.0.tar.gz</local-filename>
     <format>tgz</format>
     <md5>9c4d1471a56718132e0157af1bfc9310</md5>
-
+    <nopatch>
+      <patch strip="1">openvswitch.diff</patch>
+    </nopatch>
   </package>
 </packages>

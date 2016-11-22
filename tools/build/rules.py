@@ -492,12 +492,13 @@ def ProtocGenCppFunc(env, file):
 #
 def wait_for_sandesh_install(env):
     rc = 0
+    print 'looking for :' + env['SANDESH'] + 'in ' + os.getcwd()
     while (rc != 1):
         if os.path.isfile(env['SANDESH']):
            print env['SANDESH']
            rc = 1
         else :
-            print 'scons: warning: sandesh.exe  retrying' % rc
+            print 'scons: warning: sandesh.exe  retrying:' ,rc
             time.sleep(1)
 
 class SandeshWarning(SCons.Warnings.Warning):
@@ -607,7 +608,7 @@ def SandeshCppBuilder(target, source, env):
     if not env.Detect('xxd'):
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'xxd not detected on system')
-    print '\nopath:' + opath + '\nsource[0]path:' + source[0].path + '\nsname:' + sname + '\ntname:'+ tname + '\nhname:' + hname + '\ncname:'+cname + '\nospthbasename:' + os.path.basename(cname)
+ #   print '\nopath:' + opath + '\nsource[0]path:' + source[0].path + '\nsname:' + sname + '\ntname:'+ tname + '\nhname:' + hname + '\ncname:'+cname + '\nospthbasename:' + os.path.basename(cname)
     os.system("echo \"namespace {\"" + " >> " + cname)
     print 'after namespace'
     opath = opath.replace("\\", "/")
@@ -659,6 +660,7 @@ def SandeshGenCFunc(env, file):
 
 # SandeshGenPy Methods
 def SandeshPyBuilder(target, source, env):
+    print 'in sandeshpybuilder'
     opath = target[0].dir.path
     py_opath = os.path.dirname(opath)
     wait_for_sandesh_install(env)
@@ -672,6 +674,7 @@ def SandeshPyBuilder(target, source, env):
     if code != 0:
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'SandeshPy html generation failed')
+    print 'leaving sandeshpybuilder'
 
 def SandeshSconsEnvPyFunc(env):
     pybuild = Builder(action = Action(SandeshPyBuilder,'SandeshPyBuilder $SOURCE -> $TARGETS'))
@@ -707,7 +710,7 @@ def ThriftServicesFunc(node):
 
 def ThriftSconsEnvFunc(env, async):
     opath = env.Dir('.').abspath
-    thriftcmd = env.Dir(env['TOP_BIN']).abspath + '/thrift'
+    thriftcmd = env.Dir(env['TOP_BIN']).abspath + r'\thrift.exe'
     if async:
         lstr = thriftcmd + ' --gen cpp:async -o ' + opath + ' $SOURCE'
     else:
@@ -724,7 +727,7 @@ def ThriftGenCppFunc(env, file, async):
     service_cfiles = map(lambda s: 'gen-cpp/' + s + '.cpp', services)
     service_hfiles = map(lambda s: 'gen-cpp/' + s + '.h', services)
     targets = base_files + service_cfiles + service_hfiles
-    env.Depends(targets, '#/build/bin/thrift')
+    env.Depends(targets, '#/build/bin/thrift.exe')
     return env.ThriftCpp(targets, file)
 
 def ThriftPyBuilder(source, target, env, for_signature):
@@ -750,7 +753,7 @@ def ThriftGenPyFunc(env, path, target=''):
     if target[-1] != '/':
         target += '/'
     targets = map(lambda module: target + 'gen_py/' + mod_dir + module, modules)
-    env.Depends(targets, '#/build/bin/thrift')
+    env.Depends(targets, '#/build/bin/thrift.exe')
     return env.ThriftPy(targets, path)
 
 def IFMapBuilderCmd(source, target, env, for_signature):
@@ -1172,3 +1175,8 @@ def SetupBuildEnvironment(conf):
        os.symlink = symlink_ms
     return env
   # SetupBuildEnvironment
+
+def create_if_needed_dir(f):
+   d = os.path.dirname(f)
+   if not os.path.exists(d):
+        os.makedirs(d)
