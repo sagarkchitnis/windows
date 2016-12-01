@@ -546,6 +546,11 @@ void t_cpp_generator::init_generator() {
   // Include the types file
 #ifdef SANDESH
   f_types_impl_ <<
+#ifdef _WINDOWS
+	  //winsock2 compatibility issues
+     "#include <SDKDDKVer.h>" <<endl <<
+     "#include<boost/asio.hpp>" <<endl<<endl<<
+#endif
     "#include <boost/date_time/posix_time/posix_time.hpp>" << endl << endl <<
     "#include <base/logging.h>" << endl << endl <<
     "#include <sandesh/sandesh_types.h>" << endl <<
