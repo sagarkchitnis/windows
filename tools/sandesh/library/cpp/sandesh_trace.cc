@@ -7,7 +7,9 @@
 //
 // Sandesh Trace Request Implementation
 //
-
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 #include <boost/bind.hpp>
 #include <ctime>
 #include <base/trace.h>

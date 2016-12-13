@@ -27,7 +27,7 @@ buildinfo_dep_libs = [
     '#build/lib/libhttp.a',
     '#build/lib/libhttp_parser.a',
     '#build/lib/libpugixml.a',
-    '#build/lib/libsandesh.a',
+    '#build/lib/libsandesh.lib',
     '#build/lib/libsandeshflow.a',
     '#build/lib/libsandeshvns.a'
 ]

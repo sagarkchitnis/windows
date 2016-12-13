@@ -1,7 +1,9 @@
 /*
  * Copyright (c) 2014 Juniper Networks, Inc. All rights reserved.
  */
-
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 #include <sandesh/sandesh_message_builder.h>
 
 using namespace pugi;

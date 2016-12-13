@@ -1,27 +1,29 @@
 # -*- mode: python; -*-
-
+import os
+import subprocess
 # path to the sources
-vpath = '#/third_party/curl-7.51.0'
-print 'building curl'
+vpath = '#/third_party/curl-7_51_0'
+print 'building curl for windows'
 env = DefaultEnvironment().Clone()
+
+binaries_path = '/builds/libcurl-vc-x86-release-static-ipv6-sspi-winssl/'
+binpath = binaries_path + 'bin/'
+libpath = binaries_path + 'lib/'
+incpath = binaries_path + 'include/curl/'
 
 VariantDir(vpath + '/src', '#/' + Dir('.').path + '/src')
 
-config_cmd = ('(cd ' + Dir('.').abspath + '; ' + str(Dir(vpath)) + ')')
-print config_cmd
-#config_products = [Dir('.').abspath + '/lib/curl_config.h', 'Makefile']
+make_products = ['#/build/lib/libcurl.lib']
 
-#curl_cfg = env.Command('config.status', File(vpath + '/configure'), config_cmd)
+print 'done building curl for windows'
 
-
-#libs = ['lib/.libs/libcurl.a']
-
-#make_cmd = ('(cd ' + Dir('.').abspath + '; ' + 
-#            'make clean; make; make install)')
-
-#make_products = ['#/build/lib/libcurl.lib', '#/build/include/curl/curl.h']
-
-#curl_make = env.Command(make_products, 'Makefile', make_cmd)
-
-
-print 'done building curl'
+def build_curl_for_windows(target,source,env):
+    curdir = os.getcwd()
+    os.chdir(Dir(vpath).abspath+ '\winbuild')
+    subprocess.call('nmake /f Makefile.vc mode=static', shell=True)
+    os.symlink(Dir(vpath + binpath).abspath+ '\curl.exe', Dir('#/build/bin').abspath+'\curl.exe')
+    os.symlink(Dir(vpath + libpath).abspath+ '\libcurl_a.lib', Dir('#/build/lib').abspath+'\libcurl.lib')
+    os.symlink(Dir(vpath + incpath).abspath, Dir('#/build/include/curl/').abspath)
+    os.chdir(curdir)
+curloutput = env.Command(make_products, [] , build_curl_for_windows)
+env.Default(curloutput)

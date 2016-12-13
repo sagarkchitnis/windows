@@ -6,14 +6,16 @@ import sys
 import re
 import time
 import subprocess
+import os
 
 Import('AgentEnv')
 env = AgentEnv.Clone()
+if os.name == 'nt':
+    env.Append(CPPPATH = ['#windows'])
 
 cflags = env['CCFLAGS']
-cflags.append('-Wno-return-type')
+cflags.append('/W4')
 cflags.append('-fexceptions')
-cflags.append('-Wno-unused-variable')
 
 
 ##########################################################################

@@ -6,7 +6,9 @@
 // sandesh_statistics.cc
 // Sandesh Statistics Implementation
 //
-
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 #include <boost/foreach.hpp>
 
 #include <sandesh/sandesh_types.h>

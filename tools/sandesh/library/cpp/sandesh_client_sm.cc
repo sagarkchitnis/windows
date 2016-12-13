@@ -7,6 +7,9 @@
 //
 // Sandesh Client State Machine
 //
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 
 #include <typeinfo>
 #include <boost/bind.hpp>

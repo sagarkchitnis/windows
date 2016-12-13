@@ -7,7 +7,9 @@
 //
 // File to handle all sandesh requests..
 //
-
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 #include <sandesh/sandesh_types.h>
 #include <sandesh/sandesh.h>
 #include <sandesh/sandesh_uve_types.h>

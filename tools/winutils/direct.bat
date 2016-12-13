@@ -1,0 +1,1 @@
+for /R %1 in (*.obj) do @dumpbin /directives /section:.drectve "%1" > "%1"_direct.txt

@@ -7,6 +7,12 @@
 //
 // Sandesh Implementation
 //
+#ifdef _WINDOWS
+#include <SDKDDKVer.h>
+#include <boost/asio.hpp>
+#include<stdio.h>
+#include<fcntl.h>
+#endif
 
 #include <boost/bind.hpp>
 #include <boost/tokenizer.hpp>
@@ -160,20 +166,77 @@ bool Sandesh::Initialize(SandeshRole::type role,
 
 void Sandesh::RecordPort(const std::string& name, const std::string& module,
         unsigned short port) {
-    int fd;
+#ifdef _WINDOWS
+	HANDLE hFile = INVALID_HANDLE_VALUE;
+#else
+	int fd;
+#endif
     std::ostringstream myfifoss;
-    myfifoss << "/tmp/" << module << "." << getppid() << "." << name << "_port";
+
+#ifdef _WINDOWS
+	myfifoss << gettempdirectory() <<
+#else
+	myfifoss << "/tmp/" <<
+#endif
+
+    module << "." << getppid() << "." << name << "_port";
     std::string myfifo = myfifoss.str();
     std::ostringstream hss;
     hss << port << "\n";
     std::string hstr = hss.str();
 
+#ifdef _WINDOWS
+	 hFile = CreateFile(myfifo.c_str(),// file name
+		GENERIC_WRITE,          // open in writing mode
+		0,                      // no sharing
+		NULL,                   // default security
+		OPEN_ALWAYS,            
+		 FILE_ATTRIBUTE_NORMAL,  // normal file
+		NULL);                  // no attr. template
+	if(hFile == INVALID_HANDLE_VALUE) {
+#else
     fd = open(myfifo.c_str(), O_WRONLY | O_NONBLOCK);
     if (fd != -1) {
+#endif
+	
         SANDESH_LOG(INFO, "SANDESH: Write " << name << "_port " << port <<
                           "TO : " << myfifo);
-        write(fd, hstr.c_str(), hstr.length());
-        close(fd);
+#ifdef _WINDOWS
+		DWORD dwBytesToWrite = (DWORD)hstr.length();
+		DWORD dwBytesWritten = 0;
+		BOOL bErrorFlag = FALSE;
+//		memset(&overlapped_structure, 0, sizeof(overlapped_structure));
+//		overlapped_structure.Offset = 4096;
+//		overlapped_structure.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+
+		bErrorFlag = WriteFile(
+			hFile,           // open file handle
+			hstr.c_str(),      // start of data to write
+			dwBytesToWrite,  // number of bytes to write
+			&dwBytesWritten, // number of bytes that were written
+			NULL);            // no overlapped structure
+		if (FALSE == bErrorFlag)
+		{
+			SANDESH_LOG(INFO, "SANDESH: NOT Writing " << name << "_port " << port <<
+				"TO : " << myfifo);
+		}
+		else
+		{
+			if (dwBytesWritten != dwBytesToWrite)
+			{
+				// This is an error because a synchronous write that results in
+				// success (WriteFile returns TRUE) should write all data as
+				// requested. This would not necessarily be the case for
+				// asynchronous writes.
+				SANDESH_LOG(INFO, "SANDESH: NOT all bytes written " << name << "_port " << port <<
+					"TO : " << myfifo);
+			}
+		}
+		CloseHandle(hFile);
+#else
+             write(fd, hstr.c_str(), hstr.length());
+             close(fd);
+#endif
     } else {
         SANDESH_LOG(INFO, "SANDESH: NOT Writing " << name << "_port " << port <<
                           "TO : " << myfifo);

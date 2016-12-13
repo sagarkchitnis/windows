@@ -22,7 +22,7 @@ env['CCFLAGS'] = cflags
 env.Append(CPPPATH = ['#tools/sandesh/compiler','#build/include'])
 
 if os.name == 'nt':
- env.Append(CPPPATH = ['#tools/sandesh/compiler/windows'])
+ env.Append(CPPPATH = ['#windows'])
 
 # Lex and Yacc
 env.Append(YACCFLAGS = '-d')

@@ -17,6 +17,16 @@ import commands
 import platform
 import getpass
 
+def SymLink(env,target, source):
+    print 'symlinking' + target.abspath + " and " + source.abspath
+#    parent = os.path.dirname(target.abspath)
+#    if not os.path.exists(parent):
+#        os.makedirs(parent)
+
+    if not os.path.exists(target.abspath):
+        os.symlink(source.abspath, target.abspath)
+        print 'debug:done calling symlink'
+
 def GetPlatformInfo(env):
     '''
     Returns same 3-tuple as platform.dist()/platform.linux_distribution() (caches tuple)
@@ -572,7 +582,7 @@ def SandeshOnlyCppBuilder(target, source, env):
     if code != 0:
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'SandeshOnlyCpp code generation failed')
-    os.system("echo \"int " + sname + "_marker = 0;\" >> " + html_cpp_name)
+    os.system("echo int " + sname + "_marker = 0; >> " + html_cpp_name)
 
 def SandeshSconsEnvOnlyCppFunc(env):
     onlycppbuild = Builder(action = Action(SandeshOnlyCppBuilder,'SandeshOnlyCppBuilder $SOURCE -> $TARGETS'))
@@ -609,13 +619,13 @@ def SandeshCppBuilder(target, source, env):
         raise SCons.Errors.StopError(SandeshCodeGeneratorError,
                                      'xxd not detected on system')
  #   print '\nopath:' + opath + '\nsource[0]path:' + source[0].path + '\nsname:' + sname + '\ntname:'+ tname + '\nhname:' + hname + '\ncname:'+cname + '\nospthbasename:' + os.path.basename(cname)
-    os.system("echo \"namespace {\"" + " >> " + cname)
+    os.system("echo namespace {" + " >> " + cname)
     print 'after namespace'
     opath = opath.replace("\\", "/")
     print '\nexecuting:' + '(cd '+ opath + ' & xxd -i ' + hname + ' >> ' + os.path.basename(cname) + ' )'
     os.system("(cd " + opath + " & xxd -i " + hname + " >> " + os.path.basename(cname) + " )")
     print 'after xxd, before cat'
-    os.system("echo \"}\"" + " >> " + cname)
+    os.system("echo } " + " >> " + cname)
     os.system("cat " + tname + " >> " + cname)
     print 'after cat'
     print 'leave sandeshcppbuilder'
@@ -775,7 +785,7 @@ def CreateIFMapBuilder(env):
 
 def TypeBuilderCmd(source, target, env, for_signature):
     output = Basename(source[0].abspath)
-    return './tools/generateds/generateDS.py -f -g type -o %s %s' % (output, source[0])
+    return '"tools/generateds/generateDS.py" -f -g type -o %s %s' % (output, source[0])
 
 def TypeTargetGen(target, source, env):
     suffixes = ['_types.h', '_types.cc', '_parser.cc']
@@ -974,7 +984,7 @@ def SetupBuildEnvironment(conf):
 
     env.AddMethod(PlatformExclude, "PlatformExclude")
     env.AddMethod(GetPlatformInfo, "GetPlatformInfo")
-
+    env.AddMethod(create_if_needed_dir, "CreateDirectory")
     # Let's decide how many jobs (-jNN) we should use.
     nj = GetOption('num_jobs')
     if nj == 1:
@@ -1086,8 +1096,7 @@ def SetupBuildEnvironment(conf):
     env['CCPDBFLAGS'] = '/Zi /Fd${TARGET}.pdb'
     opt_level = env['OPT']
 	# /GS /analyze- /W3 /Zc:wchar_t /ZI /Gm /Od /Fd"Debug\vc140.pdb" /Zc:inline /fp:precise /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo /Fo"Debug\" /Fp"Debug\compilerproj.pch" 
-    env.Append(CCFLAGS = '/GS /analyze- /W3 /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
-    env.Append(LINKFLAGS= ['/DEBUG /PDB:${TARGET}.pdb'])
+    env.Append(CCFLAGS = '/GS /analyze- /w /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise  /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
     opt_level = env['OPT']
     if opt_level == 'production':
         env.Append(CCFLAGS = '-g -O3')
@@ -1124,6 +1133,7 @@ def SetupBuildEnvironment(conf):
     env.Append(BUILDERS = {'venv_add_build_pkg': venv_add_build_pkg })
     env.Append(BUILDERS = {'build_maven': build_maven })
 
+    env.AddMethod(SymLink,"SymLink")
     env.AddMethod(ExtractCppFunc, "ExtractCpp")
     env.AddMethod(ExtractCFunc, "ExtractC")
     env.AddMethod(ExtractHeaderFunc, "ExtractHeader")
@@ -1156,7 +1166,8 @@ def SetupBuildEnvironment(conf):
     if os.name == "nt":
        def symlink_ms(source, link_name):
            import ctypes
-           csl = ctypes.windll.kernel32.CreateSymbolicLinkW
+           kernel32 = ctypes.WinDLL('kernel32',use_last_error=True)
+           csl = kernel32.CreateSymbolicLinkW
            csl.argtypes = (ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32)
            csl.restype = ctypes.c_ubyte
            source = source.replace('/', '\\')
@@ -1168,15 +1179,17 @@ def SetupBuildEnvironment(conf):
            IsDir = 1 if os.path.isdir(source) else 0
            try:
               if csl(link_name, source, IsDir) == 0:
+#                 print get_last_error()
                  raise ctypes.WinError()
               print "SUCCESS: created symbolic link:%s  ----> %s" % (source , link_name)
-           except:
+           except Exception as e:
               print "ERROR: could not create symbolic link:%s  ----> %s" % (source , link_name)
+              print(e)
        os.symlink = symlink_ms
     return env
   # SetupBuildEnvironment
 
-def create_if_needed_dir(f):
+def create_if_needed_dir(env,f):
    d = os.path.dirname(f)
    if not os.path.exists(d):
         os.makedirs(d)

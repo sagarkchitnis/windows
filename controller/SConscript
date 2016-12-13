@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
-
+import os
 SConscript(dirs=['lib', 'src'])
 
 env = DefaultEnvironment()
@@ -45,6 +45,9 @@ env.Alias('controller/flaky-test', [
     'controller/src/xmpp:flaky-test',
     'controller/src/config/device-manager:flaky-test',
 ])
+
+if os.name == 'nt':
+ env.Append(CPPPATH = ['#windows'])
 
 env.Alias('test', [ 'controller/test' ])
 env.Alias('flaky-test', [ 'controller/flaky-test' ])

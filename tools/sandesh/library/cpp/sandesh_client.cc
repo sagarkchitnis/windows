@@ -7,6 +7,10 @@
 //
 // Sandesh Client
 //
+#ifdef _WINDOWS
+#include <SDKDDKVer.h>
+#include <boost/asio.hpp>
+#endif
 
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>

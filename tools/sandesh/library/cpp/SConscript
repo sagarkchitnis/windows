@@ -52,14 +52,14 @@ def WebServerBuild(wenv, abs_pth, loc, inp):
   mval = mname + "_len"
 
   wenv.Command(ofile , ('#/%s/%s/' % (loc,hpath)) + hfile,\
-    '%s ; (%s ; %s); %s ; %s ; %s ; %s' %
-    ('echo "namespace {" > ' + abs_pth + "/" + ofile,
+    '%s & (%s & %s) & %s & %s & %s & %s' %
+    ('echo namespace { > ' + abs_pth + "/" + ofile,
       'cd ' + loc + "/" + hpath,
       'xxd -i ' + hfile + ' >> ' + abs_pth + "/" + ofile,
-      'echo "}" >> ' + abs_pth + "/" + ofile,
-      'echo "#include \\"sandesh/sandesh_http.h\\"" >> ' + abs_pth + "/" + ofile,
-      'echo "static SandeshHttp::HtmlInfo h_info' + mname + '(' + mname + ", " + mval + ');" >> ' + abs_pth + "/" + ofile,
-      'echo "static SandeshHttp sr' + mname + '(\\"' + inp + '\\", h_info' + mname + ');" >> ' + abs_pth + "/" + ofile))
+      'echo } >> ' + abs_pth + "/" + ofile,
+      'echo #include "sandesh/sandesh_http.h" >> ' + abs_pth + "/" + ofile,
+      'echo static SandeshHttp::HtmlInfo h_info' + mname + '(' + mname + ", " + mval + '); >> ' + abs_pth + "/" + ofile,
+      'echo static SandeshHttp sr' + mname + '("' + inp + '", h_info' + mname + '); >> ' + abs_pth + "/" + ofile))
   wenv.Depends('sandesh_http.cc', ofile)
   return 
 

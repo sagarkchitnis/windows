@@ -7,7 +7,9 @@
 //
 // Sandesh State Machine Implementation
 //
-
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 #include <typeinfo>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>

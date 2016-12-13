@@ -26,8 +26,9 @@
 #include <unistd.h>
 #endif
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WINDOWS)
 #include <io.h>
+#include "winutils.h"
 #endif
 
 #include <base/logging.h>

@@ -224,8 +224,7 @@ AgentEnv.AppendUnique(TEST_CMN_LIBPATH = [
     env['TOP'] + '/vnsw/agent/test',
 ])
 AgentEnv.AppendUnique(TEST_CMN_CCFLAGS = [
-    '-Wno-return-type',
-    '-Wno-unused-function'
+    '/W4'
 ])
 
 ##########################################################################
@@ -388,7 +387,7 @@ env.SConscript('test-xml/SConscript', exports=['AgentEnv', 'BuildEnv'],
 # Utility functions
 ##########################################################################
 #cflags = AgentEnv['CCFLAGS']
-#cflags.remove('-Wno-return-type')
+#cflags.remove('-W4')
 #AgentEnv.Replace(CCFLAGS = cflags)
 #Export('AgentEnv')
 

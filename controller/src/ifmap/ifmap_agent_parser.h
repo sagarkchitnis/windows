@@ -20,10 +20,11 @@ class xml_node;
 class IFMapAgentParser {
 public:
 
+	//cannot use DELETE as it conflicts with windows (redefinition)
     enum ConfigMsgType {
-        UPDATE,
-        DELETE,
-        MAX
+        CMT_UPDATE ,
+        CMT_DELETE ,
+        CMT_MAX
     };
 
     IFMapAgentParser(DB *db) : db_(db) { reset_statistics(); } ;
@@ -34,31 +35,31 @@ public:
     void NodeRegister(const std::string &node, NodeParseFn parser);
     void NodeClear();
     void ConfigParse(const pugi::xml_node config, uint64_t seq);
-    uint64_t node_updates() { return nodes_processed_[UPDATE]; }
-    uint64_t node_deletes() { return nodes_processed_[DELETE]; }
-    uint64_t link_updates() { return links_processed_[UPDATE]; }
+    uint64_t node_updates() { return nodes_processed_[CMT_UPDATE]; }
+    uint64_t node_deletes() { return nodes_processed_[CMT_DELETE]; }
+    uint64_t link_updates() { return links_processed_[CMT_UPDATE]; }
     uint64_t link_deletes() { return links_processed_[DELETE]; }
-    uint64_t node_update_parse_errors() { return node_parse_errors_[UPDATE]; }
-    uint64_t node_delete_parse_errors() { return node_parse_errors_[DELETE]; }
-    uint64_t link_update_parse_errors() { return link_parse_errors_[UPDATE]; }
-    uint64_t link_delete_parse_errors() { return link_parse_errors_[DELETE]; }
+    uint64_t node_update_parse_errors() { return node_parse_errors_[CMT_UPDATE]; }
+    uint64_t node_delete_parse_errors() { return node_parse_errors_[CMT_DELETE]; }
+    uint64_t link_update_parse_errors() { return link_parse_errors_[CMT_UPDATE]; }
+    uint64_t link_delete_parse_errors() { return link_parse_errors_[CMT_DELETE]; }
     void reset_statistics() {
-        nodes_processed_[UPDATE] = 0;
-        nodes_processed_[DELETE] = 0;
-        links_processed_[UPDATE] = 0;
-        links_processed_[DELETE] = 0;
-        node_parse_errors_[UPDATE] = 0;
-        node_parse_errors_[DELETE] = 0;
-        link_parse_errors_[UPDATE] = 0;
-        link_parse_errors_[DELETE] = 0;
+        nodes_processed_[CMT_UPDATE] = 0;
+        nodes_processed_[CMT_DELETE] = 0;
+        links_processed_[CMT_UPDATE] = 0;
+        links_processed_[CMT_DELETE] = 0;
+        node_parse_errors_[CMT_UPDATE] = 0;
+        node_parse_errors_[CMT_DELETE] = 0;
+        link_parse_errors_[CMT_UPDATE] = 0;
+        link_parse_errors_[CMT_DELETE] = 0;
     }
 private:
     DB *db_;
     NodeParseMap node_map_;
-    uint64_t nodes_processed_[MAX];
-    uint64_t links_processed_[MAX];
-    uint64_t node_parse_errors_[MAX];
-    uint64_t link_parse_errors_[MAX];
+    uint64_t nodes_processed_[CMT_MAX];
+    uint64_t links_processed_[CMT_MAX];
+    uint64_t node_parse_errors_[CMT_MAX];
+    uint64_t link_parse_errors_[CMT_MAX];
     void NodeParse(pugi::xml_node &node, DBRequest::DBOperation oper, uint64_t seq);
     void LinkParse(pugi::xml_node &node, DBRequest::DBOperation oper, uint64_t seq);
 };

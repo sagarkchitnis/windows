@@ -7,6 +7,9 @@
 //
 // file to handle requests for Sending Sandesh UVEs
 //
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#endif
 
 #include "sandesh_uve.h"
 #include "../common/sandesh_uve_types.h"

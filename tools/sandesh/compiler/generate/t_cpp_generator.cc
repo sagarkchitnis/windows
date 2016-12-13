@@ -21,6 +21,7 @@
  * details.
  */
 
+
 #include <cassert>
 
 #include <fstream>
@@ -797,6 +798,9 @@ void t_cpp_generator::generate_consts(std::vector<t_const*> consts) {
 
 #ifdef SANDESH
   f_consts_impl <<
+#ifdef _WINDOWS
+     "#include <boost/asio.hpp>" <<endl<<
+#endif
     "#include <base/trace.h>" << endl <<
     "#include <sandesh/sandesh_types.h>" << endl <<
     "#include <sandesh/sandesh_constants.h>" << endl <<

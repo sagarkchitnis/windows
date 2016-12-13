@@ -97,7 +97,7 @@ buildinfo_dep_libs = [
     '../../lib/libhiredis.a',
     '../../lib/libhttp.a',
     '../../lib/libhttp_parser.a',
-    '../../lib/libsandesh.a', 
+    '../../lib/libsandesh.lib', 
     '../../lib/libsandeshvns.a', 
     '../base/libbase.a',
     '../base/libcpuinfo.a',
