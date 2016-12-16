@@ -14,7 +14,7 @@ if os.name == 'nt':
     env.Append(CPPPATH = ['#windows'])
 
 cflags = env['CCFLAGS']
-cflags.append('/W4')
+cflags.append('/w')
 cflags.append('-fexceptions')
 
 

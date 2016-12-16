@@ -346,7 +346,7 @@ void MatchPolicy::Reset() {
 /////////////////////////////////////////////////////////////////////////////
 // FlowEventLog constructor/destructor
 /////////////////////////////////////////////////////////////////////////////
-FlowEventLog::FlowEventLog() : time_(0), event_(EVENT_MAX),
+FlowEventLog::FlowEventLog() : time_(0), event_(EVENT_MAXIMUM),
     flow_handle_(FlowEntry::kInvalidFlowHandle), flow_gen_id_(0),
     ksync_entry_(NULL), hash_id_(FlowEntry::kInvalidFlowHandle), gen_id_(0),
     vrouter_flow_handle_(FlowEntry::kInvalidFlowHandle), vrouter_gen_id_(0) {

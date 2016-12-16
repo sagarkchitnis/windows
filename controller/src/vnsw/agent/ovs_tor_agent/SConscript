@@ -31,7 +31,7 @@ env.GenerateBuildInfoCode(
     path=str(Dir('.').abspath))
 
 env = AgentEnv.RemoveExceptionFlag(env)
-env.AppendUnique(CCFLAGS='/W4')
+env.AppendUnique(CCFLAGS='/w')
 
 contrail_tor_agent = env.Program(target = 'contrail-tor-agent',
                         source = [

@@ -312,7 +312,7 @@ struct FlowEventLog {
         FLOW_EVICT,
         FLOW_HANDLE_ASSIGN,
         FLOW_MSG_SKIP_EVICTED,
-        EVENT_MAX
+        EVENT_MAXIMUM
     };
 
     FlowEventLog();

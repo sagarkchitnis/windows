@@ -223,7 +223,7 @@ class AgentRoute : public Route {
 public:
     enum Trace {
         ADD,
-        DELETE,
+        DEL,
         ADD_PATH,
         DELETE_PATH,
         CHANGE_PATH,

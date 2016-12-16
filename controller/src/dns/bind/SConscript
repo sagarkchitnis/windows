@@ -6,7 +6,7 @@
 import sys
 Import('DnsEnv')
 env = DnsEnv.Clone()
-env.AppendUnique(CCFLAGS='/W4')
+env.AppendUnique(CCFLAGS='/w')
 
 SandeshGenFiles = env.SandeshGenCpp('bind.sandesh')
 SandeshGenSrcs = env.ExtractCpp(SandeshGenFiles)

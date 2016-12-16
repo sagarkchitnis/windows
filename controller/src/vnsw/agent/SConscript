@@ -224,7 +224,7 @@ AgentEnv.AppendUnique(TEST_CMN_LIBPATH = [
     env['TOP'] + '/vnsw/agent/test',
 ])
 AgentEnv.AppendUnique(TEST_CMN_CCFLAGS = [
-    '/W4'
+    '/w'
 ])
 
 ##########################################################################

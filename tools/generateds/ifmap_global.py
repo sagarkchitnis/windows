@@ -64,9 +64,10 @@ def CamelCase(input):
     return name
 
 def GetModuleName(file, suffix):
-    path_arr = file.name.split('/')
+    path_arr = file.name.split('\\')
     filename = path_arr[len(path_arr) - 1]
     mod_name = filename[:filename.find(suffix)]
     mod_name = mod_name.replace('-', '_')
     mod_name = mod_name.replace('.', '_')
+    mod_name = mod_name.replace(':', '_') #should not be needed but precaution
     return mod_name

@@ -56,7 +56,7 @@ else:
 
 common.Append(LIBPATH = libpath)
 common.Prepend(LIBS = libs)
-common.Append(CCFLAGS = '/W4')
+common.Append(CCFLAGS = '/w')
 common.Append(CCFLAGS = '/D NOMINMAX')
 if not sys.platform.startswith('darwin'):
     if platform.system().startswith('Linux'):

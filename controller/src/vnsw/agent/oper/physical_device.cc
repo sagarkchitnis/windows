@@ -165,7 +165,7 @@ bool PhysicalDeviceTable::OperDBResync(DBEntry *entry, const DBRequest *req) {
 bool PhysicalDeviceTable::OperDBDelete(DBEntry *entry, const DBRequest *req) {
     PhysicalDevice *dev = static_cast<PhysicalDevice *>(entry);
     DeleteIpToDevEntry(dev->ip());
-    dev->SendObjectLog(AgentLogEvent::DELETE);
+    dev->SendObjectLog(AgentLogEvent::DEL);
     return true;
 }
 
