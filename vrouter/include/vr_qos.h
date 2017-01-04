@@ -22,7 +22,7 @@
  * fields here should mean change in the location of the entry in
  * the flow structure
  */
-PACK(
+#pragma pack(push,1)
 	struct vr_forwarding_class_qos {
     uint8_t     vfcq_dscp;
     uint8_t     vfcq_mpls_qos:3,
@@ -30,13 +30,15 @@ PACK(
                 vfcq_untrusted:1,
                 vfcq_valid:1;
     uint8_t     vfcq_queue_id;
-} );
+	};
 
-PACK(
+
+
 	struct vr_forwarding_class {
     uint8_t vfc_id;
      struct vr_forwarding_class_qos vfc_qos;
-} );
+	};
+#pragma pack(pop)
 
 /* for easy access */
 #define vfc_dscp        vfc_qos.vfcq_dscp

@@ -9,12 +9,22 @@
  * - Parameters
  */
 
+#ifdef _WINDOWS
+#include <boost/asio.hpp>
+#include <windows.h>
+#endif
+
 #include "base/os.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef _WINDOWS
 #include <sys/resource.h>
 #include <net/if_arp.h>
+
 #include <unistd.h>
+#else
+#include "winutils.h"
+#endif
 #include <iostream>
 #include <string>
 

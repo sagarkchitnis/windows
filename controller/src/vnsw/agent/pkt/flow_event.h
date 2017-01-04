@@ -299,7 +299,7 @@ protected:
     // due to Flow PendingActions
     uint64_t events_processed_;
     uint16_t latency_limit_;
-    struct rusage rusage_;
+    //WINDOWS struct rusage rusage_;
 };
 
 class FlowEventQueue : public FlowEventQueueBase {

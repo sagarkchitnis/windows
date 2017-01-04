@@ -9,6 +9,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifdef _WINDOWS
+#define IFNAMSIZ 10
+#endif
+
 struct vn_if {
     char if_name[IFNAMSIZ];
     char if_kind[IFNAMSIZ];

@@ -39,6 +39,8 @@ void ContrailAgentInit::ProcessOptions
  * Initialization routines
 ****************************************************************************/
 void ContrailAgentInit::FactoryInit() {
+
+#ifndef _WINDOWS
     if (agent()->tsn_enabled() == false) {
         AgentObjectFactory::Register<AgentUveBase>
             (boost::factory<AgentUveStats *>());
@@ -52,6 +54,8 @@ void ContrailAgentInit::FactoryInit() {
         AgentObjectFactory::Register<KSync>(boost::factory<KSync *>());
     }
     AgentObjectFactory::Register<FlowStatsCollector>(boost::factory<FlowStatsCollector *>());
+
+#endif
 }
 
 void ContrailAgentInit::CreateModules() {

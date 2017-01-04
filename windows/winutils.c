@@ -108,3 +108,12 @@ DWORD getppid()
 	}
 	return ppid;
 }
+
+
+void bzero(unsigned char *to, int count)
+{
+	while (count-- > 0)
+	{
+		*to++ = 0;
+	}
+}

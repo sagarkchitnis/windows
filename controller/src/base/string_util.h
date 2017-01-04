@@ -145,8 +145,8 @@ static inline std::string UuidToString(const boost::uuids::uuid &id)
 static inline boost::uuids::uuid StringToUuid(const std::string &str)
 {
     boost::uuids::uuid u = boost::uuids::nil_uuid();
-    std::stringstream uuidstring(str);
-    uuidstring >> u;
+   //windows std::stringstream uuidstring(str);
+  //windows   uuidstring >> u;
     return u;
 }
 

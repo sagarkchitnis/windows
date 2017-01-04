@@ -7,11 +7,12 @@
 #include <string.h>
 #include <fcntl.h>
 #include <assert.h>
+#ifndef _WINDOWS
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 
 #include <net/if.h>
-
+#endif
 #include "base/logging.h"
 #include "cmn/agent_cmn.h"
 #include "sandesh/sandesh_types.h"
@@ -125,7 +126,9 @@ Pkt0RawInterface::~Pkt0RawInterface() {
 
 Pkt0Socket::Pkt0Socket(const std::string &name,
     boost::asio::io_service *io):
-    connected_(false), socket_(*io), timer_(NULL),
+    connected_(false),
+	//WINDOWS socket_(*io), 
+	timer_(NULL),
     read_buff_(NULL), pkt_handler_(NULL), name_(name){
 }
 
@@ -140,9 +143,9 @@ void Pkt0Socket::CreateUnixSocket() {
     boost::filesystem::remove(kAgentSocketPath);
 
     boost::system::error_code ec;
-    socket_.open();
-    local::datagram_protocol::endpoint ep(kAgentSocketPath);
-    socket_.bind(ep, ec);
+   //WINDOWS socket_.open();
+    //WINDOWS local::datagram_protocol::endpoint ep(kAgentSocketPath);
+   //WINDOWS  socket_.bind(ep, ec);
     if (ec) {
         LOG(DEBUG, "Error binding to the socket " << kAgentSocketPath
                 << ": " << ec.message());
@@ -163,7 +166,7 @@ void Pkt0Socket::IoShutdownControlInterface() {
     }
 
     boost::system::error_code ec;
-    socket_.close(ec);
+    //WINDOWS socket_.close(ec);
 }
 
 void Pkt0Socket::ShutdownControlInterface() {
@@ -171,11 +174,13 @@ void Pkt0Socket::ShutdownControlInterface() {
 
 void Pkt0Socket::AsyncRead() {
     read_buff_ = new uint8_t[kMaxPacketSize];
+#ifndef _WINDOWS
     socket_.async_receive(
             boost::asio::buffer(read_buff_, kMaxPacketSize), 
             boost::bind(&Pkt0Socket::ReadHandler, this,
                 boost::asio::placeholders::error,
                 boost::asio::placeholders::bytes_transferred));
+#endif
 }
 
 void Pkt0Socket::StartConnectTimer() {
@@ -188,9 +193,9 @@ void Pkt0Socket::StartConnectTimer() {
 }
 
 bool Pkt0Socket::OnTimeout() {
-    local::datagram_protocol::endpoint ep(kVrouterSocketPath);
+  //WINDOWS  local::datagram_protocol::endpoint ep(kVrouterSocketPath);
     boost::system::error_code ec;
-    socket_.connect(ep, ec);
+   //WINDOWS socket_.connect(ep, ec);
     if (ec != 0) {
         LOG(DEBUG, "Error connecting to socket " << kVrouterSocketPath
                 << ": " << ec.message());
@@ -211,11 +216,13 @@ int Pkt0Socket::Send(uint8_t *buff, uint16_t buff_len,
     buff_list.push_back(boost::asio::buffer(buff, buff_len));
     buff_list.push_back(boost::asio::buffer(pkt->data(), pkt->data_len()));
 
+#ifndef _WINDOWS
     socket_.async_send(buff_list,
                        boost::bind(&Pkt0Socket::WriteHandler, this,
                        boost::asio::placeholders::error,
                        boost::asio::placeholders::bytes_transferred,
                        pkt, buff));
+#endif
     return (buff_len + pkt->data_len());
 }
 
