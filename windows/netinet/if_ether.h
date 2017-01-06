@@ -1,4 +1,5 @@
 #pragma once
+
 /*
 * Copyright (c) 1982, 1986, 1993
 *	The Regents of the University of California.  All rights reserved.
@@ -37,11 +38,13 @@
 /*
 * Structure of a 10Mb/s Ethernet header.
 */
-struct	ether_header {
+
+#include "net/if_arp.h"
+typedef struct	ether_header {
 	u_char	ether_dhost[6];
 	u_char	ether_shost[6];
 	u_short	ether_type;
-};
+} ETHERHDR;
 
 #define	ETHERTYPE_PUP		0x0200	/* PUP protocol */
 #define	ETHERTYPE_IP		0x0800	/* IP protocol */
@@ -104,13 +107,13 @@ struct	ether_arp {
 * the address resolution code.  For example, each ec_softc or il_softc
 * begins with this structure.
 */
-struct	arpcom {
-	struct 	ifnet ac_if;		/* network-visible interface */
-	u_char	ac_enaddr[6];		/* ethernet hardware address */
-	struct	in_addr ac_ipaddr;	/* copy of ip address- XXX */
-	struct	ether_multi *ac_multiaddrs; /* list of ether multicast addrs */
-	int	ac_multicnt;		/* length of ac_multiaddrs list */
-};
+//WINDOWS struct	arpcom {
+//WINDOWS 	struct 	ifnet ac_if;		/* network-visible interface */
+//WINDOWS 	u_char	ac_enaddr[6];		/* ethernet hardware address */
+//WINDOWS 	struct	in_addr ac_ipaddr;	/* copy of ip address- XXX */
+//WINDOWS	struct	ether_multi *ac_multiaddrs; /* list of ether multicast addrs */
+//WINDOWS	int	ac_multicnt;		/* length of ac_multiaddrs list */
+//WINDOWS};
 
 struct llinfo_arp {
 	struct	llinfo_arp *la_next;

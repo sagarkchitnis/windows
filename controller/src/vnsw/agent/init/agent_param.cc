@@ -1142,6 +1142,7 @@ static bool ValidateInterface(bool test_mode, const std::string &ifname,
     if (test_mode) {
         return true;
     }
+#ifndef _WINDOWS
     int fd = socket(AF_LOCAL, SOCK_STREAM, 0);
     assert(fd >= 0);
 
@@ -1172,7 +1173,7 @@ static bool ValidateInterface(bool test_mode, const std::string &ifname,
             }
         }
     }
-
+#endif
     return true;
 }
 

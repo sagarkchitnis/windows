@@ -14,6 +14,8 @@
 #include <netinet/ip_icmp.h>
 #else
 #include <netinet/in.h>
+#include <netinet/if_ether.h>
+#include <netinet/ip.h>
 #endif
 
 #include <tbb/atomic.h>

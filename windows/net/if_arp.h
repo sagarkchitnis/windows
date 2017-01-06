@@ -1,4 +1,8 @@
 #pragma once
+#include<sys/types.h>
+
+
+#include <stdint.h>
 
 /*
 2  * INET         An implementation of the TCP/IP protocol suite for the LINUX
@@ -136,14 +140,14 @@
  /*
   *      This structure defines an ethernet arp header.
 */
-	
+ typedef __declspec(align(4)) uint16_t __be16;
 	 struct arphdr {
-	         __be16          ar_hrd;         /* format of hardware address   */
-	         __be16          ar_pro;         /* format of protocol address   */
+		    __be16   ar_hrd;         /* format of hardware address   */
+	        __be16          ar_pro;         /* format of protocol address   */
 	         unsigned char   ar_hln;         /* length of hardware address   */
 	         unsigned char   ar_pln;         /* length of protocol address   */
 	         __be16          ar_op;          /* ARP opcode (command)         */
-	
+
 	 #if 0
 	          /*
 	           *      Ethernet looks like this : This bit is variable sized however...

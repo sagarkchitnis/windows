@@ -57,6 +57,9 @@ enum rt_type{
 
 #define AGENT_PKT_HEAD_SPACE (sizeof(struct vr_eth) + \
                 sizeof(struct agent_hdr))
+#ifdef _WINDOWS
+#define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
+#endif
 
 PACK(
 struct agent_hdr {
