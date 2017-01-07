@@ -3,6 +3,7 @@
  */
 
 #include "base/os.h"
+
 #include <netinet/icmp6.h>
 
 #include <vr_defs.h>
@@ -16,6 +17,11 @@
 #include <oper/operdb_init.h>
 #include <oper/path_preference.h>
 #include <oper/vn.h>
+
+#ifdef _WINDOWS
+#include <netinet/ip6.h>
+#endif
+
 
 const boost::array<uint8_t, 16> Icmpv6Handler::kPrefix =
     { {0xFF, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0xFF, 0, 0, 0} };

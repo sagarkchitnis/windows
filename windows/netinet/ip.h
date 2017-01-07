@@ -33,7 +33,7 @@
 *
 *	@(#)ip.h	7.10 (Berkeley) 6/28/90
 */
-
+#include "sys/wintypes.h"
 /*
 * Definitions for internet protocol version 4.
 * Per RFC 791, September 1981.
@@ -118,7 +118,7 @@ struct ip {
 /*
 * Time stamp option structure.
 */
-typedef u_long n_long;
+
 struct	ip_timestamp {
 	u_char	ipt_code;		/* IPOPT_TS */
 	u_char	ipt_len;		/* size of structure (variable) */

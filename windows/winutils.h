@@ -27,16 +27,22 @@ DWORD getppid();
 void WindowsCloseTaskFiles();
 #define PACK( ___somestructure___ ) __pragma( pack(push, 1) ) ___somestructure___ __pragma( pack(pop) )
 
-typedef struct ether_header {
-	     u_char  ether_dhost[6];
-	     u_char  ether_shost[6];
-	     u_short ether_type;
-	
-} ETHERHDR;
+
 
 
 #define ETHER_ADDR_LEN 6
-#define	ETHERTYPE_IP	0x0800		/* IP protocol */
+#define	ETHERTYPE_IP	0x0800		
+/* IP protocol */
+/*
+  2  * Ethernet netdevice using ATM AAL5 as underlying carrier
+  3  * (RFC1483 obsoleted by RFC2684) for Linux
+  4  *
+  5  * Authors: Marcell GAL, 2000, XDSL Ltd, Hungary
+  6  *          Eric Kinzie, 2006-2007, US Naval Research Laboratory
+  7  */
+
+#define ETHERTYPE_IPV4  0x0800
+#define ETHERTYPE_IPV6  0x86dd
 
 void bzero(unsigned char *to, int count);
 typedef unsigned long   __kernel_ulong_t;
