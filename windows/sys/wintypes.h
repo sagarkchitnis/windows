@@ -26,3 +26,10 @@ typedef u_int32_t n_time;
 typedef __declspec(align(4)) uint16_t __be16;
 typedef __declspec(align(4)) uint16_t __sum16;
 typedef __declspec(align(4)) uint32_t  __be32;
+
+
+typedef unsigned char	u_char; 
+typedef unsigned short	u_short; 
+typedef unsigned int	u_int;  
+typedef unsigned long	u_long; 
+typedef struct _quad { int val[2]; } quad_t;

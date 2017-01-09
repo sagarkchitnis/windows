@@ -23,30 +23,23 @@
 /*
 *	IPv6 address structure
 */
+#include <sys/wintypes.h>
 
-#if __UAPI_DEF_IN6_ADDR
-struct in6_addr {
-	union {
-		__u8		u6_addr8[16];
-#if __UAPI_DEF_IN6_ADDR_ALT
-		__be16		u6_addr16[8];
-		__be32		u6_addr32[4];
-#endif
-	} in6_u;
-#define s6_addr			in6_u.u6_addr8
-#if __UAPI_DEF_IN6_ADDR_ALT
-#define s6_addr16		in6_u.u6_addr16
-#define s6_addr32		in6_u.u6_addr32
-#endif
+//#if __UAPI_DEF_IN6_ADDR
+struct linux_in6_addr {
+		union {
+			u_char  Byte[16];
+			u_short Word[8];
+		} u;
 };
-#endif /* __UAPI_DEF_IN6_ADDR */
+//#endif /* __UAPI_DEF_IN6_ADDR */
 
 #if __UAPI_DEF_SOCKADDR_IN6
 struct sockaddr_in6 {
 	unsigned short int	sin6_family;    /* AF_INET6 */
 	__be16			sin6_port;      /* Transport layer port # */
 	__be32			sin6_flowinfo;  /* IPv6 flow information */
-	struct in6_addr		sin6_addr;      /* IPv6 address */
+	struct linux_in6_addr		sin6_addr;      /* IPv6 address */
 	__u32			sin6_scope_id;  /* scope id (new in RFC2553) */
 };
 #endif /* __UAPI_DEF_SOCKADDR_IN6 */
@@ -54,7 +47,7 @@ struct sockaddr_in6 {
 #if __UAPI_DEF_IPV6_MREQ
 struct ipv6_mreq {
 	/* IPv6 multicast address of group */
-	struct in6_addr ipv6mr_multiaddr;
+	struct linux_in6_addr ipv6mr_multiaddr;
 
 	/* local IPv6 address of interface */
 	int		ipv6mr_ifindex;
@@ -64,7 +57,7 @@ struct ipv6_mreq {
 #define ipv6mr_acaddr	ipv6mr_multiaddr
 
 struct in6_flowlabel_req {
-	struct in6_addr	flr_dst;
+	struct linux_in6_addr	flr_dst;
 	__be32	flr_label;
 	__u8	flr_action;
 	__u8	flr_share;

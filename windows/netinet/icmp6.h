@@ -62,7 +62,7 @@
 
 //#include "byte-order.h"
 #include <sys/wintypes.h>
-
+#include<netinet/in6.h>
 #define ICMPV6_PLD_MAXLEN	1232	/* IPV6_MMTU - sizeof(struct ip6_hdr)
 					   - sizeof(struct icmp6_hdr) */
 
@@ -174,7 +174,7 @@ struct icmp6_hdr {
  */
 struct mld_hdr {
 	struct icmp6_hdr	mld_icmp6_hdr;
-	struct in6_addr		mld_addr; /* multicast address */
+	struct linux_in6_addr		mld_addr; /* multicast address */
 };
 
 /* definitions to provide backward compatibility to old KAME applications */
@@ -239,7 +239,7 @@ struct nd_router_advert {	/* router advertisement */
 
 struct nd_neighbor_solicit {	/* neighbor solicitation */
 	struct icmp6_hdr	nd_ns_hdr;
-	struct in6_addr		nd_ns_target;	/*target address */
+	struct linux_in6_addr		nd_ns_target;	/*target address */
 	/* could be followed by options */
 };
 
@@ -250,9 +250,21 @@ struct nd_neighbor_solicit {	/* neighbor solicitation */
 
 struct nd_neighbor_advert {	/* neighbor advertisement */
 	struct icmp6_hdr	nd_na_hdr;
-	struct in6_addr		nd_na_target;	/* target address */
+	struct linux_in6_addr	nd_na_target;	/* target address */
 	/* could be followed by options */
 };
+
+u_int32_t custom_htonl(u_int32_t x)
+{
+//#if BYTE_ORDER == LITTLE_ENDIAN
+	u_char *s = (u_char *)&x;
+	return (u_int32_t)(s[0] << 24 | s[1] << 16 | s[2] << 8 | s[3]);
+//else
+//	return x;
+//#endif
+}
+
+#define CONSTANT_HTONL custom_htonl
 
 #define nd_na_type		nd_na_hdr.icmp6_type
 #define nd_na_code		nd_na_hdr.icmp6_code
@@ -264,8 +276,8 @@ struct nd_neighbor_advert {	/* neighbor advertisement */
 
 struct nd_redirect {		/* redirect */
 	struct icmp6_hdr	nd_rd_hdr;
-	struct in6_addr		nd_rd_target;	/* target address */
-	struct in6_addr		nd_rd_dst;	/* destination address */
+	struct linux_in6_addr		nd_rd_target;	/* target address */
+	struct linux_in6_addr		nd_rd_dst;	/* destination address */
 	/* could be followed by options */
 };
 
@@ -311,7 +323,7 @@ struct nd_opt_prefix_info {	/* prefix information */
 	u_int32_t	nd_opt_pi_valid_time;
 	u_int32_t	nd_opt_pi_preferred_time;
 	u_int32_t	nd_opt_pi_reserved2;
-	struct in6_addr	nd_opt_pi_prefix;
+	struct linux_in6_addr	nd_opt_pi_prefix;
 };
 
 #define ND_OPT_PI_FLAG_ONLINK		0x80
@@ -441,7 +453,7 @@ struct rr_pco_match {		/* match prefix part */
 	u_int8_t	rpm_minlen;
 	u_int8_t	rpm_maxlen;
 	u_int16_t	rpm_reserved;
-	struct	in6_addr	rpm_prefix;
+	struct	linux_in6_addr	rpm_prefix;
 };
 
 #define RPM_PCO_ADD		1
@@ -457,7 +469,7 @@ struct rr_pco_use {		/* use prefix part */
 	u_int32_t	rpu_vltime;
 	u_int32_t	rpu_pltime;
 	u_int32_t	rpu_flags;
-	struct	in6_addr rpu_prefix;
+	struct	linux_in6_addr rpu_prefix;
 };
 #define ICMP6_RR_PCOUSE_RAFLAGS_ONLINK	0x80
 #define ICMP6_RR_PCOUSE_RAFLAGS_AUTO	0x40
@@ -470,7 +482,7 @@ struct rr_result {		/* router renumbering result message */
 	u_int8_t	rrr_ordinal;
 	u_int8_t	rrr_matchedlen;
 	u_int32_t	rrr_ifid;
-	struct	in6_addr rrr_prefix;
+	struct	linux_in6_addr rrr_prefix;
 };
 #define ICMP6_RR_RESULT_FLAGS_OOB		CONSTANT_HTONS(0x0002)
 #define ICMP6_RR_RESULT_FLAGS_FORBIDDEN		CONSTANT_HTONS(0x0001)

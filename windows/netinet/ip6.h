@@ -58,11 +58,12 @@
  *	@(#)ip.h	8.1 (Berkeley) 6/10/93
  */
 
-#ifndef _NETINET_IP6_H_
-#define _NETINET_IP6_H_
+#pragma once
 #include <inttypes.h>
 #include <netinet/in6.h>
 //#include "byte-order.h"
+
+
 
 /*
  * Definition for internet protocol version 6.
@@ -79,8 +80,8 @@ struct ip6_hdr {
 		} ip6_un1;
 		u_int8_t ip6_un2_vfc;	/* 4 bits version, top 4 bits class */
 	} ip6_ctlun;
-	struct in6_addr ip6_src;	/* source address */
-	struct in6_addr ip6_dst;	/* destination address */
+	struct linux_in6_addr ip6_src;	/* source address */
+	struct linux_in6_addr ip6_dst;	/* destination address */
 };
 
 #define ip6_vfc		ip6_ctlun.ip6_un2_vfc
@@ -232,4 +233,3 @@ struct ip6_frag {
 #define IPV6_MMTU	1280	/* minimal MTU and reassembly. 1024 + 256 */
 #define IPV6_MAXPACKET	65535	/* ip6 max packet size without Jumbo payload*/
 
-#endif /* !_NETINET_IP6_H_ */
