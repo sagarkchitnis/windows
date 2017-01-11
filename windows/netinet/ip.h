@@ -33,7 +33,7 @@
 *
 *	@(#)ip.h	7.10 (Berkeley) 6/28/90
 */
-#include "sys/wintypes.h"
+#include "netinet/in.h"
 /*
 * Definitions for internet protocol version 4.
 * Per RFC 791, September 1981.

@@ -61,7 +61,10 @@ struct tcphdr {
 #define	TH_ACK	0x10
 #define	TH_URG	0x20
 	u_short	th_win;			/* window */
-	u_short	th_sum;			/* checksum */
+	union {
+		u_short	th_sum;			/* checksum */
+		u_short check;
+	};
 	u_short	th_urp;			/* urgent pointer */
 };
 

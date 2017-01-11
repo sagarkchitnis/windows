@@ -20,7 +20,7 @@
 
 #ifndef ISC_TYPES_H
 #define ISC_TYPES_H 1
-
+#include <sys/wintypes.h>
 //WINDOWS #include <isc/bind9.h>
 
 /*! \file isc/types.h
@@ -42,18 +42,26 @@
 //WINDOWS #include <isc/list.h>
 
 /* Core Types.  Alphabetized by defined type. */
+typedef uint8_t isc_uint8_t;
+typedef uint16_t isc_uint16_t;
+typedef uint32_t isc_uint32_t;
+typedef uint64_t isc_uint64_t;
+typedef int8_t isc_int8_t;
+typedef int16_t isc_int16_t;
+typedef int32_t isc_int32_t;
+typedef int64_t isc_int64_t;
 
 typedef struct isc_appctx		isc_appctx_t;	 	/*%< Application context */
 typedef struct isc_backtrace_symmap	isc_backtrace_symmap_t; /*%< Symbol Table Entry */
 typedef struct isc_buffer		isc_buffer_t;		/*%< Buffer */
-typedef ISC_LIST(isc_buffer_t)		isc_bufferlist_t;	/*%< Buffer List */
+//WINDOWS typedef ISC_LIST(isc_buffer_t)		isc_bufferlist_t;	/*%< Buffer List */
 typedef struct isc_constregion		isc_constregion_t;	/*%< Const region */
 typedef struct isc_consttextregion	isc_consttextregion_t;	/*%< Const Text Region */
 typedef isc_int16_t			isc_dscp_t;		/*%< Diffserv code point */
 typedef struct isc_entropy		isc_entropy_t;		/*%< Entropy */
 typedef struct isc_entropysource	isc_entropysource_t;	/*%< Entropy Source */
 typedef struct isc_event		isc_event_t;		/*%< Event */
-typedef ISC_LIST(isc_event_t)		isc_eventlist_t;	/*%< Event List */
+//WINDOWS typedef ISC_LIST(isc_event_t)		isc_eventlist_t;	/*%< Event List */
 typedef unsigned int			isc_eventtype_t;	/*%< Event Type */
 typedef isc_uint32_t			isc_fsaccess_t;		/*%< FS Access */
 typedef struct isc_hash			isc_hash_t;		/*%< Hash */
@@ -91,7 +99,7 @@ typedef struct isc_stats		isc_stats_t;		/*%< Statistics */
 typedef int				isc_statscounter_t;	/*%< Statistics Counter */
 typedef struct isc_symtab		isc_symtab_t;		/*%< Symbol Table */
 typedef struct isc_task			isc_task_t;		/*%< Task */
-typedef ISC_LIST(isc_task_t)		isc_tasklist_t;		/*%< Task List */
+//WINDOWS typedef ISC_LIST(isc_task_t)		isc_tasklist_t;		/*%< Task List */
 typedef struct isc_taskmgr		isc_taskmgr_t;		/*%< Task Manager */
 typedef struct isc_textregion		isc_textregion_t;	/*%< Text Region */
 typedef struct isc_time			isc_time_t;		/*%< Time */

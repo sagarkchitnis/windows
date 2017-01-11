@@ -64,7 +64,7 @@ typedef pk11_context_t isc_md5_t;
 #else
 
 typedef  uint32_t isc_uint32_t;
-typedef boolean isc_boolean_t;
+typedef int isc_boolean_t;
 
 typedef struct {
 	isc_uint32_t buf[4];

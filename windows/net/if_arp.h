@@ -1,5 +1,5 @@
 #pragma once
-#include<sys/wintypes.h>
+#include "netinet/in.h"
 
 /*
 2  * INET         An implementation of the TCP/IP protocol suite for the LINUX
