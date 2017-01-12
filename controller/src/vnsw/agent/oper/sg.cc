@@ -93,7 +93,7 @@ bool SgTable::ChangeHandler(DBEntry *entry, const DBRequest *req) {
 
 bool SgTable::OperDBDelete(DBEntry *entry, const DBRequest *req) {
     SgEntry *sg = static_cast<SgEntry *>(entry);
-    sg->SendObjectLog(GetOperDBTraceBuf(), AgentLogEvent::DELETE);
+    sg->SendObjectLog(GetOperDBTraceBuf(), AgentLogEvent::DEL);
     return true;
 }
 
@@ -215,7 +215,7 @@ void SgEntry::SendObjectLog(SandeshTraceBufferPtr buf,
         case AgentLogEvent::ADD:
             str.assign("Addition");
             break;
-        case AgentLogEvent::DELETE:
+        case AgentLogEvent::DEL:
             str.assign("Deletion");
             break;
         case AgentLogEvent::CHANGE:

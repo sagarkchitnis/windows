@@ -266,7 +266,7 @@ void AgentRouteTable::DeletePathFromPeer(DBTablePartBase *part,
     // Delete route if no more paths 
     if (rt->GetActivePath() == NULL) {
         RouteInfo rt_info_del;
-        rt->FillTrace(rt_info_del, AgentRoute::DELETE, NULL);
+        rt->FillTrace(rt_info_del, AgentRoute::DEL, NULL);
         OPER_TRACE_ROUTE(Route, rt_info_del);
         PreRouteDelete(rt);
         RemoveUnresolvedRoute(rt);

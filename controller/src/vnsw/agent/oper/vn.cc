@@ -601,7 +601,7 @@ bool VnTable::OperDBDelete(DBEntry *entry, const DBRequest *req) {
     VnEntry *vn = static_cast<VnEntry *>(entry);
     DeleteAllIpamRoutes(vn);
     RebakeVxlan(vn, true);
-    vn->SendObjectLog(AgentLogEvent::DELETE);
+    vn->SendObjectLog(AgentLogEvent::DEL);
     return true;
 }
 
@@ -1220,7 +1220,7 @@ void VnEntry::SendObjectLog(AgentLogEvent::type event) const {
         case AgentLogEvent::ADD:
             str.assign("Addition ");
             break;
-        case AgentLogEvent::DELETE:
+        case AgentLogEvent::DEL:
             str.assign("Deletion ");
             info.set_event(str);
             VN_OBJECT_LOG_LOG("AgentVn", SandeshLevel::SYS_INFO, info);

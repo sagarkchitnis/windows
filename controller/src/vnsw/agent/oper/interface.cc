@@ -228,7 +228,7 @@ bool InterfaceTable::OperDBDelete(DBEntry *entry, const DBRequest *req) {
     bool ret = false;
 
     if (intf->Delete(req)) {
-        intf->SendTrace(this, Interface::DELETE);
+        intf->SendTrace(this, Interface::DEL);
         ret = true;
     }
     return ret;

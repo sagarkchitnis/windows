@@ -888,8 +888,9 @@ def UseCassandraCql(env):
     return False
 
 def CppDisableExceptions(env):
-    if not UseSystemBoost(env):
-        env.AppendUnique(CCFLAGS='-fno-exceptions')
+    return
+#    if not UseSystemBoost(env):
+#       env.AppendUnique(CCFLAGS='-fno-exceptions')
 
 def CppEnableExceptions(env):
     cflags = env['CCFLAGS']
@@ -1096,7 +1097,7 @@ def SetupBuildEnvironment(conf):
     env['CCPDBFLAGS'] = '/Zi /Fd${TARGET}.pdb'
     opt_level = env['OPT']
 	# /GS /analyze- /W3 /Zc:wchar_t /ZI /Gm /Od /Fd"Debug\vc140.pdb" /Zc:inline /fp:precise /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo /Fo"Debug\" /Fp"Debug\compilerproj.pch" 
-    env.Append(CCFLAGS = '/GS /analyze- /w /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise  /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
+    env.Append(CCFLAGS = '/GS /analyze- /w /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise /D_WIN32_WINNT=0x0601 /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
     opt_level = env['OPT']
     if opt_level == 'production':
         env.Append(CCFLAGS = '-g -O3')

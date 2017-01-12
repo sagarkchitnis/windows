@@ -6,8 +6,8 @@
 #include <windows.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
-#include <netinet/icmp.h>
 #include <netinet/ip.h>
+#include <netinet/icmp.h>
 #endif
 
 #include <stdint.h>
@@ -105,7 +105,7 @@ void DiagPktHandler::SendTimeExceededPacket() {
     uint16_t icmp_len = pkt_info_->ip->ip_hl * 4 + 128;
     if (ntohs(pkt_info_->ip->ip_len) < icmp_len)
         icmp_len = ntohs(pkt_info_->ip->ip_len);
-    uint8_t icmp_payload[icmp_len];
+    uint8_t *icmp_payload = new uint8_t[icmp_len];
     memcpy(icmp_payload, pkt_info_->ip, icmp_len);
     DiagEntry::DiagKey key = -1;
     if (!ParseIcmpData(icmp_payload, icmp_len, (uint16_t *)&key))
@@ -140,6 +140,7 @@ void DiagPktHandler::SendTimeExceededPacket() {
 
     Send(GetInterfaceIndex(), pkt_info_->vrf, AgentHdr::TX_SWITCH,
          PktHandler::ICMP);
+	delete[] icmp_payload;
 }
 
 bool DiagPktHandler::HandleTraceRouteResponse() {
@@ -163,7 +164,7 @@ bool DiagPktHandler::HandleTraceRouteResponse() {
 
     DiagEntryOp *op;
     if (IsDone()) {
-        op = new DiagEntryOp(DiagEntryOp::DELETE, entry);
+        op = new DiagEntryOp(DiagEntryOp::DEL, entry);
     } else {
         op = new DiagEntryOp(DiagEntryOp::RETRY, entry);
     }
@@ -297,7 +298,7 @@ bool DiagPktHandler::Run() {
 
     if (entry->GetSeqNo() == entry->GetMaxAttempts()) {
         DiagEntryOp *op;
-        op = new DiagEntryOp(DiagEntryOp::DELETE, entry);
+        op = new DiagEntryOp(DiagEntryOp::DEL, entry);
         entry->diag_table()->Enqueue(op);
     } else {
         entry->Retry();

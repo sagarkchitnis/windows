@@ -23,22 +23,7 @@ Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 typedef __int32 int32_t;
 typedef unsigned __int32 uint32_t;
 typedef	uint32_t		in_addr_t;
-/*struct linux_sockaddr {
-	unsigned short    sa_family;    // address family, AF_xxx
-	char              sa_data[14];  // 14 bytes of protocol address
-};
 
+#define IPPROTO_GRE  47            // Cisco GRE tunnels (rfc 1701,1702)    
 
-// IPv4 AF_INET sockets:
-
-struct linux_sockaddr_in {
-	short            sin_family;   // e.g. AF_INET, AF_INET6
-	unsigned short   sin_port;     // e.g. htons(3490)
-	struct in_addr   sin_addr;     // see struct in_addr, below
-	char             sin_zero[8];  // zero this if you want to
-};
-
-struct linux_in_addr {
-	unsigned long s_addr;          // load with inet_pton()
-};
-*/
+ 
