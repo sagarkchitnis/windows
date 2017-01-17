@@ -369,7 +369,7 @@ void BgpAsAServiceSandeshReq::HandleRequest() const {
            BgpAsAServiceSandeshList entry;
            entry.set_vm_bgp_peer_ip((*it).local_peer_ip_.to_string());
            entry.set_vm_nat_source_port((*it).source_port_);
-           entry.set_vmi_uuid(UuidToString(map_it->first));
+           entry.set_vmi_uuid(UUIDToString(map_it->first));
            bgpaas_map.push_back(entry);
            it++;
        }

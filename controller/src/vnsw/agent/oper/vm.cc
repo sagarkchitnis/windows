@@ -35,7 +35,7 @@ bool VmEntry::IsLess(const DBEntry &rhs) const {
 }
 
 string VmEntry::ToString() const {
-    return UuidToString(GetUuid());
+    return UUIDToString(GetUuid());
 }
 
 DBEntryBase::KeyPtr VmEntry::GetDBRequestKey() const {
@@ -51,7 +51,7 @@ void VmEntry::SetKey(const DBRequestKey *key) {
 bool VmEntry::DBEntrySandesh(Sandesh *sresp, std::string &name) const {
     VmListResp *resp = static_cast<VmListResp *>(sresp);
 
-    std::string str_uuid = UuidToString(GetUuid());
+    std::string str_uuid = UUIDToString(GetUuid());
     if (name.empty() || str_uuid == name) {
         VmSandeshData data;
         data.set_uuid(str_uuid);
@@ -111,7 +111,7 @@ void VmEntry::SetInterfacesDropNewFlows(bool drop_new_flows) const {
 void VmEntry::SendObjectLog(AgentLogEvent::type event) const {
     VmObjectLogInfo info;
     string str;
-    string str_uuid = UuidToString(GetUuid());
+    string str_uuid = UUIDToString(GetUuid());
     vector<string> sg_list;
 
     switch (event) {

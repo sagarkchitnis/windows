@@ -40,7 +40,7 @@ class FlowStatsCollector;
 class FlowToken;
 class FlowMgmtRequest;
 class FlowEntryInfo;
-//WINDOWS typedef std::auto_ptr<FlowEntryInfo> FlowMgmtEntryInfoPtr;
+typedef std::auto_ptr<FlowEntryInfo> FlowMgmtEntryInfoPtr;
 
 ////////////////////////////////////////////////////////////////////////////
 // This is helper struct to carry parameters of reverse-flow. When flow is
@@ -650,11 +650,10 @@ class FlowEntry {
     }
 
     FlowEntryInfo *flow_mgmt_info() const { 
-		return nullptr;
-		//windows return flow_mgmt_info_.get(); 
+		return flow_mgmt_info_.get(); 
 	}
     void set_flow_mgmt_info(FlowEntryInfo *info) {
-       //windows flow_mgmt_info_.reset(info);
+       flow_mgmt_info_.reset(info);
     }
 private:
     friend class FlowTable;
@@ -733,7 +732,7 @@ private:
 
     // Field used by flow-mgmt module. Its stored here to optimize flow-mgmt
     // and avoid lookups
-    //WINDOWS FlowMgmtEntryInfoPtr flow_mgmt_info_;
+    FlowMgmtEntryInfoPtr flow_mgmt_info_;
     // IMPORTANT: Remember to update Reset() routine if new fields are added
     // IMPORTANT: Remember to update Copy() routine if new fields are added
 };
