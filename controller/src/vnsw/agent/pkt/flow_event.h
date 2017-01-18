@@ -8,7 +8,9 @@
 #endif
 #include <ksync/ksync_entry.h>
 #include "flow_table.h"
-
+#ifdef _WINDOWS
+#include <sys/resource.h>
+#endif
 class FlowTokenPool;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -299,7 +301,7 @@ protected:
     // due to Flow PendingActions
     uint64_t events_processed_;
     uint16_t latency_limit_;
-    //WINDOWS struct rusage rusage_;
+    struct rusage rusage_;
 };
 
 class FlowEventQueue : public FlowEventQueueBase {

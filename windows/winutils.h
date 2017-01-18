@@ -1,4 +1,5 @@
 #pragma once
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include<windows.h>
 #define CLOCK_REALTIME                  0
 #define CLOCK_MONOTONIC                 1
@@ -57,3 +58,6 @@ struct rlimit {
 int getrlimit(int resource, struct rlimit *rlp);
 
 int setrlimit(int resource, const struct rlimit *rlp);
+
+#define strncasecmp _strnicmp
+#define strcasecmp _stricmp

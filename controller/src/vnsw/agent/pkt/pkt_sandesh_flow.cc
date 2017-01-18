@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  */
-
+#include <boost/asio.hpp>
+#include <windows.h>
 #include <pkt/pkt_sandesh_flow.h>
 #include <vector>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -253,7 +254,7 @@ bool PktSandeshFlow::SetFlowKey(string key) {
     if (getline(ss, item, ch)) {
         dip = item;
     }
-    error_code ec;
+    boost::system::error_code ec;
     flow_iteration_key_.src_addr = IpAddress::from_string(sip.c_str(), ec);
     flow_iteration_key_.dst_addr = IpAddress::from_string(dip.c_str(), ec);
     if (flow_iteration_key_.src_addr.is_v4()) {
@@ -384,7 +385,7 @@ void FetchFlowRecord::HandleRequest() const {
     FlowTable *flow_obj;
 
     key.nh = get_nh();
-    error_code ec;
+    boost::system::error_code ec;
     key.src_addr = IpAddress::from_string(get_sip(), ec);
     key.dst_addr = IpAddress::from_string(get_dip(), ec);
     if (key.src_addr.is_v4()) {

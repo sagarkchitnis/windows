@@ -6,9 +6,9 @@
 
 #include <vector>
 #include <bitset>
-#ifndef _WINDOWS
+
 #include <arpa/inet.h>
-#endif
+
 
 #include <netinet/in.h>
 #include <base/os.h>
