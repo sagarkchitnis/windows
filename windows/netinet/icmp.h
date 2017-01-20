@@ -55,12 +55,28 @@ struct icmp {
 			n_short	icd_seq;
 		} ih_idseq;
 		int ih_void;
+		/* ICMP_UNREACH_NEEDFRAG -- Path MTU Discovery (RFC1191) */
+		struct ih_pmtu {
+			n_short ipm_void;
+			n_short ipm_nextmtu;
+		} ih_pmtu;
+
+		struct ih_rtradv {
+			u_char irt_num_addrs;
+			u_char irt_wpa;
+			u_int16_t irt_lifetime;
+		} ih_rtradv;
 	} icmp_hun;
 #define	icmp_pptr	icmp_hun.ih_pptr
 #define	icmp_gwaddr	icmp_hun.ih_gwaddr
 #define	icmp_id		icmp_hun.ih_idseq.icd_id
 #define	icmp_seq	icmp_hun.ih_idseq.icd_seq
 #define	icmp_void	icmp_hun.ih_void
+#define	icmp_pmvoid	icmp_hun.ih_pmtu.ipm_void
+#define	icmp_nextmtu	icmp_hun.ih_pmtu.ipm_nextmtu
+#define	icmp_num_addrs	icmp_hun.ih_rtradv.irt_num_addrs
+#define	icmp_wpa	icmp_hun.ih_rtradv.irt_wpa
+#define	icmp_lifetime	icmp_hun.ih_rtradv.irt_lifetime
 	union {
 		struct id_ts {
 			n_time its_otime;

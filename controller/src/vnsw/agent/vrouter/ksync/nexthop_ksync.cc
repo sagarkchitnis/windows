@@ -27,7 +27,8 @@
 #include "vrouter/ksync/nexthop_ksync.h"
 #include "vrouter/ksync/ksync_init.h"
 #include "vr_types.h"
-
+//WINDOWSFIX - put in header
+#define AF_BRIDGE 7
 NHKSyncEntry::NHKSyncEntry(NHKSyncObject *obj, const NHKSyncEntry *entry,
                            uint32_t index) :
     KSyncNetlinkDBEntry(index), ksync_obj_(obj), type_(entry->type_),
@@ -745,7 +746,7 @@ int NHKSyncEntry::Encode(sandesh_op::type op, char *buf, int buf_len) {
                 encoder.set_nhr_tun_dip(htonl(dip_.to_v4().to_ulong()));
             } else if (sip_.is_v6() && dip_.is_v6()) {
                 encoder.set_nhr_family(AF_INET6);
-                boost::array<unsigned char, 16> bytes = sip_.to_v6().to_bytes();
+                array<unsigned char, 16> bytes = sip_.to_v6().to_bytes();
                 std::vector<int8_t> sip_vector(bytes.begin(), bytes.end());
                 bytes = dip_.to_v6().to_bytes();
                 std::vector<int8_t> dip_vector(bytes.begin(), bytes.end());
