@@ -5,6 +5,9 @@ import os
 SConscript(dirs=['lib', 'src'])
 
 env = DefaultEnvironment()
+if os.name == 'nt':
+ env.Append(CPPPATH = ['#windows'])
+
 env.Alias('controller/test', [
     'controller/src/agent:test',
     'controller/src/analytics:test',
@@ -46,8 +49,7 @@ env.Alias('controller/flaky-test', [
     'controller/src/config/device-manager:flaky-test',
 ])
 
-if os.name == 'nt':
- env.Append(CPPPATH = ['#windows'])
+
 
 env.Alias('test', [ 'controller/test' ])
 env.Alias('flaky-test', [ 'controller/flaky-test' ])

@@ -33,6 +33,9 @@
 #include "vr_os.h"
 #endif
 
+//WINDOWSFIX move to header
+#define AF_BRIDGE 7
+
 RouteKSyncEntry::RouteKSyncEntry(RouteKSyncObject* obj, 
                                  const RouteKSyncEntry *entry, 
                                  uint32_t index) :
@@ -497,12 +500,12 @@ int RouteKSyncEntry::Encode(sandesh_op::type op, uint8_t replace_plen,
     if (rt_type_ != Agent::BRIDGE) {
         if (addr_.is_v4()) {
             encoder.set_rtr_family(AF_INET);
-            boost::array<unsigned char, 4> bytes = addr_.to_v4().to_bytes();
+            array<unsigned char, 4> bytes = addr_.to_v4().to_bytes();
             std::vector<int8_t> rtr_prefix(bytes.begin(), bytes.end());
             encoder.set_rtr_prefix(rtr_prefix);
         } else if (addr_.is_v6()) {
             encoder.set_rtr_family(AF_INET6);
-            boost::array<unsigned char, 16> bytes = addr_.to_v6().to_bytes();
+            array<unsigned char, 16> bytes = addr_.to_v6().to_bytes();
             std::vector<int8_t> rtr_prefix(bytes.begin(), bytes.end());
             encoder.set_rtr_prefix(rtr_prefix);
         }

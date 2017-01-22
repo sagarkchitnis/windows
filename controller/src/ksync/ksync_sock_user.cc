@@ -87,6 +87,7 @@ void KSyncSockTypeMap::ProcessSandesh(const uint8_t *parse_buf, size_t buf_len,
 }
 
 void KSyncSockTypeMap::PurgeTxBuffer() {
+#if 0 //WINDOWSFIX
     // All responses are stored in tx_buff_list_
     // Make io-vector of all responses and transmit them
     // If there are more than one responses, they are sent as NETLINK MULTI
@@ -134,9 +135,11 @@ void KSyncSockTypeMap::PurgeTxBuffer() {
         *it++;
     }
     tx_buff_list_.clear();
+#endif
 }
 
 void KSyncSockTypeMap::FlowNatResponse(uint32_t seq_num, vr_flow_req *req) {
+#if 0 //WINDOWSFIX
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     int flow_error = sock->GetKSyncError(KSyncSockTypeMap::KSYNC_FLOW_ENTRY_TYPE);
     struct nl_client cl;
@@ -182,17 +185,21 @@ void KSyncSockTypeMap::FlowNatResponse(uint32_t seq_num, vr_flow_req *req) {
 
     nl_update_header(&cl, encode_len);
     sock->AddNetlinkTxBuff(&cl);
+#endif
 }
 
 void KSyncSockTypeMap::InitNetlinkDoneMsg(struct nlmsghdr *nlh,
                                           uint32_t seq_num) {
+#if 0 //WINDOWSFIX
     nlh->nlmsg_seq = seq_num;
     nlh->nlmsg_type = NLMSG_DONE;
     nlh->nlmsg_len = NLMSG_HDRLEN;
     nlh->nlmsg_flags = 0;
+#endif
 }
 
 void KSyncSockTypeMap::SimulateResponse(uint32_t seq_num, int code, int flags) {
+#if 0 //WINDOWSFIX
     struct nl_client cl;
     int encode_len, ret;
     uint8_t *buf;
@@ -214,6 +221,7 @@ void KSyncSockTypeMap::SimulateResponse(uint32_t seq_num, int code, int flags) {
 
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     sock->AddNetlinkTxBuff(&cl);
+#endif
 }
 
 void KSyncSockTypeMap::DisableReceiveQueue(bool disable) {
@@ -500,14 +508,20 @@ int KSyncSockTypeMap::VxLanCount() {
 }
  
 uint32_t KSyncSockTypeMap::GetSeqno(char *data) {
+#if 0 //WINDOWSFIX
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     return nlh->nlmsg_seq;
+#endif
+	return 0;
 }
 
 bool KSyncSockTypeMap::IsMoreData(char *data) {
+#if 0 //WINDOWSFIX
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
 
     return (nlh->nlmsg_flags & NLM_F_MULTI);
+#endif
+	return 0;
 }
 
 bool KSyncSockTypeMap::BulkDecoder(char *data,
@@ -522,6 +536,7 @@ bool KSyncSockTypeMap::Decoder(char *data, AgentSandeshContext *context) {
 }
 
 bool KSyncSockTypeMap::Validate(char *data) {
+#if 0 //WINDOWSFIX
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     if (nlh->nlmsg_type == NLMSG_ERROR) {
         LOG(ERROR, "Ignoring Netlink error for seqno " << nlh->nlmsg_seq 
@@ -536,6 +551,7 @@ bool KSyncSockTypeMap::Validate(char *data) {
         assert(0);
         return true;
     }
+#endif
     return true;
 }
 static int IoVectorToData(char *data, uint32_t len, KSyncBufferList *iovec) {
@@ -1096,6 +1112,7 @@ void KSyncUserSockDropStatsContext::Process() {
 }
 
 void KSyncUserSockContext::DropStatsMsgHandler(vr_drop_stats_req *req) {
+#if 0 //WINDOWSFIX
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     KSyncUserSockDropStatsContext *dropctx = new KSyncUserSockDropStatsContext(
                                                           GetSeqNum(), req);
@@ -1107,9 +1124,11 @@ void KSyncUserSockContext::DropStatsMsgHandler(vr_drop_stats_req *req) {
         dropctx->Process();
         delete dropctx;
     }
+#endif
 }
 
 void MockDumpHandlerBase::SendDumpResponse(uint32_t seq_num, Sandesh *from_req) {
+#if 0 //WINDOWSFIX
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     struct nl_client cl;
     int error = 0, ret;
@@ -1180,9 +1199,12 @@ void MockDumpHandlerBase::SendDumpResponse(uint32_t seq_num, Sandesh *from_req) 
     } else {
         KSyncSockTypeMap::SimulateResponse(seq_num, resp_code, 0);
     }
+#endif
 }
 
 void MockDumpHandlerBase::SendGetResponse(uint32_t seq_num, int idx) {
+#if 0 //WINDOWSFIX
+
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     struct nl_client cl;
     int error = 0, ret;
@@ -1227,6 +1249,7 @@ void MockDumpHandlerBase::SendGetResponse(uint32_t seq_num, int idx) {
 
     nl_update_header(&cl, encode_len + resp_len);
     sock->AddNetlinkTxBuff(&cl);
+#endif
 }
 
 Sandesh* IfDumpHandler::Get(int idx) {

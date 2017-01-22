@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2015 Juniper Networks, Inc. All rights reserved.
  */
-#include <sys/eventfd.h>
+//WINDOWSFIX #include <sys/eventfd.h>
+#include <boost/asio.hpp>
+#include <windows.h>
+
 #include <algorithm>
 #include <vector>
 #include <set>
@@ -60,7 +63,7 @@ void KSyncTxQueue::Init(bool use_work_queue) {
             (boost::bind(&KSyncSock::OnEmptyQueue, sock_, _1));
         return;
     }
-    assert((event_fd_ = eventfd(0, (FD_CLOEXEC | EFD_SEMAPHORE))) >= 0);
+   //WINDOWS-TEMP assert((event_fd_ = eventfd(0, (FD_CLOEXEC | EFD_SEMAPHORE))) >= 0);
 
     KSyncTxQueueTask *task = new KSyncTxQueueTask(scheduler, this);
     scheduler->Enqueue(task);
@@ -77,7 +80,7 @@ void KSyncTxQueue::Shutdown() {
     }
 
     uint64_t u = 1;
-    assert(write(event_fd_, &u, sizeof(u)) == sizeof(u));
+    //WINDOWS-TEMP assert(write(event_fd_, &u, sizeof(u)) == sizeof(u));
     while (queue_len_ != 0) {
         usleep(1);
     }
@@ -85,7 +88,7 @@ void KSyncTxQueue::Shutdown() {
     while(ksync_tx_queue_task_done_ != true) {
         usleep(1);
     }
-    close(event_fd_);
+   //WINDOWS-TEMP close(event_fd_);
 }
 
 bool KSyncTxQueue::EnqueueInternal(IoContext *io_context) {
@@ -101,7 +104,8 @@ bool KSyncTxQueue::EnqueueInternal(IoContext *io_context) {
     if (ncount == 1) {
         uint64_t u = 1;
         int res = 0;
-        while ((res = write(event_fd_, &u, sizeof(u))) < (int)sizeof(u)) {
+  //WINDOWS-TEMP      while ((res = write(event_fd_, &u, sizeof(u))) < (int)sizeof(u))
+		{
             int ec = errno;
             if (ec != EINTR && ec != EIO) {
                 LOG(ERROR, "KsyncTxQueue write failure : " << ec << " : "
@@ -121,7 +125,7 @@ bool KSyncTxQueue::Run() {
         ssize_t num = 0;
 
         while (1) {
-            num = read(event_fd_, &u, sizeof(u));
+         //WINDOWS-TEMP   num = read(event_fd_, &u, sizeof(u));
             if (num >= (int)sizeof(u)) {
                 break;
             }
