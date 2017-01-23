@@ -276,20 +276,23 @@ typedef enum {
     L4_TYPE_NEIGHBOUR_ADVERTISEMENT,
 } l4_pkt_type_t;
 
+PACK(
 struct vr_eth {
     unsigned char eth_dmac[VR_ETHER_ALEN];
     unsigned char eth_smac[VR_ETHER_ALEN];
     unsigned short eth_proto;
-} __attribute__((packed));
+} );
 
 #define VLAN_ID_INVALID         0xFFFF
 #define VLAN_ID_MAX             0xFFFF
 #define VR_VLAN_PRIORITY_SHIFT  13
 
+PACK(
 struct vr_vlan_hdr {
     unsigned short vlan_tag;
     unsigned short vlan_proto;
-} __attribute__((packed));
+}
+);
 
 
 #define VR_ARP_HW_LEN           6
@@ -322,6 +325,7 @@ vr_vlan_get_tos(uint8_t *eth_data)
 
 #define VR_ARP_HW_TYPE_ETHER    1
 
+PACK(
 struct vr_arp {
     unsigned short arp_hw;
     unsigned short arp_proto;
@@ -332,7 +336,7 @@ struct vr_arp {
     unsigned int arp_spa;
     unsigned char arp_dha[VR_ARP_HW_LEN];
     unsigned int arp_dpa;
-} __attribute__((packed));
+} );
 
 static inline bool
 vr_grat_arp(struct vr_arp *sarp)
@@ -353,6 +357,7 @@ vr_grat_arp(struct vr_arp *sarp)
 #define VR_IP_DSCP(val)         ((val) << 2)
 
 #define VR_IP_ADDRESS_LEN       4
+
 
 struct vr_ip {
 #if defined(__KERNEL__) && defined(__linux__)
@@ -389,7 +394,8 @@ struct vr_ip {
     unsigned short ip_csum;
     unsigned int ip_saddr;
     unsigned int ip_daddr;
-} __attribute__((packed));
+};
+
 
 static inline void
 vr_incremental_diff(unsigned int oldval, unsigned int newval,
@@ -454,20 +460,22 @@ vr_inet_set_tos(struct vr_ip *iph, uint8_t tos)
 #define SOURCE_LINK_LAYER_ADDRESS_OPTION    1
 #define TARGET_LINK_LAYER_ADDRESS_OPTION    2
 
+PACK(
 struct vr_neighbor_option {
     uint8_t vno_type;
     uint8_t vno_length;
     uint8_t vno_value[0];
-} __attribute__((packed));
+}) ;
 
 
+PACK(
 struct vr_ip6_pseudo {
     unsigned char ip6_src[VR_IP6_ADDRESS_LEN];
     unsigned char ip6_dst[VR_IP6_ADDRESS_LEN];
     unsigned short ip6_l4_length;
     unsigned short ip6_zero;
     unsigned int ip6_zero_nh;
-} __attribute__((packed));
+});
 
 
 struct vr_ip6 {
@@ -502,7 +510,7 @@ struct vr_ip6 {
     uint8_t         ip6_hlim;
     uint8_t         ip6_src[VR_IP6_ADDRESS_LEN];
     uint8_t         ip6_dst[VR_IP6_ADDRESS_LEN];
-} __attribute__((packed));
+} ;
 
 #define VR_IP4_MAPPED_IP6_ZERO_BYTES    10
 #define VR_IP4_MAPPED_IP6_ONE_BYTES     2
@@ -726,6 +734,7 @@ vr_ip_transport_header_valid(struct vr_ip *iph)
 #define VR_TCP_OFFSET(field)    ((ntohs(field) & 0xF000) >> 12)
 #define VR_TCP_FLAGS(field)     (ntohs(field) & 0x01FF)
 
+PACK(
 struct vr_tcp {
     unsigned short tcp_sport;
     unsigned short tcp_dport;
@@ -735,21 +744,23 @@ struct vr_tcp {
     unsigned short tcp_win;
     unsigned short tcp_csum;
     unsigned short tcp_urg;
-} __attribute__((packed));
+} );
 
+PACK(
 struct vr_udp {
     unsigned short udp_sport;
     unsigned short udp_dport;
     unsigned short udp_length;
     unsigned short udp_csum;
-} __attribute__((packed));
+} );
 
+PACK(
 struct vr_sctp {
     unsigned short sctp_sport;
     unsigned short sctp_dport;
     unsigned int sctp_vtag;
     unsigned int sctp_csum;
-} __attribute__((packed));
+} );
 
 #define VR_ICMP_TYPE_ECHO_REPLY     0
 #define VR_ICMP_TYPE_DEST_UNREACH   3
@@ -765,6 +776,7 @@ struct vr_sctp {
 
 #define VR_IP6_PROTO_FRAG          44
 
+PACK(
 struct vr_icmp {
     uint8_t icmp_type;
     uint8_t icmp_code;
@@ -773,7 +785,7 @@ struct vr_icmp {
     uint16_t icmp_eid;
     uint16_t icmp_eseq;
     uint8_t  icmp_data[0]; /* compatibility with ICMPv6 */
-} __attribute__((packed));
+} );
 
 static inline bool
 vr_icmp_echo(struct vr_icmp *icmph)
@@ -810,10 +822,11 @@ vr_icmp6_error(struct vr_icmp *icmp6)
     return false;
 }
 
+PACK(
 struct vr_gre {
     unsigned short gre_flags;
     unsigned short gre_proto;
-} __attribute__((packed));
+} );
 
 struct vr_pcap {
     /* timestamp seconds */
@@ -826,10 +839,11 @@ struct vr_pcap {
     unsigned int pcap_orig_len;
 };
 
+PACK(
 struct vr_vxlan {
     unsigned int vxlan_flags;
     unsigned int vxlan_vnid;
-} __attribute__((packed));
+} );
 
 #define VR_VXLAN_IBIT               0x08000000
 #define VR_VXLAN_RABIT              0x01000000
@@ -977,8 +991,8 @@ vr_forwarding_md_set_label(struct vr_forwarding_md *fmd, unsigned int label,
 static inline bool
 pkt_is_gso(struct vr_packet *pkt)
 {
-    if (vr_pgso_size && vr_pgso_size(pkt))
-        return true;
+    //WINDOWS-TEMP if (vr_pgso_size && vr_pgso_size(pkt))
+	//WINDOWS-TEMP    return true;
     return false;
 }
 
@@ -988,7 +1002,7 @@ pkt_data_at_offset(struct vr_packet *pkt, unsigned short off)
     if (off < pkt->vp_end)
         return pkt->vp_head + off;
 
-    return vr_data_at_offset(pkt, off);
+   //WINDOWS-TEMP return vr_data_at_offset(pkt, off);
 }
 
 static inline unsigned char *
@@ -1051,7 +1065,7 @@ pkt_network_header(struct vr_packet *pkt)
     if (pkt->vp_network_h < pkt->vp_end)
         return pkt->vp_head + pkt->vp_network_h;
 
-    return vr_network_header(pkt);
+   //WINDOWS-TEMP return vr_network_header(pkt);
 }
 
 static inline unsigned char *
@@ -1099,7 +1113,8 @@ pkt_head_len(struct vr_packet *pkt)
 static inline unsigned int
 pkt_len(struct vr_packet *pkt)
 {
-    return pkt_head_len(pkt) + vr_pfrag_len(pkt);
+    //WINDOWS-TEMP return pkt_head_len(pkt) + vr_pfrag_len(pkt);
+	return 0;
 }
 
 static inline unsigned char *

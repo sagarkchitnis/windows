@@ -8,6 +8,7 @@
 
 #include "vr_defs.h"
 #include "vr_htable.h"
+#define PACK( ___somestructure___ ) __pragma( pack(push, 1) ) ___somestructure___ __pragma( pack(pop) )
 
 #define VR_FLOW_ACTION_DROP         0x0
 #define VR_FLOW_ACTION_HOLD         0x1
@@ -327,8 +328,9 @@ struct vr_dummy_flow_entry {
     uint8_t fe_drop_reason;
     uint8_t fe_type;
     unsigned short fe_udp_src_port;
-    struct vr_mirror_meta_entry *fe_mme;;
-} );
+    struct vr_mirror_meta_entry *fe_mme;
+} 
+);
 
 #define VR_FLOW_ENTRY_PACK (128 - sizeof(struct vr_dummy_flow_entry))
 
