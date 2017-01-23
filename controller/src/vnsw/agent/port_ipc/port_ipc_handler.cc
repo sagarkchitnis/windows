@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2015 Juniper Networks, Inc. All rights reserved.
  */
+#include<WinSock2.h>
 
 #include <ctype.h>
 #include <stdio.h>
@@ -495,10 +496,12 @@ bool PortIpcHandler::GetPortInfo(const string &uuid_str, string &info) const {
 }
 
 bool PortIpcHandler::InterfaceExists(const std::string &name) const {
+#if 0 //WINDOWS-TEMP
     int indx  = if_nametoindex(name.c_str());
     if (indx == 0) {
         return false;
     }
+#endif
     return true;
 }
 
