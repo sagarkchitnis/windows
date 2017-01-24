@@ -19,6 +19,7 @@
 #include "qos_config_kstate.h"
 #include "vr_nexthop.h"
 #include "vr_message.h"
+#include<WinSock2.h> 
 #include <net/if.h>
 
 using namespace std;

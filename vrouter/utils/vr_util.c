@@ -22,7 +22,7 @@
 #elif defined(__FreeBSD__)
 #include <net/ethernet.h>
 #endif
-
+#include<WinSock2.h>
 #include <net/if.h>
 #include <netinet/in.h>
 

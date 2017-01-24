@@ -10,7 +10,8 @@
 #ifndef _WINDOWS
 #include <sys/ioctl.h>
 #include <sys/socket.h>
-
+#include<WinSock2.h>
+#include<WinSock2.h> 
 #include <net/if.h>
 #endif
 #include "base/logging.h"

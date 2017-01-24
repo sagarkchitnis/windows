@@ -6,6 +6,7 @@
 #define vnsw_agent_flow_proto_hpp
 
 #ifndef _WINDOWS
+
 #include <net/if.h>
 #endif
 

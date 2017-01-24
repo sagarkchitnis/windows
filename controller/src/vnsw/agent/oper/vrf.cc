@@ -836,6 +836,7 @@ public:
     //Override route notification
     bool RouteWalkNotify(DBTablePartBase *partition, DBEntryBase *e) {
         assert(0);
+		return true;
     }
 
     static void WalkDone(VrfDeleteWalker *walker) { 

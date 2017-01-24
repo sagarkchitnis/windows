@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#include <WinSock2.h>
+#include<WinSock2.h> 
 #include <net/if.h>
 
 #include <boost/asio.hpp>

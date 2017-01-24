@@ -23,6 +23,7 @@
 #endif
 
 #include <stdint.h>
+#include<WinSock2.h>
 #include <net/if.h>
 #include <netinet/in.h>
 #include "vr_types.h"

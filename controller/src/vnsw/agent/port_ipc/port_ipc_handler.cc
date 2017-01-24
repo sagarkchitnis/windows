@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <fstream>
+#include<WinSock2.h> 
 #include <net/if.h>
 #include <boost/uuid/uuid.hpp>
 #include <boost/filesystem.hpp>

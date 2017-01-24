@@ -8,6 +8,7 @@
 
 #endif
 
+#include<WinSock2.h> 
 #include <net/if.h>
 
 #include <uve/agent_uve_stats.h>

@@ -1,11 +1,14 @@
 /*
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  sact*/
+#include <boost/asio.hpp>
+#include <windows.h>
 
 #include "base/os.h"
 #include <sys/types.h>
 #include <net/ethernet.h>
 #include <netinet/ether.h>
+#include<net/if.h>
 #include <boost/uuid/uuid_io.hpp>
 #include <tbb/mutex.h>
 
@@ -591,7 +594,7 @@ void InterfaceTable::DeleteDhcpSnoopEntry(const std::string &ifname) {
         return;
     }
 
-    return dhcp_snoop_map_.erase(it);
+     dhcp_snoop_map_.erase(it);
 }
 
 // Set config_seen_ flag in DHCP Snoop entry.

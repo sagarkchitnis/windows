@@ -17,6 +17,7 @@
 #include "vr_os.h"
 #endif
 
+#include<WinSock2.h> 
 #include <net/if.h>
 
 #include <io/event_manager.h>
