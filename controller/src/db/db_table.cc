@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  */
-
+#include <boost/asio.hpp>
+#include <windows.h>
 #include <vector>
 #include <tbb/atomic.h>
 #include <tbb/spin_rw_mutex.h>
