@@ -38,5 +38,12 @@ struct ifconf {
 		struct ifreq   *ifc_req; /* array of structures */
 	};
 };
+struct if_nameindex
+{
+	unsigned int if_index;	/* 1, 2, ... */
+	char *if_name;		/* null terminated name: "eth0", ... */
+};
 
 unsigned int if_nametoindex(const char *ifname);
+struct if_nameindex *if_nameindex(void);
+void if_freenameindex(struct if_nameindex *ptr);

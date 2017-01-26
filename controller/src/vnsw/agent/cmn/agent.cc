@@ -41,7 +41,7 @@
 
 #include <cmn/agent_factory.h>
 #include <base/task_tbbkeepawake.h>
-
+#include<net/if.h>
 const std::string Agent::null_string_ = "";
 const std::set<std::string> Agent::null_string_list_;
 const std::string Agent::fabric_vn_name_ =
@@ -463,7 +463,8 @@ void Agent::Shutdown() {
     tbb_awake_task_->ShutTbbKeepAwakeTask();
 }
 
-static bool interface_exist(string &name) {
+static bool interface_exist(string &name) 
+{
 	struct if_nameindex *ifs = NULL;
 	struct if_nameindex *head = NULL;
 	bool ret = false;

@@ -32,7 +32,7 @@ DWORD getppid();
 void WindowsCloseTaskFiles();
 #define PACK( ___somestructure___ ) __pragma( pack(push, 1) ) ___somestructure___ __pragma( pack(pop) )
 
-
+#define strtok_r strtok_s
 
 
 #define ETHER_ADDR_LEN 6
