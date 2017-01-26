@@ -12,9 +12,11 @@
 #include "nexthop_server/nexthop_server.h"
 #include <pthread.h>
 #include "rapidjson/document.h"
-#include "rapidjson/filestream.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/filewritestream.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include "sys/wintypes.h"
 
 NexthopDBClient::NexthopDBClient(WindowsDomainSocketSession *session,
                                  NexthopDBServer *server)
@@ -118,7 +120,7 @@ NexthopDBClient::NextMessage(int *data_len)
     }
 
     const char *nhdata = s.GetString();
-    int nhlen = s.Size();
+    int nhlen = s.GetSize();//WINDOWS-TEMP verify if this is correct
     u_int8_t *out_data = new u_int8_t[nhlen + 4];
     out_data[0] = (unsigned char) (nhlen >> 24);
     out_data[1] = (unsigned char) (nhlen >> 16);

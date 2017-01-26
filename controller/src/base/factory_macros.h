@@ -118,7 +118,7 @@
   public:\
     template <class U>\
     static typename boost::enable_if<boost::is_same<U, _T>, void>::type\
-        Register(boost::function<_T *(A0, A1, A2)> function) {\
+        Register(boost::function<_T *(A0&, A1&, A2&)> function) {\
         _Module *obj = GetInstance();\
         obj->make_ ## _T ## _ = function;\
     }\
@@ -129,7 +129,7 @@
         return obj->make_ ## _T ## _(a0, a1, a2);\
     }\
   private:\
-    boost::function<_T *(A0, A1, A2)> make_ ## _T ##_\
+    boost::function<_T *(A0&, A1&, A2&)> make_ ## _T ##_\
 
 #define FACTORY_PARAM_TYPE_N3(_Module, _T, _P, A0, A1, A2)\
   public:\
