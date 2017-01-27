@@ -316,6 +316,7 @@ class IFMapParserGenerator(object):
 #include "ifmap/ifmap_agent_parser.h"
 #include "ifmap/ifmap_server_parser.h"
 #include "ifmap/ifmap_table.h"
+#include <linux/time.h>
 
 using namespace pugi;
 using namespace std;

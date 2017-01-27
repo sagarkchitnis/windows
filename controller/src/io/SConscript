@@ -9,6 +9,7 @@ Import('BuildEnv')
 env = BuildEnv.Clone()
 env.CppDisableExceptions()
 env.Append(CPPPATH = [env['TOP']])
+env.Append(CPPPATH = '#third_party\OpenSSLWin32\include')
 
 SandeshGenFiles = env.SandeshGenCpp('io.sandesh')
 SandeshGenSrcs = env.ExtractCpp(SandeshGenFiles)

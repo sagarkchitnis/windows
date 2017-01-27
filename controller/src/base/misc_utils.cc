@@ -8,7 +8,7 @@
 #include <stdlib.h> 
 #include <base/misc_utils.h>
 #include <base/logging.h>
-#include <netdb.h>
+//WINDOWSFIX #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "boost/filesystem/operations.hpp"

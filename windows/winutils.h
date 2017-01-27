@@ -10,18 +10,9 @@ int getloadavg(double loadavg[], int nelem);;
 typedef  unsigned int   useconds_t;
 typedef unsigned int            uint;
 typedef unsigned long           ulong;
-typedef SSIZE_T              ssize_t;
-/*struct timeval {
-	time_t          tv_sec;
-	suseconds_t     tv_usec;
-};
+typedef ptrdiff_t ssize_t;
 
-struct timespec {
-	time_t          tv_sec;
-	long            tv_nsec;
-};*/
-
-char *ctime_r(time_t *, char[]);
+char *ctime_r(time_t*, char[]);
 
 int clock_gettime(int X, struct timespec *tv);
 int usleep(useconds_t usec);
