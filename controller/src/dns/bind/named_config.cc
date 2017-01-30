@@ -129,7 +129,7 @@ void NamedConfig::DelZone(const Subnet &subnet, const VirtualDnsConfig *vdns) {
 
 void NamedConfig::UpdateNamedConf(const VirtualDnsConfig *updated_vdns) {
     CreateNamedConf(updated_vdns);
-    sync();
+    //WINDOWS-TEMP sync();
     // rndc_reconfig();
     // TODO: convert this to a call to rndc library
     std::stringstream str;

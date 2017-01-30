@@ -101,3 +101,25 @@ struct tcphdr {
 */
 #define	TCP_NODELAY	0x01	/* don't delay send to coalesce packets */
 #define	TCP_MAXSEG	0x02	/* set maximum segment size */
+#define TCP_MD5SIG_MAXKEYLEN    80
+#define TCP_MD5SIG              14 
+
+#define _K_SS_MAXSIZE   128     /* Implementation specific max size */
+#define _K_SS_ALIGNSIZE (__alignof(struct sockaddr *))
+                                 /* Implementation specific desired alignment */
+
+ typedef unsigned short __kernel_sa_family_t;
+
+ struct __kernel_sockaddr_storage {
+	         __kernel_sa_family_t    ss_family;              /* address family */
+		       char            __data[_K_SS_MAXSIZE - sizeof(unsigned short)];
+	
+} __declspec(align(32));   /* force desired alignment */
+ struct tcp_md5sig {
+	         struct __kernel_sockaddr_storage tcpm_addr;     /* address associated */
+	         __u16   __tcpm_pad1;                            /* zero */
+	         __u16   tcpm_keylen;                            /* key length */
+	         __u32   __tcpm_pad2;                            /* zero */
+	         __u8    tcpm_key[TCP_MD5SIG_MAXKEYLEN];         /* key (binary) */
+	
+};

@@ -32,11 +32,7 @@ DBRequest::DBRequest() : oper(static_cast<DBOperation>(0)) {
 }
 
 DBRequest::~DBRequest() {
-#if defined(__GNUC__) && (__GNUC_PREREQ(4, 2) > 0)
-    boost::has_virtual_destructor<DBRequestKey>::type key_has_destructor;
-    boost::has_virtual_destructor<DBRequestData>::type data_has_destructor;
-    assert(key_has_destructor && data_has_destructor);
-#endif
+
 }
 
 void DBRequest::Swap(DBRequest *rhs) {

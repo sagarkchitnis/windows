@@ -239,7 +239,7 @@ int Timer::GetElapsedTime() const {
 
 #if BOOST_VERSION >= 104900
     elapsed =
-        boost::chrono::nanoseconds(impl_->timer_.expires_from_now()).count();
+        std::chrono::nanoseconds(impl_->timer_.expires_from_now()).count();
 #else
     elapsed = impl_->timer_.expires_from_now().total_nanoseconds();
 #endif
