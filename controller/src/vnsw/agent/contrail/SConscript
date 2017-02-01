@@ -25,13 +25,13 @@ cflags.append('-fexceptions')
 # Dependencies on external libraries first
 buildinfo_dep_libs = [
     '#build/lib/libthrift.lib',
-    '#build/lib/libthriftasio.lib',
-    '#build/lib/libhttp.lib',
-    '#build/lib/libhttp_parser.lib',
-    '#build/lib/libpugixml.lib',
+    '#build/lib/libthriftnb.lib',
+    '#build/lib/http.lib',
+    '#build/lib/http_parser.lib',
+    '#build/lib/pugixml.lib',
     '#build/lib/libsandesh.lib',
-    '#build/lib/libsandeshflow.lib',
-    '#build/lib/libsandeshvns.lib'
+    '#build/lib/sandeshflow.lib',
+    '#build/lib/sandeshvns.lib'
 ]
 
 def MapBuildCmnLib(list):
@@ -39,23 +39,23 @@ def MapBuildCmnLib(list):
 
 # Common contrail libraries
 buildinfo_dep_libs += MapBuildCmnLib([
-    'base/libbase.a',
-    'base/libcpuinfo.a',
-    'db/libdb.a',
-    'dns/bind/libbind_interface.a',
-    'ifmap/libifmap_agent.a',
-    'ifmap/libifmap_common.a',
-    'io/libio.a',
-    'ksync/libksync.a',
-    'net/libnet.a',
-    'route/libroute.a',
-    'schema/libbgp_schema.a',
-    'schema/libifmap_vnc.a',
-    'schema/libxmpp_unicast.a',
-    'schema/libxmpp_multicast.a',
-    'vrouter/utils/libvrutil.a',
-    'xml/libxml.a',
-    'xmpp/libxmpp.a'
+    'base/base.lib',
+    'base/cpuinfo.lib',
+    'db/db.lib',
+    'dns/bind/bind_interface.lib',
+    'ifmap/ifmap_agent.lib',
+    'ifmap/ifmap_common.lib',
+    'io/io.lib',
+    'ksync/ksync.lib',
+    'net/net.lib',
+    'route/route.lib',
+    'schema/bgp_schema.lib',
+    'schema/ifmap_vnc.lib',
+    'schema/xmpp_unicast.lib',
+    'schema/xmpp_multicast.lib',
+    'vrouter/utils/vrutil.lib',
+    'xml/xml.lib',
+    'xmpp/xmpp.lib'
      ])
 
 def MapBuildAgentLib(list):
@@ -63,20 +63,20 @@ def MapBuildAgentLib(list):
 
 # agent libraries
 buildinfo_dep_libs += MapBuildAgentLib([
-    'cfg/libcfg.a',
-    'cmn/libvnswcmn.a',
-    'controller/libvnswctrl.a',
-    'filter/libfilter.a',
-    'kstate/libkstate.a',
-    'vrouter/ksync/libvnswksync.a',
-    'openstack/libnova_ins.a',
-    'openstack/libnova_ins_thrift.a',
-    'port_ipc/libport_ipc.a',
-    'oper/libvnswoperdb.a',
-    'pkt/libpkt.a', 'diag/libdiag.a',
-    'services/libagent_services.a', 'uve/libuve.a',
-    'uve/libstatsuve.a', 'vrouter/flow_stats/libflowstats.a',
-    'vrouter/stats_collector/libstatscollector.a'
+    'cfg/cfg.lib',
+    'cmn/vnswcmn.lib',
+    'controller/vnswctrl.lib',
+    'filter/filter.lib',
+    'kstate/kstate.lib',
+    'vrouter/ksync/vnswksync.lib',
+    'openstack/nova_ins.lib',
+    'openstack/nova_ins_thrift.lib',
+    'port_ipc/port_ipc.lib',
+    'oper/vnswoperdb.lib',
+    'pkt/pkt.lib', 'diag/diag.lib',
+    'services/agent_services.lib', 'uve/uve.lib',
+    'uve/statsuve.lib', 'vrouter/flow_stats/flowstats.lib',
+    'vrouter/stats_collector/statscollector.lib'
 ])
 
 env.GenerateBuildInfoCode(
