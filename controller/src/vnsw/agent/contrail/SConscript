@@ -43,6 +43,7 @@ buildinfo_dep_libs += MapBuildCmnLib([
     'base/cpuinfo.lib',
     'db/db.lib',
     'dns/bind/bind_interface.lib',
+    'dns/cmn/cmn.lib',
     'ifmap/ifmap_agent.lib',
     'ifmap/ifmap_common.lib',
     'io/io.lib',
