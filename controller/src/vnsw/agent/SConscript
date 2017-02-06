@@ -145,12 +145,11 @@ env.Prepend(LIBS = [
     'http',
     'http_parser',
     'base',
-    'thriftasio',
+    'thriftnb',
     'thrift',
     'boost_filesystem',
     'boost_program_options',
     'boost_regex',
-    'rt',
 ])
 
 # Libvirt library
@@ -210,7 +209,7 @@ AgentEnv.AppendUnique(CONTRAIL_LIBS = [
     'ksyncnl',
     'kstate',
     'vrutil',
-    'isc',
+#    'isc',
 ])
 
 # Common libraries for agent test code

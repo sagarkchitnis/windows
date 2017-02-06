@@ -9,7 +9,7 @@ print 'installing bind binaries'
 vpath = '#/third_party/bind-9.11.0-p1/'
 sbinpath = '#/build/sbin'
 
-env = DefaultEnvironment()
+env = DefaultEnvironment(TARGET_ARCH='x86')
 
 #for windows we use the zip file with the binaries
 #copy binaries to sbin

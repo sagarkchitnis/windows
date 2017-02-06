@@ -25,7 +25,7 @@ boost_libs = [
 def MapPath(xpath, list):
     return map(lambda x: '#/' + Dir('.').path + '/tools/' + x, list)
 
-env = DefaultEnvironment()
+env = DefaultEnvironment(TARGET_ARCH='x86')
 
 
 

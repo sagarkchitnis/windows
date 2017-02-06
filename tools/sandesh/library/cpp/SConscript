@@ -86,7 +86,7 @@ WebServerOutput = []
 for elem in WebServerSpec:
   WebServerBuild(env, abs_path, elem[0], elem[1])
   
-libsandesh = env.Library(target = 'libsandesh',
+libsandesh = env.Library(target = 'sandesh',
                          source = SandeshGenSrcs +
                                   SandeshTraceGenSrcs +
                                   ['sandesh.cc',

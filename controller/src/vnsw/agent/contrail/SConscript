@@ -24,12 +24,12 @@ cflags.append('-fexceptions')
 
 # Dependencies on external libraries first
 buildinfo_dep_libs = [
-    '#build/lib/libthrift.lib',
-    '#build/lib/libthriftnb.lib',
+    '#build/lib/thrift.lib',
+    '#build/lib/thriftnb.lib',
     '#build/lib/http.lib',
     '#build/lib/http_parser.lib',
     '#build/lib/pugixml.lib',
-    '#build/lib/libsandesh.lib',
+    '#build/lib/sandesh.lib',
     '#build/lib/sandeshflow.lib',
     '#build/lib/sandeshvns.lib'
 ]
@@ -93,8 +93,8 @@ env.Prepend(LIBS = AgentEnv['CONTRAIL_LIBS'])
 # even though there may not be any calls requiring its presence. We need this
 # for kstate library so that the HTML file for kstate  is listed in agent
 # introspect page
-env.Prepend(LINKFLAGS = ['-Wl,--whole-archive', '-rdynamic', '-lkstate', '-ldiag',
-                         '-Wl,--no-whole-archive'])
+#env.Prepend(LINKFLAGS = ['-Wl,--whole-archive', '-rdynamic', '-lkstate', '-ldiag',
+#                         '-Wl,--no-whole-archive'])
 
 #Add -Wno-return-type to ignore errors from thrift generated code in
 #InstanceService.h

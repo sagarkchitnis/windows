@@ -19,7 +19,7 @@ env.Append(CPPPATH = [env['TOP'],
 env.Prepend(LIBS=[  'cpuinfo',
                     'ds',
                     'io',
-                    'libsandesh',
+                    'sandesh',
                     'http',
                     'httpc',
                     'http_parser',
@@ -59,7 +59,7 @@ libs = MapBuildDir([
 	'net',
         'http', 
         'http/client',
-        'libsandesh'])
+        'sandesh'])
 
 env.Append(LIBPATH=libs)
 env.Append(LIBPATH=['.', SrcBuildDir('base'), SrcBuildDir('discovery/client'),
@@ -97,7 +97,7 @@ buildinfo_dep_libs = [
     '../../lib/libhiredis.a',
     '../../lib/http.lib',
     '../../lib/http_parser.lib',
-    '../../lib/libsandesh.lib', 
+    '../../lib/sandesh.lib', 
     '../../lib/sandeshvns.lib', 
     '../base/base.lib',
     '../base/cpuinfo.lib',

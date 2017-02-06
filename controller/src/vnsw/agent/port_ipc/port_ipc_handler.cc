@@ -433,7 +433,8 @@ bool PortIpcHandler::ValidateMac(const string &mac) const {
     return true;
 }
 
-bool PortIpcHandler::DeletePort(const string &uuid_str, string &err_str) {
+bool PortIpcHandler::DelPort(const std::string &uuid_str, std::string &err_str) {
+	
     uuid port_uuid = StringToUuid(uuid_str);
     if (port_uuid == nil_uuid()) {
         CONFIG_TRACE(PortInfo, "Invalid port uuid");

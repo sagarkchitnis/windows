@@ -1000,7 +1000,7 @@ def SetupBuildEnvironment(conf):
             env['NUM_JOBS'] = nj
 
     env['OPT'] = GetOption('opt')
-    env['TARGET_MACHINE'] = GetOption('target')
+#    env['TARGET_MACHINE'] = GetOption('target')
     env['INSTALL_PREFIX'] = GetOption('install_prefix')
     env['INSTALL_BIN'] = ''
     env['INSTALL_SHARE'] = ''
@@ -1096,11 +1096,18 @@ def SetupBuildEnvironment(conf):
     env['REPO_PROJECTS'] = repo_list
     env['CC'] = 'cl.exe'
     env['CXX'] = 'cl.exe'
+    env['TARGET_ARCH']='x86'
     env['CCPDBFLAGS'] = '/Zi /Fd${TARGET}.pdb'
     opt_level = env['OPT']
     env['OBJSUFFIX'] = '.o'
 	# /GS /analyze- /W3 /Zc:wchar_t /ZI /Gm /Od /Fd"Debug\vc140.pdb" /Zc:inline /fp:precise /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /errorReport:prompt /WX- /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo /Fo"Debug\" /Fp"Debug\compilerproj.pch" 
-    env.Append(CCFLAGS = '/Iwindows /GS /analyze- /w /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise /D_WIN32_WINNT=0x0601 /D "_WINDOWS" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /w /wd4996 /wd4150 /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc /nologo ')
+    env.Append(CCFLAGS = '/Iwindows /GS /analyze- /w /Zc:wchar_t /Gm /Od /Zc:inline /fp:precise /D_WIN32_WINNT=0x0601 /D "_WINDOWS" /D "WIN32" /D "CURL_STATICLIB" /D "_DEBUG" /D "_CONSOLE" /errorReport:prompt /WX- /w /wd4996 /wd4150 /Zc:forScope /RTC1 /Gd /Oy- /MDd /Fa"Debug\" /EHsc ')
+    env['CCFLAGS'].remove('/nologo')
+    env['LINKFLAGS'].remove('/nologo')
+    env['ARFLAGS'].remove('/nologo')
+    env.Append(LINKFLAGS = '/MACHINE:x86')
+    env.Append(ARFLAGS = '/MACHINE:x86')
+
     opt_level = env['OPT']
     if opt_level == 'production':
         env.Append(CCFLAGS = '-g -O3')

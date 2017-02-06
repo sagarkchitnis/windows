@@ -44,10 +44,10 @@ if sys.platform != 'darwin':
 include = ['#/controller/src', '#/build/include', '#controller/lib']
 
 libpath = ['#/build/lib']
+#WINDOWS-TEMP
+libs = ['boost_system', 'log4cplus']
 
-libs = ['boost_system', 'log4cplus', 'pthread']
-
-common = DefaultEnvironment().Clone()
+common = DefaultEnvironment(TARGET_ARCH='x86').Clone()
 
 if common['OPT'] == 'production' or common.UseSystemTBB():
     libs.append('tbb')

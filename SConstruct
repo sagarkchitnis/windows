@@ -10,7 +10,7 @@ import sys
 sys.path.append('tools/build')
 
 import rules
-conf = Configure(DefaultEnvironment(ENV = os.environ))
+conf = Configure(DefaultEnvironment(ENV = os.environ, TARGET_ARCH='x86'))
 env = rules.SetupBuildEnvironment(conf)
 
 SConscript(dirs=['controller',  'vrouter', 'tools/sandesh'])

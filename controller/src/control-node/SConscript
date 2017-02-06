@@ -156,7 +156,7 @@ lib_ermvpn = File('../bgp/ermvpn/libbgp_ermvpn.lib')
 lib_evpn = File('../bgp/evpn/libbgp_evpn.lib')
 lib_rtarget = File('../bgp/rtarget/librtarget.lib')
 lib_ifmap_server = File('../ifmap/libifmap_server.lib')
-lib_sandesh = File('../sandesh/library/cpp/libsandesh.lib')
+lib_sandesh = File('../sandesh/library/cpp/sandesh.lib')
 lib_cpuinfo = File('../base/libcpuinfo.lib')
 lib_process_info = File('../base/libprocess_info.lib')
 lib_nodeinfo = File('../base/libnodeinfo.lib')
@@ -198,8 +198,8 @@ buildinfo_dep_libs = ['../bgp/libbgp.lib',
                       '../bgp/extended-community/libextended_community.lib',
                       '../bgp/rtarget/librtarget.lib', '../bgp/security_group/libsecurity_group.lib', '../schema/libifmap_vnc.lib', 
                       '../ifmap/libifmap_server.lib', '../ifmap/libifmap_common.lib', '../route/libroute.lib', '../net/libnet.lib', 
-                      '../../lib/libifmapio.lib', '../xmpp/libxmpp.lib', '../xml/libxml.lib', '../../lib/libsandeshvns.lib', 
-                      '../../lib/libsandesh.lib', '../../lib/libhttp.lib', '../../lib/libhttp_parser.lib',
+                      '../../lib/libifmapio.lib', '../xmpp/libxmpp.lib', '../xml/libxml.lib', '../../lib/sandeshvns.lib', 
+                      '../../lib/sandesh.lib', '../../lib/libhttp.lib', '../../lib/libhttp_parser.lib',
                       '../db/libdb.lib', '../io/libio.lib', '../base/libbase.lib', '../base/libcpuinfo.lib', '../base/libprocess_info.lib',
                       '../base/libnodeinfo.lib', '../../lib/libpugixml.lib',
 		      ]

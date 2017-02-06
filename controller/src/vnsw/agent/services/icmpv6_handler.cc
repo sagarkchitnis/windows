@@ -376,11 +376,11 @@ void Icmpv6Handler::SolicitedMulticastIpAndMac(const Ip6Address &dip,
     /* The ethernet address for IPv6 multicast address is 0x33-33-mm-mm-mm-mm,
      * where mm-mm-mm-mm is a direct mapping of the last 32 bits of the
      * IPv6 multicast address */
-    mac[0] = mac[1] = 0x33;
-    mac[2] = ip[12];
-    mac[3] = ip[13];
-    mac[4] = ip[14];
-    mac[5] = ip[15];
+    mac[(size_t)0] = mac[(size_t)1] = 0x33;
+    mac[(size_t)2] = ip[12];
+    mac[(size_t)3] = ip[13];
+    mac[(size_t)4] = ip[14];
+    mac[(size_t)5] = ip[15];
 }
 
 void Icmpv6Handler::SendNeighborSolicit(const Ip6Address &sip,
