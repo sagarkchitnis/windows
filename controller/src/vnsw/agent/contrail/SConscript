@@ -31,7 +31,7 @@ buildinfo_dep_libs = [
     '#build/lib/pugixml.lib',
     '#build/lib/sandesh.lib',
     '#build/lib/sandeshflow.lib',
-    '#build/lib/sandeshvns.lib'
+    '#build/lib/sandeshvns.lib','Iphlpapi.lib'
 ]
 
 def MapBuildCmnLib(list):
@@ -56,8 +56,8 @@ buildinfo_dep_libs += MapBuildCmnLib([
     'schema/xmpp_multicast.lib',
     'vrouter/utils/vrutil.lib',
     'xml/xml.lib',
-    'xmpp/xmpp.lib'
-     ])
+    'xmpp/xmpp.lib',
+	 ])
 
 def MapBuildAgentLib(list):
     return map(lambda x: File('../' + x).abspath, list)

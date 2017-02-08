@@ -13,7 +13,8 @@ logshlibs = [ str(File('#/build/lib/log4cplusD.dll')) ]
 logproducts = loglibs + logshlibs #+ [ str(File('#/build/include/log4cplus/logger.h')) ]
 
 def build_log4cplus_for_windows(target,source,env):
-    cmd = 'xcopy ' + Dir('.').srcnode().abspath + '\msvc15\* ' + Dir(vpath).abspath + '\msvc10 /e /y'
+    cmd = 'xcopy ' + abs_toppath + '\controller\lib\log4cplus\msvc15\* ' + Dir(vpath).abspath + '\msvc10 /e /y'
+    print cmd
     subprocess.call(cmd, shell=True)
     curdir = os.getcwd()
     os.chdir(Dir(vpath).abspath+ '\\msvc10')

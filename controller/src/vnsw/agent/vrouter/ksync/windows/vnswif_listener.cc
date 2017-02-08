@@ -32,7 +32,11 @@ void VnswInterfaceListenerWindows::SyncCurrentState() {
 
 }
 
+void VnswInterfaceListenerWindows::UpdateLinkLocalRoute(const Ip4Address &addr, bool del_rt)
+{
 
+
+}
 
 void VnswInterfaceListenerWindows::RegisterAsyncReadHandler() {
 	

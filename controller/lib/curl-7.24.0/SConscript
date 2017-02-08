@@ -2,7 +2,7 @@
 import os
 import subprocess
 # path to the sources
-vpath = '#/third_party/curl-7_51_0'
+vpath = '#/third_party/curl-curl-7_51_0'
 print 'building curl for windows'
 env = DefaultEnvironment(TARGET_ARCH='x86').Clone()
 

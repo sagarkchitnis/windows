@@ -121,7 +121,8 @@ typedef isc_result_t(isc_httpdaction_t)(const char *url,
 	isc_buffer_t *body,
 	isc_httpdfree_t **freecb,
 	void **freecb_args);
-typedef isc_boolean_t(isc_httpdclientok_t)(const isc_sockaddr_t *, void *);
+
+typedef isc_boolean_t (isc_httpdclientok_t)(const isc_sockaddr_t *, void *);
 
 /*% Resource */
 typedef enum {
