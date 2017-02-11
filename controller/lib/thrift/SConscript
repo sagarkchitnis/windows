@@ -42,7 +42,7 @@ def build_thrift_libs_for_windows(target,source,env):
    cmd = 'copy ' +  abs_vpath + r'\lib\cpp' + r'\Debug' + r'\libthriftnb.lib ' +  env.Dir(env['TOP_LIB']).abspath + r'\thriftnb.lib'
    print cmd
    subprocess.call(cmd, shell=True)
-   cmd = 'copy ' +  abs_vpath + r'\lib\cpp\src\*.h' +  env.Dir(env['TOP_INCLUDE']).abspath + r'\thrift'
+   cmd = 'copy ' +  abs_vpath + r'\lib\cpp\src\*.h ' +  env.Dir(env['TOP_INCLUDE']).abspath + r'\thrift\*'
    print cmd
    subprocess.call(cmd, shell=True)
    os.chdir(curdir)
@@ -51,7 +51,7 @@ def build_thrift_libs_for_windows(target,source,env):
 
 
 thrift_exe = '#/build/bin/thrift.exe'
-thrift_libs = ['#/build/lib/libthrift.lib', '#build/lib/libthriftnb.lib']
+thrift_libs = ['#/build/lib/thrift.lib', '#build/lib/thriftnb.lib']
 
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\protocol\*.h')

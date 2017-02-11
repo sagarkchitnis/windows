@@ -31,7 +31,7 @@ buildinfo_dep_libs = [
     '#build/lib/pugixml.lib',
     '#build/lib/sandesh.lib',
     '#build/lib/sandeshflow.lib',
-    '#build/lib/sandeshvns.lib','Iphlpapi.lib'
+    '#build/lib/sandeshvns.lib'
 ]
 
 def MapBuildCmnLib(list):

@@ -278,7 +278,7 @@ class DerivedStatsPeriodicIf {
             // There were no updates to the DerivedStat
             // since the last flush
             ds_cache_.reset();
-            return ds_cache_;
+            return ds_cache_.get();
         }
         ds_cache_ = boost::make_shared<ResultT>();
         if (ds_->FillResult(ds_cache_->value)) {
@@ -288,7 +288,7 @@ class DerivedStatsPeriodicIf {
         // Clear the DerivedStat
         ds_.reset();
 
-        return ds_cache_;
+        return ds_cache_.get();
     }
 
     // This is the interface to retrieve the current value
