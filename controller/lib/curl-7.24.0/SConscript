@@ -1,6 +1,8 @@
 # -*- mode: python; -*-
 import os
 import subprocess
+import shutil
+
 # path to the sources
 vpath = '#/third_party/curl-curl-7_51_0'
 print 'building curl for windows'
@@ -13,7 +15,7 @@ incpath = binaries_path + 'include/curl/'
 
 VariantDir(vpath + '/src', '#/' + Dir('.').path + '/src')
 
-make_products = ['#/build/lib/libcurl.lib']
+make_products = ['#/build/lib/curl.lib']
 
 print 'done building curl for windows'
 
@@ -21,9 +23,15 @@ def build_curl_for_windows(target,source,env):
     curdir = os.getcwd()
     os.chdir(Dir(vpath).abspath+ '\winbuild')
     subprocess.call('nmake /f Makefile.vc mode=static', shell=True)
-    os.symcopy(Dir(vpath + binpath).abspath+ '\curl.exe', Dir('#/build/bin').abspath+'\curl.exe')
-    os.symcopy(Dir(vpath + libpath).abspath+ '\libcurl_a.lib', Dir('#/build/lib').abspath+'\libcurl.lib')
-    os.symcopy(Dir(vpath + incpath).abspath, Dir('#/build/include/curl/').abspath)
+    if not os.path.exists(Dir('#/build/bin').abspath+'\curl.exe'):
+      print 'copying curl.exe'
+      shutil.copyfile(Dir(vpath + binpath).abspath+ '\curl.exe', Dir('#/build/bin').abspath+'\curl.exe')
+    if not os.path.exists(Dir('#/build/lib').abspath+'\curl.lib'):
+      print 'copying curl.lib'
+      shutil.copyfile(Dir(vpath + libpath).abspath+ '\libcurl_a.lib', Dir('#/build/lib').abspath+'\curl.lib')
     os.chdir(curdir)
-curloutput = env.Command(make_products, [] , build_curl_for_windows)
-env.Default(curloutput)
+curloutput = env.Command(make_products, Dir('#/build/include/curl').abspath , build_curl_for_windows)
+#env.Default(curloutput)
+if not os.path.exists(Dir('#/build/include/curl').abspath):
+    print 'copying include/curl'
+    shutil.copytree(Dir(vpath + incpath).abspath, Dir('#/build/include/curl').abspath)

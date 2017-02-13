@@ -1,0 +1,18 @@
+# -*- mode: python; -*-
+
+import os
+import re
+import subprocess
+import sys
+import glob
+import shutil
+
+print 'building windows tbb'
+
+vpath = '#/third_party/OpenSSlWin32'
+
+env = DefaultEnvironment()
+
+env.InstallAs('#build/lib/ssl.lib', Dir(vpath).abspath+ r'\lib\libssl.lib')
+env.InstallAs('#build/lib/crypto.lib', Dir(vpath).abspath+ r'\lib\libcrypto.lib')
+     

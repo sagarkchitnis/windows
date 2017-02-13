@@ -36,29 +36,26 @@ def build_log4cplus_for_windows(target,source,env):
     curdir = os.getcwd()
     os.chdir(Dir(vpath).abspath+ '\\msvc10')
     subprocess.call("msbuild log4cplus.sln", shell=True)
-    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.lib ' + Dir('#/build/lib/').abspath
+    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.lib ' + Dir('#/build/lib/*').abspath
     print cmd
     subprocess.call(cmd, shell=True)
-    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.exe ' + Dir('#/build/bin/').abspath
+    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.exe ' + Dir('#/build/bin/*').abspath
     print cmd
     subprocess.call(cmd, shell=True)
-    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.dll ' + Dir('#/build/sbin/').abspath
+    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.dll ' + Dir('#/build/bin/*').abspath
     print cmd
     subprocess.call(cmd, shell=True)
-
     os.chdir(curdir)
+    print os.getcwd()
 
-env.Command(logproducts, str(Dir(vpath)), build_log4cplus_for_windows)
-Default(logproducts)
 
 srcdir = Dir(vpath + '/include/log4cplus').abspath
 destdir = Dir('#/build/include/log4cplus').abspath
 
 if not os.path.exists(destdir):
+  print 'copying to ' + destdir
   shutil.copytree(srcdir, destdir)
+  env.Command(logproducts, str(Dir(vpath)), build_log4cplus_for_windows)
 
-#SymCopy( [Dir('#/build/include/log4cplus')], [Dir(vpath + '/include/log4cplus')])
-
+env.InstallAs( '#/build/lib/log4cplus.lib', vpath +r'\msvc10\Win32\bin.Debug\log4CplusSD.lib')
 print 'done installing log4cplus'
-#build log4cplus
-

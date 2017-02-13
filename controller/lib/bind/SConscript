@@ -4,7 +4,7 @@ import sys
 import glob
 import subprocess
 
-print 'installing bind binaries'
+#print 'installing bind binaries'
 
 vpath = '#/third_party/bind-9.11.0-p1/'
 sbinpath = '#/build/sbin'
@@ -14,11 +14,11 @@ env = DefaultEnvironment(TARGET_ARCH='x86')
 #for windows we use the zip file with the binaries
 #copy binaries to sbin
 #files = glob.glob(Dir(vpath).abspath+'\*.exe')
-print 'creating ' + Dir(sbinpath).abspath
-Execute(Mkdir(Dir(sbinpath).abspath))
-cmd = 'copy ' + Dir(vpath).abspath + '\*.exe ' + Dir(sbinpath).abspath +'\. /Y'
+#print 'creating ' + Dir(sbinpath).abspath
+#Execute(Mkdir(Dir(sbinpath).abspath))
+#cmd = 'copy ' + Dir(vpath).abspath + '\*.exe ' + Dir(sbinpath).abspath +'\. /Y'
 #print cmd
-subprocess.call(cmd, shell=True)
-cmd = 'copy ' + Dir(vpath).abspath + '\*.dll ' + Dir(sbinpath).abspath +'\. /Y'
-subprocess.call(cmd, shell=True)
-print 'done installing bind binaries'
+#subprocess.call(cmd, shell=True)
+#cmd = 'copy ' + Dir(vpath).abspath + '\*.dll ' + Dir(sbinpath).abspath +'\. /Y'
+#subprocess.call(cmd, shell=True)
+#print 'done installing bind binaries'

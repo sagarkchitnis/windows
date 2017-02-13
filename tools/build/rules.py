@@ -256,7 +256,8 @@ def UnitTest(env, name, sources, **kwargs):
 
 def GenerateBuildInfoCode(env, target, source, path):
     print 'GenerateBuildInfoCode', target, path
-    env.Command(target=target, source=source, action=BuildInfoAction)
+    if not os.path.exists(path + '/' + target[0]):
+         env.Command(target=target, source=source, action=BuildInfoAction)
     return
 
 # If contrail-controller (i.e., #controller/) is present, determine

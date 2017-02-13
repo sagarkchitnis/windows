@@ -9,8 +9,7 @@ env.VariantDir('#/' + Dir('.').path + '/src', vpath)
 pugixml_buildpath = Dir('.').abspath + '/src'
 
 lib = env.Library('pugixml', pugixml_buildpath + '/pugixml.cpp')
-env.Default(lib)
-env.Default(env.Install('#/build/lib/', 'pugixml.lib'))
-env.Default(env.Install('#/build/include/pugixml', vpath + '/pugixml.hpp'))
-env.Default(env.Install('#/build/include/pugixml', vpath + '/pugiconfig.hpp'))
+env.Install('#/build/lib/', 'pugixml.lib')
+env.Install('#/build/include/pugixml', vpath + '/pugixml.hpp')
+env.Install('#/build/include/pugixml', vpath + '/pugiconfig.hpp')
 print 'done installing pugixml'

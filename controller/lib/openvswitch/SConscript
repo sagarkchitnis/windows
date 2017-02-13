@@ -37,9 +37,11 @@ srcdir = Dir(vpath).abspath
 destdir = Dir('#/build/include/openvswitch').abspath
 
 if not os.path.exists(destdir + '/include'):
+  print 'copying to inc' + destdir 
   shutil.copytree(srcdir+'/include', destdir+'/include')
 
 if not os.path.exists(destdir + '/lib'):
+  print 'copying to lib' + destdir 
   shutil.copytree(srcdir+'/include', destdir+'/lib')
 
 

@@ -56,44 +56,44 @@ thrift_libs = ['#/build/lib/thrift.lib', '#build/lib/thriftnb.lib']
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\protocol\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/protocol', hf))
+    env.Install('#/build/include/thrift/protocol', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\protocol\*.tcc')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/protocol', hf))
+    env.Install('#/build/include/thrift/protocol', hf)
 
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\windows\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/windows', hf))
+    env.Install('#/build/include/thrift/windows', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\transport\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/transport', hf))
+    env.Install('#/build/include/thrift/transport', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\async\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/async', hf))
+    env.Install('#/build/include/thrift/async', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\concurrency\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/concurrency', hf))
+    env.Install('#/build/include/thrift/concurrency', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\processor\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/processor', hf))
+    env.Install('#/build/include/thrift/processor', hf)
 
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\server\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift/server', hf))
+    env.Install('#/build/include/thrift/server', hf)
 
 headerfiles =  glob.glob(abs_vpath + r'\lib\cpp\src\*.h')
 for hf in headerfiles:
-    env.Default(env.Install('#/build/include/thrift', hf))
+    env.Install('#/build/include/thrift', hf)
 
 env.Command(thrift_exe, str(Dir(vpath)) , build_thrift_exe_for_windows)
 env.Command(thrift_libs, str(Dir(vpath)) , build_thrift_libs_for_windows)
 
-Default(thrift_exe)
-Default(thrift_libs)
+#Default(thrift_exe)
+#Default(thrift_libs)
