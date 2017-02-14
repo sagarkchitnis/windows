@@ -85,6 +85,7 @@ env.GenerateBuildInfoCode(
     source = buildinfo_dep_libs + ['main.cc'],
     path=str(Dir('.').abspath))
 env.Depends('main.o', 'buildinfo.cc')
+env['LINKFLAGS'].remove('/DEBUG')
 
 # Add contrail-vrouter-agent specific libraries
 env.Prepend(LIBS = AgentEnv['CONTRAIL_LIBS'])
@@ -95,7 +96,7 @@ env.Prepend(LIBS = AgentEnv['CONTRAIL_LIBS'])
 # introspect page
 #env.Prepend(LINKFLAGS = ['-Wl,--whole-archive', '-rdynamic', '-lkstate', '-ldiag',
 #                         '-Wl,--no-whole-archive'])
-
+env.Prepend(LINKFLAGS = 'Iphlpapi.lib')
 #Add -Wno-return-type to ignore errors from thrift generated code in
 #InstanceService.h
 if sys.platform.startswith('freebsd'):

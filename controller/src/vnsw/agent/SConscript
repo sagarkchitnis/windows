@@ -185,9 +185,9 @@ env.Prepend(LIBS = AGENT_MULTIPATH_LIBS)
 def MakeLinkCmd(list):
     return map(lambda x: '-l' + x, list)
 
-env.Prepend(LINKFLAGS = [ '-Wl,--whole-archive', '-rdynamic'] + 
-                          MakeLinkCmd(AGENT_MULTIPATH_LIBS) +
-                        ['-Wl,--no-whole-archive'])
+#env.Prepend(LINKFLAGS = [ '-Wl,--whole-archive', '-rdynamic'] + 
+#                          MakeLinkCmd(AGENT_MULTIPATH_LIBS) +
+#                        ['-Wl,--no-whole-archive'])
 # Prefer linking against the self-built libraries over the system ones
 env.AppendENVPath('LD_RUN_PATH', '#/build/lib')
 

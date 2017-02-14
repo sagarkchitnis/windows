@@ -138,14 +138,6 @@ build_obj = map(lambda x : env.Object(x), ['buildinfo.cc'])
 
 lib_cpuinfo = File('../base/cpuinfo.lib')
 lib_base = File('../base/base.lib')
-if sys.platform != 'darwin':
-    env.Prepend(LINKFLAGS =
-                ['-Wl,--whole-archive',
-                 '-lbase', '-lcpuinfo',
-                 '-Wl,--no-whole-archive'])
-else:
-    env.Prepend(LINKFLAGS = ['-Wl,-force_load,' + lib_base.path])
-    env.Prepend(LINKFLAGS = ['-Wl,-force_load,' + lib_cpuinfo.path])
 
 qed = env.Program(
         target = 'qed', 

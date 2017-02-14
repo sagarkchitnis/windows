@@ -59,7 +59,7 @@ bool GetBuildInfo(std::string &build_info_str) {
 
 int main(int argc, char *argv[]) {
     AgentParam params;
-
+	cout << "test sagar";
     try {
         params.ParseArguments(argc, argv);
     } catch (...) {

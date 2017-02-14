@@ -23,7 +23,7 @@ env = DefaultEnvironment(TARGET_ARCH='x86')
 stagedir = Dir('#').abspath;
 stagedir += '/build/third_party/boost_1_62_0'
 boostcmd = 'b2 -j4 toolset=msvc-14.0 --build-type=complete   architecture=x86 address-model=32 stage --stagedir='+ stagedir
-
+buildlibdir = Dir('#build/lib').abspath + '/'
 
 def Symlink(target, source):
     parent = os.path.dirname(target[0].abspath)
@@ -38,6 +38,11 @@ if not os.path.exists(libpath):
     print '%s not present' % libpath
     sys.exit(1)
 
+def copyifabsent(tofile, fromfile):
+    if not os.path.exists(tofile):
+       print 'copying ' + fromfile + ' to ' + tofile
+       shutil.copyfile(fromfile, tofile)
+
 
 def build_boost_for_windows(target,source,env):
    cwd = os.getcwd()
@@ -48,6 +53,16 @@ def build_boost_for_windows(target,source,env):
    subprocess.call("bootstrap.bat", shell=True)
    subprocess.call(boostcmd, shell=True)
    os.chdir(cwd)
+   copyifabsent(buildlibdir+ 'boost_program_options.lib', Dir(vpath).abspath+ r'\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi\libboost_program_options-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'boost_regex.lib', Dir(vpath).abspath+ r'\bin.v2\libs\regex\build\msvc-14.0\debug\link-static\threading-multi\libboost_regex-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'boost_system.lib', Dir(vpath).abspath+ r'\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi\libboost_system-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_system-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi\libboost_system-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_date_time-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\date_time\build\msvc-14.0\debug\link-static\threading-multi\libboost_date_time-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_regex-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\regex\build\msvc-14.0\debug\link-static\threading-multi\libboost_regex-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_program_options-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi\libboost_program_options-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_thread-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\thread\build\msvc-14.0\debug\link-static\threading-multi\libboost_thread-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'libboost_filesystem-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi\libboost_filesystem-vc140-mt-gd-1_62.lib' )
+   copyifabsent(buildlibdir+'boost_filesystem.lib', Dir(vpath).abspath + r'\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi\libboost_filesystem-vc140-mt-gd-1_62.lib')
 
 
 
@@ -57,19 +72,10 @@ destdir = Dir('#/build/include/boost').abspath
 if not os.path.exists(destdir):
   print 'copying files to' + destdir
   shutil.copytree(srcdir, destdir)
-  env.Command('#build/lib/boost_system.lib', str(Dir(vpath)), build_boost_for_windows)
+
+env.Command('#build/lib/boost_filesystem.lib', str(Dir(vpath)), build_boost_for_windows)
 
 
-env.InstallAs('#build/lib/boost_filesystem.lib', Dir(vpath).abspath+ r'\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi\libboost_filesystem-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/boost_program_options.lib', Dir(vpath).abspath+ r'\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi\libboost_program_options-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/boost_regex.lib', Dir(vpath).abspath+ r'\bin.v2\libs\regex\build\msvc-14.0\debug\link-static\threading-multi\libboost_regex-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/boost_system.lib', Dir(vpath).abspath+ r'\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi\libboost_system-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_system-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi\libboost_system-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_date_time-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\date_time\build\msvc-14.0\debug\link-static\threading-multi\libboost_date_time-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_regex-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\regex\build\msvc-14.0\debug\link-static\threading-multi\libboost_regex-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_program_options-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi\libboost_program_options-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_thread-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\thread\build\msvc-14.0\debug\link-static\threading-multi\libboost_thread-vc140-mt-gd-1_62.lib' )
-env.InstallAs('#build/lib/libboost_filesystem-vc140-mt-gd-1_62.lib', Dir(vpath).abspath+ r'\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi\libboost_filesystem-vc140-mt-gd-1_62.lib' )
 
 #Default(SymCopy([Dir('#/build/include/boost')], [Dir(vpath + bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\runtime-link-static\threading-multi)]))
 

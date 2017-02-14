@@ -47,7 +47,9 @@ def build_log4cplus_for_windows(target,source,env):
     subprocess.call(cmd, shell=True)
     os.chdir(curdir)
     print os.getcwd()
-
+    if not os.path.exists(Dir('#/build/lib').abspath+ r'\log4cplus.lib'):
+      print 'copying log4cplus.lib'
+      shutil.copyfile(abs_vpath +r'\msvc10\Win32\bin.Debug\log4CplusSD.lib', Dir('#/build/lib').abspath+ r'\log4cplus.lib')
 
 srcdir = Dir(vpath + '/include/log4cplus').abspath
 destdir = Dir('#/build/include/log4cplus').abspath
@@ -55,7 +57,8 @@ destdir = Dir('#/build/include/log4cplus').abspath
 if not os.path.exists(destdir):
   print 'copying to ' + destdir
   shutil.copytree(srcdir, destdir)
-  env.Command(logproducts, str(Dir(vpath)), build_log4cplus_for_windows)
+  
+env.Command('#/build/lib/log4cplus.lib', str(Dir(vpath)), build_log4cplus_for_windows)
 
-env.InstallAs( '#/build/lib/log4cplus.lib', vpath +r'\msvc10\Win32\bin.Debug\log4CplusSD.lib')
+#env.InstallAs( , vpath +r'\msvc10\Win32\bin.Debug\log4CplusSD.lib')
 print 'done installing log4cplus'
