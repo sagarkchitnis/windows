@@ -85,7 +85,7 @@ env.GenerateBuildInfoCode(
     source = buildinfo_dep_libs + ['main.cc'],
     path=str(Dir('.').abspath))
 env.Depends('main.o', 'buildinfo.cc')
-env['LINKFLAGS'].remove('/DEBUG')
+#env['LINKFLAGS'].remove('/DEBUG')
 
 # Add contrail-vrouter-agent specific libraries
 env.Prepend(LIBS = AgentEnv['CONTRAIL_LIBS'])
