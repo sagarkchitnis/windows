@@ -120,12 +120,13 @@ bool KSyncTxQueue::EnqueueInternal(IoContext *io_context) {
 }
 
 bool KSyncTxQueue::Run() {
+#ifndef _WINDOWS //WINDOWS-TEMP
     while (1) {
         uint64_t u = 0;
         ssize_t num = 0;
 
         while (1) {
-         //WINDOWS-TEMP   num = read(event_fd_, &u, sizeof(u));
+           num = read(event_fd_, &u, sizeof(u));
             if (num >= (int)sizeof(u)) {
                 break;
             }
@@ -154,5 +155,6 @@ bool KSyncTxQueue::Run() {
         if (t1)
             busy_time_ += (ClockMonotonicUsec() - t1);
     }
+#endif
     return true;
 }
