@@ -11,10 +11,11 @@ typedef  unsigned int   useconds_t;
 typedef unsigned int            uint;
 typedef unsigned long           ulong;
 typedef ptrdiff_t ssize_t;
-
+typedef int clockid_t;
 char *ctime_r(time_t*, char[]);
 
-int clock_gettime(int X, struct timespec *tv);
+int clock_gettime(clockid_t clk_id, struct timespec *tv);
+int clock_getres(clockid_t clk_id, struct timespec *res);
 int usleep(useconds_t usec);
 unsigned int sleep(unsigned int seconds);
 
