@@ -1,6 +1,6 @@
 
-
-
+#pragma once
+#include<string>
 
 class AgentConstants
 {
@@ -12,7 +12,6 @@ class AgentConstants
 		static const  std::string log_dns ;// "/var/log/dns"
 		static const  std::string contrail_query_engine_log ;// "/var/log/contrail/contrail-query-engine.log"
 		static const  std::string contrail_vrouter2_log ;// "/var/log/contrail/vrouter2.log"
-		static const  std::string contrail_collector_log ;// "/etc/contrail/contrail-collector.conf"
 		static const  std::string contrail_keystone_auth_log ;// "/etc/contrail/contrail-keystone-auth.conf"
 		static const  std::string contrail_ks_cert ;// "/etc/contrail/ks-cert"
 		static const  std::string contrail_ks_key ;// "/etc/contrail/ks-key"

@@ -1,4 +1,5 @@
 
+#include "AgentConstants.h"
 const std::string  AgentConstants::contrail_collector_log = "/var/log/contrail/contrail-collector.log";
 const std::string  AgentConstants::contrail_named_log = "/var/log/contrail/contrail-named.log";
 const std::string  AgentConstants::named_bind_log = "/var/log/named/bind.log";
@@ -7,12 +8,11 @@ const std::string  AgentConstants::contrail_dns_log = "/var/log/contrail/contrai
 const std::string  AgentConstants::log_dns = "/var/log/dns";
 const std::string  AgentConstants::contrail_query_engine_log = "/var/log/contrail/contrail-query-engine.log";
 const std::string  AgentConstants::contrail_vrouter2_log = "/var/log/contrail/vrouter2.log";
-const std::string  AgentConstants::contrail_collector_log = "/etc/contrail/contrail-collector.conf";
+const std::string  AgentConstants::contrail_collector_conf = "/etc/contrail/contrail-collector.conf";
 const std::string  AgentConstants::contrail_keystone_auth_log = "/etc/contrail/contrail-keystone-auth.conf";
 const std::string  AgentConstants::contrail_ks_cert = "/etc/contrail/ks-cert";
 const std::string  AgentConstants::contrail_ks_key = "/etc/contrail/ks-key";
 const std::string  AgentConstants::contrail_ks_ca = "/etc/contrail/ks-ca";
-const std::string  AgentConstants::contrail_collector_conf = "/etc/contrail/contrail-collector.conf";
 const std::string  AgentConstants::contrail_database_conf = "/etc/contrail/contrail-database.conf";
 const std::string  AgentConstants::contrail_control_conf = "/etc/contrail/contrail-control.conf";
 const std::string  AgentConstants::contrail_ssl_certs_server_pem = "/etc/contrail/ssl/certs/server.pem";

@@ -46,7 +46,7 @@ int clock_gettime_monotonic(struct timespec *ts)
 		return -1;
 
 	LARGE_INTEGER           t;
-	FILETIME            f;
+//	FILETIME            f;
 	double                  nanoseconds;
 	static LARGE_INTEGER    starttime;
 	static double           TicksPerNanosecond;
@@ -77,7 +77,7 @@ unsigned __int64 jan_1_1970 = static_cast<unsigned __int64>(116444736000000000UL
 
 int clock_gettime_realtime(struct timespec *ts)
 {
-	struct timeval  tv;
+//	struct timeval  tv;
 	FILETIME    filetime;
 	SYSTEMTIME    systemtime;
 	ULARGE_INTEGER ulI;
@@ -127,35 +127,38 @@ LARGE_INTEGER getFILETIMEoffset()
 }
 
 
-char *ctime_r(const time_t *timep, char *buf)
+char *ctime_r(const time_t *timep, char buf[])
 {
-	if (timep == nullptr)
+	if (timep == nullptr || buf == nullptr)
+		return nullptr;
+	char buffer[100];
+	errno_t e = ctime_s(buffer, 100, timep);
+	if (e == 0)
 	{
-		char buff[BUF_SIZE];
-		if (strftime(buff, BUF_SIZE, "%A %c", timep) != 0)
-		{
-			//warning - buf needs to be big enough to hold formatted string
-			strcpy(buf, buff)
-		    return buf;
-		}
+#pragma warning(disable:4996)
+		//assuming buf has enough space
+		strcpy(buf, buffer);
+
+		return buf;
 	}
-	return nullptr;
+	else
+		return nullptr;
 }
 
 
 
 char* strptime(const char* str,const char* format,	struct tm* tm)
 {
-	std::istringstream ip(str);
+	std::istringstream input(str);
 	input.imbue(std::locale(setlocale(LC_ALL, nullptr)));
 	input >> std::get_time(tm, format);
 	if (input.fail()) 
 	{
 		return nullptr;
 	}
-	return static_cast<char*>(str + input.tellg());
+	return const_cast<char*>(str + input.tellg());
 }
-
+/*
 
 time_t timelocal(struct tm *tm)
 {
@@ -172,7 +175,7 @@ struct tm *  gmtime_r(__int64 const *, struct tm *)
 	return nullptr; 
 }
 
-
+*/
 
 
 

@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\winutils.cpp" />
+    <ClCompile Include="AgentConstants.cpp" />
     <ClCompile Include="TimeUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
