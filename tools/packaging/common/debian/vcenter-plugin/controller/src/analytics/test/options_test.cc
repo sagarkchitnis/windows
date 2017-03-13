@@ -119,7 +119,7 @@ TEST_F(OptionsTest, DefaultConfFile) {
     EXPECT_EQ(options_.http_server_port(), default_http_server_port);
     EXPECT_EQ(options_.log_category(), "");
     EXPECT_EQ(options_.log_disable(), false);
-    EXPECT_EQ(options_.log_file(), "/var/log/contrail/contrail-collector.log");
+    EXPECT_EQ(options_.log_file(), "AgentConstants::contrail_collector_log");
     EXPECT_EQ(options_.log_files_count(), 10);
     EXPECT_EQ(options_.log_file_size(), 1024*1024);
     EXPECT_EQ(options_.log_level(), "SYS_NOTICE");
@@ -217,7 +217,7 @@ TEST_F(OptionsTest, OverrideBooleanFromCommandLine) {
     EXPECT_EQ(options_.http_server_port(), default_http_server_port);
     EXPECT_EQ(options_.log_category(), "");
     EXPECT_EQ(options_.log_disable(), false);
-    EXPECT_EQ(options_.log_file(), "/var/log/contrail/contrail-collector.log");
+    EXPECT_EQ(options_.log_file(), "AgentConstants::contrail_collector_log");
     EXPECT_EQ(options_.log_files_count(), 10);
     EXPECT_EQ(options_.log_file_size(), 1024*1024);
     EXPECT_EQ(options_.log_level(), "SYS_NOTICE");
