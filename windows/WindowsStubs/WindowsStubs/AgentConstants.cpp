@@ -28,3 +28,4 @@ const std::string  AgentConstants::contrail_dns_named_log = "dns_named.log";
 const std::string  AgentConstants::server_privkey_pem = "server-privkey.pem\n";
 const std::string  AgentConstants::contrail_dns_test_dir = "dns_test";
 const std::string  AgentConstants::contrail_query_engine_conf = "contrail-query-engine.conf";
+const std::string  AgentConstants::temp_directory = "tmp/";

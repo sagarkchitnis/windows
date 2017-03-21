@@ -33,4 +33,5 @@ public:
 		static const  std::string server_privkey_pem ;// "/etc/server-privkey.pem\n"
 		static const  std::string contrail_dns_test_dir ;// "/etc/contrail/dns/test"
 		static const  std::string contrail_query_engine_conf ;// "/etc/contrail/contrail-query-engine.conf"
+		static const  std::string temp_directory; 
 };
