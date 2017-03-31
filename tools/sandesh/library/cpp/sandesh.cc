@@ -12,6 +12,7 @@
 #include <boost/asio.hpp>
 #include<stdio.h>
 #include<fcntl.h>
+#include "AgentConstants.h"
 #endif
 
 #include <boost/bind.hpp>
@@ -173,11 +174,9 @@ void Sandesh::RecordPort(const std::string& name, const std::string& module,
 #endif
     std::ostringstream myfifoss;
 
-#ifdef _WINDOWS
-	myfifoss << gettempdirectory() <<
-#else
-	myfifoss << "/tmp/" <<
-#endif
+
+	myfifoss << AgentConstants::temp_directory <<
+
 
     module << "." << getppid() << "." << name << "_port";
     std::string myfifo = myfifoss.str();
