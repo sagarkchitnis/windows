@@ -15,7 +15,7 @@ def build_windowsstubs_lib(target,source,env):
    curdir = os.getcwd()
    os.chdir(abs_vpath)
    print os.getcwd()
-   subprocess.call("msbuild WindowsStubs.sln /p:platform=x86", shell=True)
+   subprocess.call("msbuild WindowsStubs.sln /p:platform=" + env['TARGET_ARCH'], shell=True)
    cmd = 'copy ' +  abs_vpath + r'\debug\windowsstubs.lib ' +  env.Dir(env['TOP_LIB']).abspath 
    print cmd
    subprocess.call(cmd, shell=True)

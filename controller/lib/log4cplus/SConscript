@@ -13,6 +13,15 @@ abs_toppath = Dir('#').abspath
 loglibs = [ str(File('#/build/lib/log4cplus.lib')) ]
 logshlibs = [ str(File('#/build/lib/log4cplusD.dll')) ]
 logproducts = loglibs + logshlibs #+ [ str(File('#/build/include/log4cplus/logger.h')) ]
+builtbinpath = os.path.join(abs_vpath,'msvc10')
+
+if env['TARGET_ARCH'] == 'x86':
+   builtbinpath = os.path.join(builtbinpath, 'win32')
+else:
+   builtbinpath = os.path.join(builtbinpath, 'win64')
+
+
+builtbinpath = os.path.join(builtbinpath,'bin.')
 
 def Symlink(target, source):
     print 'target =', target[0]
@@ -36,7 +45,7 @@ def build_log4cplus_for_windows(target,source,env):
     curdir = os.getcwd()
     os.chdir(Dir(vpath).abspath+ '\\msvc10')
     subprocess.call("msbuild log4cplus.sln", shell=True)
-    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.lib ' + Dir('#/build/lib/*').abspath
+    cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\ + *.lib ' + Dir('#/build/lib/*').abspath
     print cmd
     subprocess.call(cmd, shell=True)
     cmd = 'xcopy /Y ' + Dir(vpath).abspath + r'\msvc10\win32\bin.Debug\*.exe ' + Dir('#/build/bin/*').abspath

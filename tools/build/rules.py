@@ -1096,8 +1096,10 @@ def SetupBuildEnvironment(conf):
         repo_list[path] = repo
     env['REPO_PROJECTS'] = repo_list
     env['CC'] = 'cl.exe'
-    env['CXX'] = 'cl.exe'
-    env['TARGET_ARCH']='x86'
+    env['CXX'] = 'cl.exe'    
+    env['TARGET_ARCH']='x64'
+    env['TARGET_CONFIG']='debug'
+	
     env['CCPDBFLAGS'] = '/Z7'
     opt_level = env['OPT']
     env['OBJSUFFIX'] = '.o'
@@ -1106,8 +1108,8 @@ def SetupBuildEnvironment(conf):
     env['CCFLAGS'].remove('/nologo')
     env['LINKFLAGS'].remove('/nologo')
     env['ARFLAGS'].remove('/nologo')
-    env.Append(LINKFLAGS = '/MACHINE:x86')
-    env.Append(ARFLAGS = '/MACHINE:x86')
+    env.Append(LINKFLAGS = '/MACHINE:'+ env['TARGET_ARCH'])
+    env.Append(ARFLAGS = '/MACHINE:' +env['TARGET_ARCH'])
 
     opt_level = env['OPT']
     if opt_level == 'production':
