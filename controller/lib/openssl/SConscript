@@ -7,12 +7,28 @@ import sys
 import glob
 import shutil
 
-print 'building windows tbb'
+print 'openssl enter...'
 
-vpath = '#/third_party/OpenSSlWin32'
+vpath = '#/third_party/openssl-1.0.2k'
 
 env = DefaultEnvironment()
 
-env.InstallAs('#build/lib/ssl.lib', Dir(vpath).abspath+ r'\lib\libssl.lib')
-env.InstallAs('#build/lib/crypto.lib', Dir(vpath).abspath+ r'\lib\libcrypto.lib')
+def build_openssl_for_windows(target,source,env):
+   cwd = os.getcwd()
+   os.chdir(Dir(vpath).abspath)
+   assert os.path.isdir(Dir(vpath).abspath)
+   print os.getcwd()
+   subprocess.call("perl Configure VC-WIN64A ", shell=True)
+   subprocess.call("ms\do_win64a", shell=True)
+   subprocess.call("nmake -f ms\nt.mak", shell=True)
+   subprocess.call("nmake -f ms\nt.mak install", shell=True)
+   os.chdir(cwd)
+
+
+
+
+env.InstallAs('#build/lib/ssleay32.lib', Dir(vpath).abspath+ r'\lib\ssleay32.lib')
+env.InstallAs('#build/lib/libeay32.lib', Dir(vpath).abspath+ r'\lib\libeay32.lib')
+
+print 'openssl leave...'
      
