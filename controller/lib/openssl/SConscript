@@ -22,14 +22,18 @@ def build_openssl_for_windows(target,source,env):
    os.chdir(Dir(vpath).abspath)
    assert os.path.isdir(Dir(vpath).abspath)
    print os.getcwd()
-   perlcmd = "perl Configure VC-WIN64A" + "--prefix=" + Dir('#/build')#incomplete
-   subprocess.call("perl Configure VC-WIN64A ", shell=True)
-   subprocess.call("ms\do_win64a", shell=True)
-   subprocess.call("nmake -f ms\nt.mak", shell=True)
-   subprocess.call("nmake -f ms\nt.mak install", shell=True)
+   perlcmd = "perl Configure debug-VC-WIN64A" + " --prefix=" + Dir('#/build').abspath
+   print perlcmd
+   subprocess.call(perlcmd, shell=True)
+   print ' calling do_win64'
+   subprocess.call(r'ms\do_win64a', shell=True)
+   print '  calling ms nk.mak'
+   subprocess.call(r'nmake -f ms\nt.mak', shell=True)
+   print ' calling ms nt.mak install'
+   subprocess.call(r'nmake -f ms\nt.mak install', shell=True)
    os.chdir(cwd)
 
-env.Command([ssllibpath], str(Dir(vpath)) , build_openssl_for_windows)
+env.Command('#/build/lib/ssleay32.lib', str(Dir(vpath)) , build_openssl_for_windows)
 
 #env.InstallAs('#build/lib/ssl.lib', ssllibpath)
 #env.InstallAs('#build/lib/crypto.lib',cryptolibpath)

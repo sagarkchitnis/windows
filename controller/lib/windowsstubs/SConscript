@@ -13,7 +13,7 @@ abs_toppath = Dir('#').abspath
 
 x64dir = ''
 if env['TARGET_ARCH'] == 'x64':
-   x64dir = '/x64'
+   x64dir = r'\x64'
 
 #build libraries
 def build_windowsstubs_lib(target,source,env):
@@ -23,7 +23,7 @@ def build_windowsstubs_lib(target,source,env):
    msbuildcmd = "msbuild WindowsStubs.sln /p:platform=" + env['TARGET_ARCH'] + " /p:Configuration=Debug"
    print msbuildcmd
    subprocess.call(msbuildcmd, shell=True)
-   cmd = 'copy ' +  abs_vpath +  x64dir + r'/debug' + '/windowsstubs.lib ' +  env.Dir(env['TOP_LIB']).abspath 
+   cmd = 'copy ' +  abs_vpath +  x64dir + r'\debug' + r'\windowsstubs.lib ' +  env.Dir(env['TOP_LIB']).abspath 
    print cmd
    subprocess.call(cmd, shell=True)
    os.chdir(curdir)
