@@ -13,6 +13,9 @@ vpath = '#/third_party/openssl-1.0.2k'
 buildpath = '#/build'
 
 env = DefaultEnvironment()
+ssllibpath = Dir(vpath).abspath+ r'\out32\ssleay32.lib'
+cryptolibpath = Dir(vpath).abspath+ r'\out32\libeay32.lib'
+opensslconfheader = '#build/include/openssl/conf.h'
 
 def build_openssl_for_windows(target,source,env):
    cwd = os.getcwd()
@@ -26,10 +29,17 @@ def build_openssl_for_windows(target,source,env):
    subprocess.call("nmake -f ms\nt.mak install", shell=True)
    os.chdir(cwd)
 
-env.Command([], str(Dir(vpath)) , build_openssl_for_windows)
+env.Command([ssllibpath], str(Dir(vpath)) , build_openssl_for_windows)
 
-env.InstallAs('#build/lib/ssleay32.lib', Dir(vpath).abspath+ r'\lib\ssleay32.lib')
-env.InstallAs('#build/lib/libeay32.lib', Dir(vpath).abspath+ r'\lib\libeay32.lib')
+#env.InstallAs('#build/lib/ssl.lib', ssllibpath)
+#env.InstallAs('#build/lib/crypto.lib',cryptolibpath)
+
+srcdir = Dir(vpath + '/inc32/openssl').abspath
+destdir = Dir('#/build/include/openssl').abspath
+
+if not os.path.exists(destdir):
+  print 'copying files to' + destdir
+  shutil.copytree(srcdir, destdir)
 
 print 'openssl leave...'
      
