@@ -134,11 +134,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cpuinfo.h" />
+    <ClInclude Include="..\..\taskutil.h" />
     <ClInclude Include="..\..\winutils.h" />
-    <ClInclude Include="cpuinfo.h" />
+    <ClInclude Include="..\..\wmi.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="TaskUtil.h" />
-    <ClInclude Include="wmi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\winutils.cpp" />
