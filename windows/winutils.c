@@ -110,10 +110,11 @@ DWORD getppid()
 }
 
 
-void bzero(unsigned char *to, int count)
+void bzero(void *to, int count)
 {
+    unsigned char *chto = static_cast<unsigned char*>(to);
 	while (count-- > 0)
 	{
-		*to++ = 0;
+		*chto++ = 0;
 	}
 }

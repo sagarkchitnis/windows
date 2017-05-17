@@ -23,7 +23,6 @@ char *gettempdirectory();
 DWORD getppid();
 void WindowsCloseTaskFiles();
 #define PACK( ___somestructure___ ) __pragma( pack(push, 1) ) ___somestructure___ __pragma( pack(pop) )
-
 #define strtok_r strtok_s
 
 
@@ -41,7 +40,7 @@ void WindowsCloseTaskFiles();
 #define ETHERTYPE_IPV4  0x0800
 #define ETHERTYPE_IPV6  0x86dd
 
-void bzero(unsigned char *to, int count);
+void bzero(void *to, int count);
 typedef unsigned long   __kernel_ulong_t;
 struct rlimit {
 	         __kernel_ulong_t        rlim_cur;

@@ -17,7 +17,8 @@
 
 namespace opt = boost::program_options;
 
-pthread_t asio_thread;
+//pthread_t asio_thread;
+boost::thread *asio_thread = nullptr;
 
 void *asio_poll(void *arg){
     Agent::GetInstance()->event_manager()->Run();
@@ -25,18 +26,35 @@ void *asio_poll(void *arg){
 }
 
 void AsioRun() {
-    pthread_attr_t attr;
+    //pthread_attr_t attr;
     int ret;
 
-    pthread_attr_init(&attr);
-    if ((ret = pthread_create(&asio_thread, &attr, asio_poll, NULL)) != 0) {
-        LOG(ERROR, "pthread_create error : " <<  strerror(ret) );
-        assert(0);
-    }
+   // pthread_attr_init(&attr);
+  //  if ((ret = pthread_create(&asio_thread, &attr, asio_poll, NULL)) != 0) {
+  //      LOG(ERROR, "pthread_create error : " <<  strerror(ret) );
+  //      assert(0);
+  //  }
+	try {
+		asio_thread = new boost::thread(asio_poll);
+	}
+	catch (boost::thread_resource_error)
+	{
+
+		LOG(ERROR, "boost::thread_create error : " );
+		assert(0);
+		throw;
+	}
+	
 }
 
 void AsioStop() {
-    pthread_join(asio_thread, NULL);
+
+   // pthread_join(asio_thread, NULL);
+	if (asio_thread)
+	{
+		asio_thread->join();
+		delete asio_thread;
+	}
 }
 
 void WaitForInitDone(Agent *agent) {

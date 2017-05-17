@@ -57,4 +57,4 @@ struct msghdr {
 #define SIOCGIFCOUNT    0x8938          /* get number of devices */
 
 int ioctl(int __fd, unsigned long int __request, ...);
-int close(int fd);
+//int close(int fd);
