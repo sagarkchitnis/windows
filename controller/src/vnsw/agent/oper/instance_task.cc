@@ -109,11 +109,11 @@ bool InstanceTaskExecvp::Run() {
 
         _exit(127);
     }
-#endif
+
     close(err[1]);
 
     start_time_ = time(NULL);
-#if 0 //WINDOWS-TEMP
+   //WINDOWS-TEMP
     int fd = ::dup(err[0]);
     close(err[0]);
     if (fd == -1) {
@@ -134,7 +134,7 @@ bool InstanceTaskExecvp::Run() {
     }
     setup_done_ = true;
 #endif
-    bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
+   //WINDOWS-TEMP bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
 	//WINDOWS-TEMP   input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
 	//WINDOWS-TEMP         boost::bind(&InstanceTaskExecvp::ReadData,
 	//WINDOWS-TEMP                    this, boost::asio::placeholders::error,

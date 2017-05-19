@@ -20,9 +20,9 @@ namespace opt = boost::program_options;
 //pthread_t asio_thread;
 boost::thread *asio_thread = nullptr;
 
-void *asio_poll(void *arg){
+void asio_poll(){
     Agent::GetInstance()->event_manager()->Run();
-    return NULL;
+   // return NULL;
 }
 
 void AsioRun() {

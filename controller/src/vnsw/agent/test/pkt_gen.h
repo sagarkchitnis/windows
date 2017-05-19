@@ -46,7 +46,7 @@ struct udp_packet {
     struct ether_header eth;
     struct ip ip;
     struct udphdr udp;
-    uint8_t payload[];
+    uint8_t payload[UDP_PAYLOAD_SIZE];//WINDOWSFIX - verify 
 });
 
 PACK(
@@ -69,7 +69,7 @@ struct udp6_packet {
     struct ether_header eth;
     struct ip6_hdr  ip;
     struct udphdr udp;
-    uint8_t payload[];
+    uint8_t payload[UDP_PAYLOAD_SIZE];//windowsfix verify
 });
 
 class IpUtils {
