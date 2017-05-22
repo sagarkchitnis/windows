@@ -41,7 +41,7 @@ void InstanceTaskExecvp::ReadData(const boost::system::error_code &ec,
         return;
     }
 
-    bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
+ //WINDOWS-TEMP   bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
    //WINDOWS-TEMP input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
    //WINDOWS-TEMP                 boost::bind(&InstanceTaskExecvp::ReadData,
    //WINDOWS-TEMP                           this, boost::asio::placeholders::error,

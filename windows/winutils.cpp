@@ -35,11 +35,12 @@ DWORD getppid()
 }
 
 
-void bzero(unsigned char *to, int count)
+void bzero(void *to, int count)
 {
+	unsigned char *chto = static_cast<unsigned char*>(to);
 	while (count-- > 0)
 	{
-		*to++ = 0;
+		*chto++ = 0;
 	}
 }
 
@@ -77,7 +78,7 @@ int ioctl(int fd, unsigned long request, ...) { return 0; }
 unsigned int  if_nametoindex(char const *) { return 0; }
 void  if_freenameindex(struct if_nameindex *) { return; }
 struct if_nameindex *  if_nameindex(void) { return 0; }
-
+char *windows_if_indextoname(unsigned int ifindex, char *ifname) { return nullptr; }
 static inline int
 xdigit(char c) {
 	unsigned d;

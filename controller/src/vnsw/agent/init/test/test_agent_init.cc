@@ -1,6 +1,8 @@
 /*
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  */
+#include <boost/asio.hpp>
+#include <windows.h>
 
 #include "base/os.h"
 #include <sys/resource.h>
@@ -10,6 +12,7 @@
 
 #include <base/test/task_test_util.h>
 #include <cfg/cfg_init.h>
+#include "AgentConstants.h"
 
 namespace opt = boost::program_options;
 using std::map;
@@ -362,7 +365,7 @@ TEST_F(FlowTest, Default_Cmdline_arg1) {
     EXPECT_EQ(param.stale_interface_cleanup_timeout(), 60);
     EXPECT_EQ(param.http_server_port(), 10001);
     EXPECT_STREQ(param.log_category().c_str(), "abc");
-    EXPECT_STREQ(param.log_file().c_str(), AgentConstants::contrail_vrouter2_log);
+    EXPECT_STREQ(param.log_file().c_str(), AgentConstants::contrail_vrouter2_log.c_str());
     EXPECT_STREQ(param.log_level().c_str(), "SYS_ERR");
     EXPECT_TRUE(param.isXenMode());
     EXPECT_EQ(param.agent_mode(), AgentParam::TSN_AGENT);
@@ -415,7 +418,7 @@ TEST_F(FlowTest, Default_Cmdline_arg3) {
 }
 
 TEST_F(FlowTest, MultitokenVector) {
-    int argc = 3;
+   const int argc = 3;
     char *argv[argc];
     char argv_0[] = "";
     char argv_1[] = "--DEFAULT.collectors=10.10.10.1:100 20.20.20.2:200";

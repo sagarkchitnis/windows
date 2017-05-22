@@ -18,7 +18,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tv);
 int clock_getres(clockid_t clk_id, struct timespec *res);
 int usleep(useconds_t usec);
 unsigned int sleep(unsigned int seconds);
-
+char *windows_if_indextoname(unsigned int ifindex, char *ifname);
 char *gettempdirectory();
 DWORD getppid();
 void WindowsCloseTaskFiles();
