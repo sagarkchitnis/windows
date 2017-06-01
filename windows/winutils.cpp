@@ -2,8 +2,9 @@
 
 #include "winutils.h"
 #include "TlHelp32.h"
-#include "sys/wintypes.h"
+
 #include "net/ethernet.h"
+#include <intrin.h> 
 
 DWORD getppid()
 {
@@ -124,4 +125,18 @@ struct ether_addr *
 {
 	static struct ether_addr addr;
 	return ether_aton_r(asc, &addr);
+}
+
+//similar functionality as ffsl in linux - called in bitset.cc
+int find_first_set64(uint64_t value) 
+{
+	unsigned long index = 0;
+	unsigned char isNonZero= _BitScanForward64(&index, value);
+	if (isNonZero)	{
+
+		return index + 1;
+		//ffsl assumes least significant bit is position is 1.
+		//_bitScanForward assumes least significant bt position is 0.
+	}
+	else return 0;
 }

@@ -17,7 +17,7 @@ InstanceTaskExecvp::InstanceTaskExecvp(const std::string &name,
                                        const std::string &cmd,
                                        int cmd_type, EventManager *evm) :
         name_(name), cmd_(cmd), 
-	//WINDOWS-TEMP input_(*(evm->io_service())),
+	    input_(*(evm->io_service())),
 
         setup_done_(false), pid_(0), cmd_type_(cmd_type), pipe_stdout_(false) {
 }
@@ -33,7 +33,7 @@ void InstanceTaskExecvp::ReadData(const boost::system::error_code &ec,
 
     if (ec) {
         boost::system::error_code close_ec;
-   //WINDOWS-TEMP     input_.close(close_ec);
+        input_.close(close_ec);
 
         if (!on_exit_cb_.empty()) {
             on_exit_cb_(this, ec);
@@ -41,11 +41,11 @@ void InstanceTaskExecvp::ReadData(const boost::system::error_code &ec,
         return;
     }
 
- //WINDOWS-TEMP   bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
-   //WINDOWS-TEMP input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
-   //WINDOWS-TEMP                 boost::bind(&InstanceTaskExecvp::ReadData,
-   //WINDOWS-TEMP                           this, boost::asio::placeholders::error,
-   //WINDOWS-TEMP                          boost::asio::placeholders::bytes_transferred));
+       bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
+       input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
+                         boost::bind(&InstanceTaskExecvp::ReadData,
+                                  this, boost::asio::placeholders::error,
+                             boost::asio::placeholders::bytes_transferred));
 }
 
 void InstanceTaskExecvp::Stop() {
@@ -134,11 +134,11 @@ bool InstanceTaskExecvp::Run() {
     }
     setup_done_ = true;
 #endif
-   //WINDOWS-TEMP bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
-	//WINDOWS-TEMP   input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
-	//WINDOWS-TEMP         boost::bind(&InstanceTaskExecvp::ReadData,
-	//WINDOWS-TEMP                    this, boost::asio::placeholders::error,
-	//WINDOWS-TEMP                  boost::asio::placeholders::bytes_transferred));
+    bzero((unsigned char*)rx_buff_, sizeof(rx_buff_));
+	input_.async_read_some(boost::asio::buffer(rx_buff_, kBufLen),
+	         boost::bind(&InstanceTaskExecvp::ReadData,
+	                   this, boost::asio::placeholders::error,
+	                  boost::asio::placeholders::bytes_transferred));
     return true;
 
 }

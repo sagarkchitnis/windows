@@ -2,6 +2,7 @@
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include<windows.h>
 #include <stdlib.h>
+#include "sys/wintypes.h"
 
 int getloadavg(double loadavg[], int nelem);;
 
@@ -22,6 +23,7 @@ char *windows_if_indextoname(unsigned int ifindex, char *ifname);
 char *gettempdirectory();
 DWORD getppid();
 void WindowsCloseTaskFiles();
+int find_first_set64(uint64_t value);
 #define PACK( ___somestructure___ ) __pragma( pack(push, 1) ) ___somestructure___ __pragma( pack(pop) )
 #define strtok_r strtok_s
 

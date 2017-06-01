@@ -159,7 +159,7 @@ protected:
     uint8_t tx_buf_[kMaxBufferSize];
 
     int sock_fd_;
-    //WINDOWS-TEMP local::datagram_protocol::socket sock_;
+	boost::asio::generic::datagram_protocol::socket sock_;
     DBTableBase::ListenerId intf_listener_id_;
     DBTableBase::ListenerId fabric_listener_id_;
     int seqno_;
