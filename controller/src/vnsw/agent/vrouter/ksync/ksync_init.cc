@@ -107,7 +107,7 @@ void KSync::Init(bool create_vhost) {
 }
 
 void KSync::InitDone() {
-#ifndef _WINDOWS //WINDOWSFIX
+#ifndef _WINDOWS //WINDOWS-TEMP
     for (uint16_t i = 0; i < flow_table_ksync_obj_list_.size(); i++) {
         FlowTable *flow_table = agent_->pkt()->get_flow_proto()->GetTable(i);
         flow_table_ksync_obj_list_[i]->set_flow_table(flow_table);
@@ -127,7 +127,7 @@ void KSync::InitFlowMem() {
 }
 
 void KSync::NetlinkInit() {
-#if 0 //WINDOWSFIX
+#if 0 //WINDOWS-TEMP
     EventManager *event_mgr;
 
     event_mgr = agent_->event_manager();
@@ -345,7 +345,7 @@ void KSync::Shutdown() {
 }
 
 void GenericNetlinkInit() {
-#if 0 //WINDOWSFIX
+#if 0 //WINDOWS-TEMP
     struct nl_client    *cl;
     int    family;
 

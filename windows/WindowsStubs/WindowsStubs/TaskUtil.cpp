@@ -6,7 +6,7 @@
 #include <cctype>
 #include <algorithm>
 
-std::string TaskExecuteAndWait(std::string execpath, bool usePipes)
+std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 {
 	
 	STARTUPINFO si;
@@ -68,8 +68,8 @@ std::string TaskExecuteAndWait(std::string execpath, bool usePipes)
 		return "-1";
 	}
 
-	
-	WaitForSingleObject(pi.hProcess, INFINITE);
+	if(usePipes || bWait)
+	   WaitForSingleObject(pi.hProcess, INFINITE);
 
 	if (usePipes)
 	{
@@ -105,3 +105,12 @@ std::string TaskExecuteAndWait(std::string execpath, bool usePipes)
 	return output;
 }
 
+
+
+int system(const char * command)
+{
+	if (command == nullptr) return 0;
+	std::string ret = WindowsTaskExecute(command, false, true);
+	if (ret == "-1") return -1;
+	else return 0;
+}

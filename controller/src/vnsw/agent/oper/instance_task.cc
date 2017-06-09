@@ -63,7 +63,7 @@ bool InstanceTaskExecvp::IsSetup() {
 }
 
 // If there is an error before the fork, task is set to "not running"
-// and "false" is returned to caller so that caller can take appropriate
+// and "false" is returned to caller so that caller can take appropriatreae
 // action on task. If an error is encounted after  fork, it is very
 // likely that child process is running so we keep the task status as
 // "running" and return "false" to caller, so that caller does not
@@ -80,14 +80,16 @@ bool InstanceTaskExecvp::Run() {
     for (std::size_t i = 0; i != argv.size(); ++i) {
         c_argv[i] = argv[i].c_str();
     }
+	//https://msdn.microsoft.com/en-us/library/y23kc048(v=vs.140).aspx
 
-    int err[2];
-	//WINDOWS-TEMP if (pipe(err) < 0) {
-	//WINDOWS-TEMP   return is_running_ = false;
-	//WINDOWS-TEMP}
-
-	//WINDOWS-TEMP  pid_ = vfork();
 #if 0 //WINDOWS-TEMP
+    int err[2];
+	if (pipe(err) < 0) {
+	  return is_running_ = false;
+	}
+
+	pid_ = vfork();
+
     if (pid_ == 0) {
         close(err[0]);
         if (pipe_stdout_) {
@@ -104,8 +106,8 @@ bool InstanceTaskExecvp::Run() {
 
         /* Close all the open fds before execvp */
         CloseTaskFds();
-		//WINDOWS-TEMP   execvp(c_argv[0], (char **) c_argv.data());
-		//WINDOWS-TEMP   perror("execvp");
+		execvp(c_argv[0], (char **) c_argv.data());
+		perror("execvp");
 
         _exit(127);
     }

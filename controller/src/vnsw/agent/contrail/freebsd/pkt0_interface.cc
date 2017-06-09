@@ -86,7 +86,7 @@ void Pkt0Interface::InitControlInterface() {
     }
 
     // Set interface name and save the /dev/tapX path for later use
-    std::string dev_name = std::string("/dev/") +
+    std::string dev_name = std::string(AgentConstants::dev_directory+"/") +
         std::string(ifr.ifr_name);
     ifr.ifr_data = (caddr_t) name_.c_str();
     if (ioctl(socket_fd, SIOCSIFNAME, &ifr) < 0) {

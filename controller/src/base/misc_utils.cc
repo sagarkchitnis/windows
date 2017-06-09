@@ -8,7 +8,7 @@
 #include <stdlib.h> 
 #include <base/misc_utils.h>
 #include <base/logging.h>
-//WINDOWSFIX #include <netdb.h>
+//WINDOWS-TEMP #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "boost/filesystem/operations.hpp"
@@ -22,7 +22,7 @@
 using namespace std;
 namespace fs = boost::filesystem;
 const std::string MiscUtils::ContrailVersionCmd = "/usr/bin/contrail-version";
-const std::string MiscUtils::CoreFileDir = "/var/crashes/";
+const std::string MiscUtils::CoreFileDir = AgentConstants::var_directory+"/crashes/";
 const int MiscUtils::MaxCoreFiles = 5;
 const map<MiscUtils::BuildModule, string> MiscUtils::BuildModuleNames = 
     MiscUtils::MapInit();

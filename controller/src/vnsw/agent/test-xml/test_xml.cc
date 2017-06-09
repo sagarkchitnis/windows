@@ -246,7 +246,7 @@ bool AgentUtXmlTest::ReadXml() {
 
 bool AgentUtXmlTest::Load() {
     struct stat s;
-#if 0 //WINDOWSFIX - easy fix for windows
+#if 0 //WINDOWS-TEMP - easy fix for windows
     if (stat(file_name_.c_str(), &s)) {
         cout << "Error <" << strerror(errno) << "> opening file "
             << file_name_ << endl;

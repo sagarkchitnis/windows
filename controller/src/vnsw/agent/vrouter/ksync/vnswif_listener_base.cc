@@ -24,7 +24,7 @@ SandeshTraceBufferPtr VnswIfTraceBuf(SandeshTraceBufferCreate(
 
 VnswInterfaceListenerBase::VnswInterfaceListenerBase(Agent *agent) :
     agent_(agent), read_buf_(NULL), sock_fd_(-1),
-	//WINDOWS-TEMP sock_(*(agent->event_manager())->io_service()),
+	sock_(*(agent->event_manager())->io_service()),
     intf_listener_id_(DBTableBase::kInvalidId),
     fabric_listener_id_(DBTableBase::kInvalidId), seqno_(0),
     vhost_intf_up_(false), ll_addr_table_(), revent_queue_(NULL),
@@ -69,8 +69,8 @@ void VnswInterfaceListenerBase::Init() {
     sock_fd_ = CreateSocket();
 
     /* Assign native socket to boost asio */
-    //WINDOWS-TEMP boost::asio::local::datagram_protocol protocol;
-    ////WINDOWS-TEMP sock_.assign(protocol, sock_fd_);
+    //WINDOWS-TEMP boost::asio::generic::datagram_protocol protocol;
+    //WINDOWS-TEMP sock_.assign(protocol, sock_fd_);
 
     SyncCurrentState();
 
@@ -87,7 +87,7 @@ void VnswInterfaceListenerBase::Shutdown() {
     }
 
     boost::system::error_code ec;
-	//WINDOWS-TEMP sock_.close(ec);
+	sock_.close(ec);
 }
 
 

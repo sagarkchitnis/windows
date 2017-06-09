@@ -24,7 +24,7 @@
 #include "base/os.h"
 #include "base/logging.h"
 
-#define TAP_INTF_CLONE_DEV "/dev/tap"
+#define TAP_INTF_CLONE_DEV AgentConstants::dev_directory+"/tap"
 
 void DeleteTapByName(const char* if_name) {
     int socket_fd = socket(AF_LOCAL, SOCK_DGRAM, 0);

@@ -45,7 +45,7 @@ void AgentSignal::NotifyDefault(const boost::system::error_code &error,
 }
 
 void AgentSignal::HandleSig(const boost::system::error_code &error, int sig) {
-#if 0 //WINDOWSFIX
+#if 0 //WINDOWS-TEMP
     if (!error) {
         int status = 0;
         pid_t pid = 0;
@@ -70,7 +70,7 @@ void AgentSignal::RegisterSigHandler() {
 
 void AgentSignal::Initialize() {
     boost::system::error_code ec;
-#if 0 //WINDOWSFIX
+#if 0 //WINDOWS-TEMP
     /*
      * FIX(safchain) currently only handling SIGCHLD
      */

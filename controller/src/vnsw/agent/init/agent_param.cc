@@ -624,7 +624,7 @@ void AgentParam::ParseAgentInfo() {
 
     if (!GetValueFromTree<string>(agent_base_dir_,
                                   "DEFAULT.agent_base_directory")) {
-        agent_base_dir_ = "/var/lib/contrail";
+        agent_base_dir_ = AgentConstants::var_directory+"/lib/contrail";
     }
 }
 

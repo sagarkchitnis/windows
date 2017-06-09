@@ -7,7 +7,7 @@
 #include <vrouter/ksync/interface_scan.h>
 #include <oper/interface_common.h>
 #include <oper/mirror_table.h>
-//WINDOWSFIX move to header
+//WINDOWS-TEMP move to header
 #define  IF_NAMESIZE	32
 
 #ifdef _WINDOWS

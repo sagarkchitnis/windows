@@ -1,3 +1,3 @@
 #pragma once
 #include <string>
-std::string TaskExecuteAndWait(std::string execpath, bool usePipes=false);
+std::string WindowsTaskExecute(std::string execpath, bool usePipes=false, bool bWait=true);

@@ -25,7 +25,7 @@
 #include "base/os.h"
 #include "base/logging.h"
 
-#define TUN_INTF_CLONE_DEV "/dev/net/tun"
+#define TUN_INTF_CLONE_DEV AgentConstants::dev_directory+"/net/tun"
 
 void DeleteTap(int fd) {
     if (ioctl(fd, TUNSETPERSIST, 0) < 0) {

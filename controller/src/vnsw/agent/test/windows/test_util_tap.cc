@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 
-//WINDOWSFIX: needs windows implementation for the TAP interface
+//WINDOWS-TEMP: needs windows implementation for the TAP interface
 
 
 void DeleteTap(int fd) {

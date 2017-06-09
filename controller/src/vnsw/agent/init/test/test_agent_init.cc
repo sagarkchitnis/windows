@@ -67,7 +67,7 @@ TEST_F(FlowTest, Agent_Conf_file_1) {
                  "controller/src/vnsw/agent/init/test/cfg.ini");
     EXPECT_STREQ(param.program_name().c_str(), "test-param");
     EXPECT_EQ(param.agent_mode(), AgentParam::VROUTER_AGENT);
-    EXPECT_STREQ(param.agent_base_dir().c_str(), "/var/lib/contrail");
+    EXPECT_STREQ(param.agent_base_dir().c_str(), AgentConstants::var_directory+"/lib/contrail");
     EXPECT_EQ(param.subnet_hosts_resolvable(), true);
 
     const std::vector<uint16_t> &ports = param.bgp_as_a_service_port_range_value();
@@ -77,7 +77,7 @@ TEST_F(FlowTest, Agent_Conf_file_1) {
                  "controller/src/vnsw/agent/init/test/cfg.ini");
     EXPECT_STREQ(param.program_name().c_str(), "test-param");
     EXPECT_EQ(param.agent_mode(), AgentParam::VROUTER_AGENT);
-    EXPECT_STREQ(param.agent_base_dir().c_str(), "/var/lib/contrail");
+    EXPECT_STREQ(param.agent_base_dir().c_str(), AgentConstants::var_directory+"/lib/contrail");
     EXPECT_EQ(param.subnet_hosts_resolvable(), true);
 
     const std::vector<uint16_t> &ports2 = param.bgp_as_a_service_port_range_value();
@@ -266,7 +266,7 @@ TEST_F(FlowTest, Agent_Param_1) {
         (char *) "--DEFAULT.http_server_port", (char *)"8000",
         (char *) "--DEFAULT.hostname",     (char *)"vhost-1",
         (char *) "--DEFAULT.dhcp_relay_mode",     (char *)"true",
-        (char *) "--DEFAULT.agent_base_directory",     (char *)"/var/run/contrail",
+        (char *) "--DEFAULT.agent_base_directory",     (char *)AgentConstants::var_directory+"/run/contrail",
         (char *) "--DEFAULT.subnet_hosts_resolvable",  (char *)"false",
         (char *) "--DEFAULT.pkt0_tx_buffers",  (char *)"3000",
     };
@@ -292,7 +292,7 @@ TEST_F(FlowTest, Agent_Param_1) {
     EXPECT_EQ(param.http_server_port(), 8000);
     EXPECT_STREQ(param.host_name().c_str(), "vhost-1");
     EXPECT_EQ(param.dhcp_relay_mode(), true);
-    EXPECT_STREQ(param.agent_base_dir().c_str(), "/var/run/contrail");
+    EXPECT_STREQ(param.agent_base_dir().c_str(), AgentConstants::var_directory+"/run/contrail");
     EXPECT_EQ(param.subnet_hosts_resolvable(), false);
     EXPECT_EQ(param.pkt0_tx_buffer_count(), 3000);
 }

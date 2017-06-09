@@ -35,7 +35,7 @@
 #include "vrouter/ksync/ksync_init.h"
 
 // Name of clone device for creating tap interface
-#define TUN_INTF_CLONE_DEV      "/dev/net/tun"
+#define TUN_INTF_CLONE_DEV      AgentConstants::dev_directory+"/net/tun"
 #define SOCK_RETRY_COUNT 4
 
 InterfaceKSyncEntry::InterfaceKSyncEntry(InterfaceKSyncObject *obj,

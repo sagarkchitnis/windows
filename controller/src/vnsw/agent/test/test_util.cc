@@ -3607,7 +3607,7 @@ int MplsToVrfId(int label) {
 }
 
 uint32_t GetInterfaceLabel(int uuid, bool l3) {
-	return 0;//WINDOWSFIX
+	return 0;//WINDOWS-TEMP
 }
 
 PktGen *TxMplsPacketUtil(int ifindex, const char *out_sip,

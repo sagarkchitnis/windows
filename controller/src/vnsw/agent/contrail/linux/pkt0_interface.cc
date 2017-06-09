@@ -25,7 +25,7 @@
 #include "pkt/pkt_init.h"
 #include "../pkt0_interface.h"
 
-#define TUN_INTF_CLONE_DEV "/dev/net/tun"
+#define TUN_INTF_CLONE_DEV AgentConstants::dev_directory+"/net/tun"
 
 #define TAP_TRACE(obj, ...)                                              \
 do {                                                                     \

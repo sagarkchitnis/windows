@@ -29,7 +29,7 @@
 using namespace std;
 namespace fs = boost::filesystem;
 
-const std::string PortIpcHandler::kPortsDir = "/var/lib/contrail/ports";
+const std::string PortIpcHandler::kPortsDir = AgentConstants::var_directory+"/lib/contrail/ports";
 
 PortIpcHandler::AddPortParams::AddPortParams
     (const string &pid, const string &iid, const string &vid,
