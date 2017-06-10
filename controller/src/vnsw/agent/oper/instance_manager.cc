@@ -22,14 +22,16 @@
     #include "oper/libvirt_instance_adapter.h"
 #endif
 #include "base/util.h"
+#include "AgentConstants.h"
+#include "TaskUtil.h"
 
 using boost::uuids::uuid;
 SandeshTraceBufferPtr InstanceManagerTraceBuf(
         SandeshTraceBufferCreate("InstanceManager", 1000));
 
-static const char loadbalancer_config_path_default[] =
+static const string loadbalancer_config_path_default =
         AgentConstants::var_directory+"/lib/contrail/loadbalancer/";
-static const char namespace_store_path_default[] =
+static const string namespace_store_path_default =
         AgentConstants::var_directory+"/run/netns";
 static const char namespace_prefix[] = "vrouter-";
 

@@ -18,7 +18,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-
+#include "AgentConstants.h"
 using namespace std;
 namespace fs = boost::filesystem;
 const std::string MiscUtils::ContrailVersionCmd = "/usr/bin/contrail-version";
