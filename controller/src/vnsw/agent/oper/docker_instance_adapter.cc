@@ -7,8 +7,8 @@ InstanceTask* DockerInstanceAdapter::CreateStartTask(const ServiceInstance::Prop
         return NULL;
     }
     std::stringstream cmd_str;
-    cmd_str <<  docker_cmd_ << " create";//WINDOWS-TEMP : verify
-	//WINDOWS-TEMP - agent will already be running in admin mode hence "runas" may not be needed to replace sudo. Verification needed.
+    cmd_str <<  docker_cmd_ << " create";//WINDOWS-CHECK : verify
+	//WINDOWS-CHECK - agent will already be running in admin mode hence "runas" may not be needed to replace sudo. Verification needed.
     cmd_str << " " << UUIDToString(props.instance_id);
     cmd_str << " --image " << props.image_name;
 
@@ -74,8 +74,8 @@ InstanceTask* DockerInstanceAdapter::CreateStopTask(const ServiceInstance::Prope
     }
 
     std::stringstream cmd_str;
-    cmd_str << " " << docker_cmd_ << " destroy";////WINDOWS-TEMP : verify
-	//WINDOWS-TEMP - agent will already be running in admin mode hence "runas" may not be needed to replace sudo. Verification needed.
+    cmd_str << " " << docker_cmd_ << " destroy";////WINDOWS-CHECK : verify
+	//WINDOWS-CHECK - agent will already be running in admin mode hence "runas" may not be needed to replace sudo. Verification needed.
     cmd_str << " " << UUIDToString(props.instance_id);
 
     if (props.vmi_inside != boost::uuids::nil_uuid()) {

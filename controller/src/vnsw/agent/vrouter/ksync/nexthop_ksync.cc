@@ -27,7 +27,7 @@
 #include "vrouter/ksync/nexthop_ksync.h"
 #include "vrouter/ksync/ksync_init.h"
 #include "vr_types.h"
-//WINDOWS-TEMP - put in header
+//WINDOWS-OLD - put in header
 #define AF_BRIDGE 7
 NHKSyncEntry::NHKSyncEntry(NHKSyncObject *obj, const NHKSyncEntry *entry,
                            uint32_t index) :

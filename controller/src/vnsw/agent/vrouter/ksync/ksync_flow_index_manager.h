@@ -32,7 +32,7 @@ public:
     static const uint8_t kActiveGenIdDiffMax = 127;
 
     struct IndexEntry {
-		IndexEntry(const IndexEntry& i) { owner_ = i.owner_; } //WINDOWS-TEMP - needs work for mutex
+		IndexEntry(const IndexEntry& i) { owner_ = i.owner_; } //WINDOWS-OLD - needs work for mutex
         IndexEntry() : owner_(NULL) { }
         virtual ~IndexEntry() {
             assert(owner_.get() == NULL);

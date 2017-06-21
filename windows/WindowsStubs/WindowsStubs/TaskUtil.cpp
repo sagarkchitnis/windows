@@ -5,6 +5,8 @@
 #include<string>
 #include <cctype>
 #include <algorithm>
+#include <process.h>
+
 
 std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 {
@@ -24,8 +26,7 @@ std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 
 
 
-	//std::wstring wexecpath;
-	//std::copy(str.begin(), str.end(), std::back_inserter(wexecpath));
+
 
 	int len;
 	int slength = (int)execpath.length() + 1;
@@ -113,4 +114,97 @@ int system(const char * command)
 	std::string ret = WindowsTaskExecute(command, false, true);
 	if (ret == "-1") return -1;
 	else return 0;
+}
+
+
+int osspecific_getpid(void)
+{
+    return _getpid();
+}
+
+
+FILE *popen(const char *command, const char *type)
+{
+    return _popen(command, type);
+}
+
+int pclose(FILE *stream)
+{
+    return _pclose(stream);
+}
+
+
+struct ProcessInfoDeleter {
+    void operator()(PROCESS_INFORMATION* ppi) {
+        if (ppi)
+        {
+            if (ppi->hProcess)
+                CloseHandle(ppi->hProcess);
+            if (ppi->hThread)
+                CloseHandle(ppi->hThread);
+            delete ppi;
+        }
+    }
+};
+
+bool TaskExecuteAndWait(std::string execpath, std::string *pOutput) {
+    STARTUPINFO si;
+    SECURITY_ATTRIBUTES securityAttr;
+    HANDLE inputPipe, outputPipe;
+    bool retval = true;
+    std::unique_ptr< PROCESS_INFORMATION, ProcessInfoDeleter > upi(new PROCESS_INFORMATION);
+    PROCESS_INFORMATION *ppi = upi.get();//only for clarity purposes, ownership is not relinquished
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(ppi, sizeof(PROCESS_INFORMATION));
+    ZeroMemory(&securityAttr, sizeof(securityAttr));
+    securityAttr.nLength = sizeof(securityAttr);
+    securityAttr.bInheritHandle = TRUE;
+    int len;
+    int slength = (int)execpath.length() + 1;
+    len = MultiByteToWideChar(CP_ACP, 0, execpath.c_str(), slength, 0, 0);
+    auto ubuf = std::unique_ptr< wchar_t[]>{ new wchar_t[len] };
+    wchar_t *pbuf = ubuf.get(); //only for clarity
+    MultiByteToWideChar(CP_ACP, 0, execpath.c_str(), slength, pbuf, len);
+    if (pOutput) {
+        CreatePipe(&inputPipe, &outputPipe, &securityAttr, 0);
+        si.dwFlags = STARTF_USESTDHANDLES;
+        si.hStdInput = NULL;
+        si.hStdOutput = outputPipe;
+        si.hStdError = outputPipe;
+    }
+
+    if (!CreateProcess(NULL, pbuf, NULL, NULL, TRUE, 0, NULL, NULL, &si, ppi)) {
+        DWORD le = GetLastError();
+        std::cout << "CreateProcess Failed. Error code:" << le << std::endl;
+        retval = false;
+    }
+
+    if (retval && WaitForSingleObject(ppi->hProcess, INFINITE) == WAIT_FAILED) {
+        DWORD le = GetLastError();
+        std::cout << "WaitForSingleObject Failed. Error code:" << le << std::endl;
+        retval = false;
+    }
+
+    if (retval && pOutput) {
+        CloseHandle(outputPipe);
+        const int BUFFER_SIZE = 200;
+        DWORD nNumberOfBytesToRead = 0;
+        do {
+            char localbuf[BUFFER_SIZE + 1];
+
+            if (::ReadFile(inputPipe, localbuf, BUFFER_SIZE, &nNumberOfBytesToRead, 0)) {
+                if (nNumberOfBytesToRead == 0)
+                    break;
+
+                localbuf[nNumberOfBytesToRead] = '\0';
+
+                *pOutput += localbuf;
+            }
+
+        } while (nNumberOfBytesToRead != 0);
+        CloseHandle(inputPipe);
+    }
+
+    return retval;
 }

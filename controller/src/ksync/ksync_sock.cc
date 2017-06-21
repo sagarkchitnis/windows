@@ -41,7 +41,7 @@
 #include "vr_types.h"
 
 using namespace boost::asio;
-#define SO_RCVBUFFORCE  33 //WINDOWS-TEMP
+#define SO_RCVBUFFORCE  33 //WINDOWS-OLD
 /* Note SO_RCVBUFFORCE is supported only for linux version 2.6.14 and above */
 typedef boost::asio::detail::socket_option::integer<SOL_SOCKET,
         SO_RCVBUFFORCE> ReceiveBuffForceSize;
@@ -81,7 +81,7 @@ static uint32_t IoVectorToData(char *data, KSyncBufferList *iovec) {
 // Netlink utilities
 /////////////////////////////////////////////////////////////////////////////
 static uint32_t GetNetlinkSeqno(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     return nlh->nlmsg_seq;
 #endif
@@ -89,7 +89,7 @@ static uint32_t GetNetlinkSeqno(char *data) {
 }
 
 static bool NetlinkMsgDone(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     return ((nlh->nlmsg_flags & NLM_F_MULTI) != 0);
 #endif
@@ -98,7 +98,7 @@ static bool NetlinkMsgDone(char *data) {
 
 // Common validation for netlink messages
 static bool ValidateNetlink(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     if (nlh->nlmsg_type == NLMSG_ERROR) {
         LOG(ERROR, "Netlink error for seqno " << nlh->nlmsg_seq << " len "
@@ -144,7 +144,7 @@ static bool ValidateNetlink(char *data) {
 }
 
 static void GetNetlinkPayload(char *data, char **buf, uint32_t *buf_len) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     int len = 0;
     if (nlh->nlmsg_type == NLMSG_DONE) {
@@ -159,7 +159,7 @@ static void GetNetlinkPayload(char *data, char **buf, uint32_t *buf_len) {
 }
 
 static void InitNetlink(nl_client *client) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     nl_init_generic_client_req(client, KSyncSock::GetNetlinkFamilyId());
     unsigned char *nl_buf;
     uint32_t nl_buf_len;
@@ -168,7 +168,7 @@ static void InitNetlink(nl_client *client) {
 }
 
 static void ResetNetlink(nl_client *client) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     unsigned char *nl_buf;
     uint32_t nl_buf_len;
     client->cl_buf_offset = 0;
@@ -177,7 +177,7 @@ static void ResetNetlink(nl_client *client) {
 }
 
 static void UpdateNetlink(nl_client *client, uint32_t len, uint32_t seq_no) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     nl_update_header(client, len);
     struct nlmsghdr *nlh = (struct nlmsghdr *)client->cl_buf;
     nlh->nlmsg_pid = KSyncSock::GetPid();
@@ -209,7 +209,7 @@ KSyncSock::KSyncSock() :
     max_bulk_msg_count_(kMaxBulkMsgCount), max_bulk_buf_size_(kMaxBulkMsgSize),
     bulk_seq_no_(kInvalidBulkSeqNo), tx_count_(0), err_count_(0),
     read_inline_(true) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     TaskScheduler *scheduler = TaskScheduler::GetInstance();
     uint32_t task_id = 0;
     for(int i = 0; i < IoContext::MAX_WORK_QUEUES; i++) {
@@ -232,7 +232,7 @@ KSyncSock::KSyncSock() :
 }
 
 KSyncSock::~KSyncSock() {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     assert(wait_tree_.size() == 0);
 
     if (rx_buff_) {
@@ -253,7 +253,7 @@ KSyncSock::~KSyncSock() {
 }
 
 void KSyncSock::Shutdown() {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     shutdown_ = true;
     sock_->send_queue_.Shutdown();
@@ -262,7 +262,7 @@ void KSyncSock::Shutdown() {
 }
 
 void KSyncSock::Init(bool use_work_queue) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     sock_->send_queue_.Init(use_work_queue);
     pid_ = getpid();
@@ -271,7 +271,7 @@ void KSyncSock::Init(bool use_work_queue) {
 }
 
 void KSyncSock::SetMeasureQueueDelay(bool val) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     sock_->send_queue_.set_measure_busy_time(val);
     for (int i = 0; i < IoContext::MAX_WORK_QUEUES; i++) {
@@ -281,7 +281,7 @@ void KSyncSock::SetMeasureQueueDelay(bool val) {
 }
 
 void KSyncSock::Start(bool read_inline) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     sock_->read_inline_ = read_inline;
     if (sock_->read_inline_) {
@@ -296,7 +296,7 @@ void KSyncSock::Start(bool read_inline) {
 }
 
 void KSyncSock::SetSockTableEntry(KSyncSock *sock) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     assert(sock_.get() == NULL);
     sock_.reset(sock);
@@ -304,7 +304,7 @@ void KSyncSock::SetSockTableEntry(KSyncSock *sock) {
 }
 
 void KSyncSock::SetNetlinkFamilyId(int id) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     vnsw_netlink_family_id_ = id;
     InitNetlink(sock_->nl_client_);
@@ -312,7 +312,7 @@ void KSyncSock::SetNetlinkFamilyId(int id) {
 }
 
 uint32_t KSyncSock::WaitTreeSize() const {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     return wait_tree_.size();
 #endif
@@ -320,7 +320,7 @@ uint32_t KSyncSock::WaitTreeSize() const {
 }
 
 void KSyncSock::SetSeqno(uint32_t seq) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     seqno_ = seq;
     uve_seqno_ = seq;
@@ -329,7 +329,7 @@ void KSyncSock::SetSeqno(uint32_t seq) {
 }
 
 uint32_t KSyncSock::AllocSeqNo(bool is_uve) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     uint32_t seq;
     if (is_uve) {
@@ -347,7 +347,7 @@ uint32_t KSyncSock::AllocSeqNo(bool is_uve) {
 }
 
 KSyncSock *KSyncSock::Get(DBTablePartBase *partition) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     return sock_.get();
 #endif
@@ -355,7 +355,7 @@ KSyncSock *KSyncSock::Get(DBTablePartBase *partition) {
 }
 
 KSyncSock *KSyncSock::Get(int idx) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     assert(idx == 0);
     return sock_.get();
@@ -364,7 +364,7 @@ KSyncSock *KSyncSock::Get(int idx) {
 }
 
 bool KSyncSock::ValidateAndEnqueue(char *data) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     Validate(data);
     IoContext::IoContextWorkQId q_id;
@@ -382,7 +382,7 @@ bool KSyncSock::ValidateAndEnqueue(char *data) {
 // Read handler registered with boost::asio. Demux done based on seqno_
 void KSyncSock::ReadHandler(const boost::system::error_code& error,
                             size_t bytes_transferred) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     if (error) {
         LOG(ERROR, "Error reading from Ksync sock. Error : " << 
@@ -406,7 +406,7 @@ void KSyncSock::ReadHandler(const boost::system::error_code& error,
 // Process kernel data - executes in the task specified by IoContext
 // Currently only Agent::KSync and Agent::Uve are possibilities
 bool KSyncSock::ProcessKernelData(char *data) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     uint32_t seqno = GetSeqno(data);
     WaitTree::iterator it;
@@ -436,7 +436,7 @@ bool KSyncSock::BlockingRecv() {
 
     char data[kBufLen];
     bool ret = false;
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     do {
         Receive(boost::asio::buffer(data, kBufLen));
         AgentSandeshContext *ctxt = KSyncSock::GetAgentSandeshContext();
@@ -459,7 +459,7 @@ bool KSyncSock::BlockingRecv() {
 
 // BlockingSend does not support bulk messages.
 size_t KSyncSock::BlockingSend(char *msg, int msg_len) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     KSyncBufferList iovec;
     iovec.push_back(buffer(msg, msg_len));
     bulk_buf_size_ = msg_len;
@@ -469,14 +469,14 @@ size_t KSyncSock::BlockingSend(char *msg, int msg_len) {
 }
 
 void KSyncSock::GenericSend(IoContext *ioc) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     send_queue_.Enqueue(ioc);
 #endif
 }
 
 void KSyncSock::SendAsync(KSyncEntry *entry, int msg_len, char *msg,
                           KSyncEntry::KSyncEvent event) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     uint32_t seq = AllocSeqNo(false);
     KSyncIoContext *ioc = new KSyncIoContext(entry, msg_len, msg, seq, event);
     send_queue_.Enqueue(ioc);
@@ -486,7 +486,7 @@ void KSyncSock::SendAsync(KSyncEntry *entry, int msg_len, char *msg,
 // Write handler registered with boost::asio
 void KSyncSock::WriteHandler(const boost::system::error_code& error,
                              size_t bytes_transferred) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     if (error) {
         LOG(ERROR, "Ksync sock write error : " <<
             boost::system::system_error(error).what());
@@ -499,7 +499,7 @@ void KSyncSock::WriteHandler(const boost::system::error_code& error,
 
 // End of messages in the work-queue. Send messages pending in bulk context
 void KSyncSock::OnEmptyQueue(bool done) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     if (bulk_seq_no_ == kInvalidBulkSeqNo)
         return;
     tbb::mutex::scoped_lock lock(mutex_);
@@ -513,7 +513,7 @@ void KSyncSock::OnEmptyQueue(bool done) {
 // Send messages accumilated in bulk context
 int KSyncSock::SendBulkMessage(KSyncBulkSandeshContext *bulk_context,
                                uint32_t seqno) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     KSyncBufferList iovec;
     // Get all buffers to send into single io-vector
     bulk_context->Data(&iovec);
@@ -543,7 +543,7 @@ int KSyncSock::SendBulkMessage(KSyncBulkSandeshContext *bulk_context,
 // Get the bulk-context for sequence-number
 KSyncBulkSandeshContext *KSyncSock::LocateBulkContext(uint32_t seqno,
                               IoContext::IoContextWorkQId io_context_type) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     tbb::mutex::scoped_lock lock(mutex_);
     if (bulk_seq_no_ == kInvalidBulkSeqNo) {
         bulk_seq_no_ = seqno;
@@ -565,7 +565,7 @@ KSyncBulkSandeshContext *KSyncSock::LocateBulkContext(uint32_t seqno,
 //  - false : if message cannot be added to bulk context
 bool KSyncSock::TryAddToBulk(KSyncBulkSandeshContext *bulk_context,
                              IoContext *ioc) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     if ((bulk_buf_size_ + ioc->GetMsgLen()) > max_bulk_buf_size_)
         return false;
 
@@ -586,7 +586,7 @@ bool KSyncSock::TryAddToBulk(KSyncBulkSandeshContext *bulk_context,
 }
 
 bool KSyncSock::SendAsyncImpl(IoContext *ioc) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     KSyncBulkSandeshContext *bulk_context = LocateBulkContext(ioc->GetSeqno(),
                                             ioc->GetWorkQId());
     // Try adding message to bulk-message list
@@ -611,9 +611,9 @@ bool KSyncSock::SendAsyncImpl(IoContext *ioc) {
 // KSyncSockNetlink routines
 /////////////////////////////////////////////////////////////////////////////
 KSyncSockNetlink::KSyncSockNetlink(boost::asio::io_service &ios, int protocol) 
-//WINDOWS-TEMP    : sock_(ios, protocol) 
+//WINDOWS-OLD    : sock_(ios, protocol) 
 {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     ReceiveBuffForceSize set_rcv_buf;
     set_rcv_buf = KSYNC_SOCK_RECV_BUFF_SIZE;
     boost::system::error_code ec;
@@ -653,7 +653,7 @@ bool KSyncSockNetlink::Validate(char *data) {
 //netlink socket class for interacting with kernel
 void KSyncSockNetlink::AsyncSendTo(KSyncBufferList *iovec, uint32_t seq_no,
                                    HandlerCb cb) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     ResetNetlink(nl_client_);
     KSyncBufferList::iterator it = iovec->begin();
     iovec->insert(it, buffer((char *)nl_client_->cl_buf,
@@ -666,7 +666,7 @@ void KSyncSockNetlink::AsyncSendTo(KSyncBufferList *iovec, uint32_t seq_no,
 }
 
 size_t KSyncSockNetlink::SendTo(KSyncBufferList *iovec, uint32_t seq_no) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
 
     ResetNetlink(nl_client_);
     KSyncBufferList::iterator it = iovec->begin();
@@ -674,13 +674,13 @@ size_t KSyncSockNetlink::SendTo(KSyncBufferList *iovec, uint32_t seq_no) {
                              nl_client_->cl_buf_offset));
     UpdateNetlink(nl_client_, bulk_buf_size_, seq_no);
 #endif
-    //WINDOWS-TEMP boost::asio::netlink::raw::endpoint ep;
-	return 0;//WINDOWS-TEMP sock_.send_to(*iovec, ep);
+    //WINDOWS-OLD boost::asio::netlink::raw::endpoint ep;
+	return 0;//WINDOWS-OLD sock_.send_to(*iovec, ep);
 }
 
 // Static method to decode non-bulk message
 void KSyncSockNetlink::NetlinkDecoder(char *data, SandeshContext *ctxt) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     assert(ValidateNetlink(data));
     char *buf = NULL;
     uint32_t buf_len = 0;
@@ -697,7 +697,7 @@ bool KSyncSockNetlink::Decoder(char *data, AgentSandeshContext *context) {
 // Static method used in ksync_sock_user only
 void KSyncSockNetlink::NetlinkBulkDecoder(char *data, SandeshContext *ctxt,
                                           bool more) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     assert(ValidateNetlink(data));
     char *buf = NULL;
     uint32_t buf_len = 0;
@@ -710,7 +710,7 @@ void KSyncSockNetlink::NetlinkBulkDecoder(char *data, SandeshContext *ctxt,
 
 bool KSyncSockNetlink::BulkDecoder(char *data,
                                    KSyncBulkSandeshContext *bulk_context) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     // Get sandesh buffer and buffer-length
     uint32_t buf_len = 0;
     char *buf = NULL;
@@ -721,11 +721,11 @@ bool KSyncSockNetlink::BulkDecoder(char *data,
 }
 
 void KSyncSockNetlink::AsyncReceive(mutable_buffers_1 buf, HandlerCb cb) {
-    //WINDOWS-TEMP sock_.async_receive(buf, cb);
+    //WINDOWS-OLD sock_.async_receive(buf, cb);
 }
 
 void KSyncSockNetlink::Receive(mutable_buffers_1 buf) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     sock_.receive(buf);
     struct nlmsghdr *nlh = buffer_cast<struct nlmsghdr *>(buf);
     if (nlh->nlmsg_type == NLMSG_ERROR) {
@@ -788,7 +788,7 @@ void KSyncSockUdp::AsyncSendTo(KSyncBufferList *iovec, uint32_t seq_no,
 }
 
 size_t KSyncSockUdp::SendTo(KSyncBufferList *iovec, uint32_t seq_no) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     struct uvr_msg_hdr hdr;
     hdr.seq_no = seq_no;
     hdr.flags = 0;
@@ -850,7 +850,7 @@ bool KSyncSockTcp::IsMoreData(char *data) {
 }
 
 size_t KSyncSockTcp::SendTo(KSyncBufferList *iovec, uint32_t seq_no) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     ResetNetlink(nl_client_);
     int offset = nl_client_->cl_buf_offset;
     UpdateNetlink(nl_client_, bulk_buf_size_, seq_no);
@@ -886,7 +886,7 @@ bool KSyncSockTcp::Decoder(char *data, AgentSandeshContext *context) {
 
 bool KSyncSockTcp::BulkDecoder(char *data,
                                KSyncBulkSandeshContext *bulk_context) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     // Get sandesh buffer and buffer-length
     uint32_t buf_len = 0;
     char *buf = NULL;
@@ -902,7 +902,7 @@ void KSyncSockTcp::AsyncReceive(mutable_buffers_1 buf, HandlerCb cb) {
 }
 
 void KSyncSockTcp::Receive(mutable_buffers_1 buf) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     uint32_t bytes_read = 0;
     boost::system::error_code ec;
     const struct nlmsghdr *nlh = NULL;
@@ -1001,7 +1001,7 @@ KSyncSockTcpSessionReader::KSyncSockTcpSessionReader(
 }
 
 int KSyncSockTcpSessionReader::MsgLength(Buffer buffer, int offset) {
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-OLD
     size_t size = TcpSession::BufferSize(buffer);
     int remain = size - offset;
     if (remain < GetHeaderLenSize()) {

@@ -734,7 +734,7 @@ void InstanceManager::StopStaleNetNS(ServiceInstance::Properties &props) {
     std::stringstream ss;
     ss << "StaleNetNS " << cmd;
     INSTANCE_MANAGER_TRACE(Trace, ss.str().c_str());
-#ifndef _WINDOWS //WINDOWS-TEMP
+#ifndef _WINDOWS //WINDOWS-CHECK
     pid_t pid = vfork();
     if (pid == 0) {
         CloseTaskFds();

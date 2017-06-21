@@ -69,8 +69,9 @@ void AgentSignal::RegisterSigHandler() {
 }
 
 void AgentSignal::Initialize() {
-    boost::system::error_code ec;
 #if 0 //WINDOWS-TEMP
+    boost::system::error_code ec;
+
     /*
      * FIX(safchain) currently only handling SIGCHLD
      */

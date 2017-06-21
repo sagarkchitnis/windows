@@ -2,7 +2,7 @@
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  */
 #pragma once
-//WINDOWS-TEMP - major change to use named pipes
+//WINDOWS-OLD - major change to use named pipes
 
 #include <string>
 #include <boost/bind.hpp>

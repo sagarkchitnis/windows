@@ -20,6 +20,8 @@
 #include <sandesh/sandesh.h>
 #include <base/sandesh/task_types.h>
 
+#include <TaskUtil.h>
+
 #if defined(__FreeBSD__)
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -838,6 +840,7 @@ int TaskScheduler::CountThreadsPerPid(pid_t pid) {
     file.close();
 #else
 //WINDOWS-TEMP#error "TaskScheduler::CountThreadsPerPid() - unsupported platform."
+    //WINDOWS-TEMP
 #endif
 
     return threads;
@@ -851,7 +854,7 @@ void TaskScheduler::WaitForTerminateCompletion() {
 
     int count = 0;
     int threadsRunning;
-    pid_t pid = getpid();
+    pid_t pid = osspecific_getpid();
 
     while (count++ < 12000) {
         threadsRunning = CountThreadsPerPid(pid);

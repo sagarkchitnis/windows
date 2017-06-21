@@ -93,11 +93,11 @@ void KSyncFlowMemory::InitFlowMem() {
     int encode_len, error, ret;
 
     assert((cl = nl_register_client()) != NULL);
-    //WINDOWS-TEMP assert(nl_socket(cl, AF_NETLINK, SOCK_DGRAM, NETLINK_GENERIC) > 0);
+    //WINDOWS-OLD assert(nl_socket(cl, AF_NETLINK, SOCK_DGRAM, NETLINK_GENERIC) > 0);
     assert(nl_connect(cl, 0, 0) == 0);
     assert(vrouter_get_family_id(cl) > 0);
 
-    //WINDOWS-TEMP assert(nl_build_nlh(cl, cl->cl_genl_family_id, NLM_F_REQUEST) == 0);
+    //WINDOWS-OLD assert(nl_build_nlh(cl, cl->cl_genl_family_id, NLM_F_REQUEST) == 0);
     assert(nl_build_genlh(cl, SANDESH_REQUEST, 0) == 0);
 
     attr_len = nl_get_attr_hdr_size();
@@ -125,8 +125,8 @@ void KSyncFlowMemory::InitFlowMem() {
     nl_free_client(cl);
 
     // Remove the existing /dev/flow file first. We will add it again below
-	//WINDOWS-TEMP
-#if 0 //WINDOWS-TEMP !defined(__FreeBSD__)
+	//WINDOWS-OLD
+#if 0 //WINDOWS-OLD !defined(__FreeBSD__)
     if (unlink(AgentConstants::dev_directory+"/flow") != 0) {
         if (errno != ENOENT) {
             LOG(DEBUG, "Error deleting </dev/flow>. Error <" << errno
@@ -146,7 +146,7 @@ void KSyncFlowMemory::InitFlowMem() {
     }
 #endif
 
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     int fd;
     if ((fd = open(AgentConstants::dev_directory+"/flow", O_RDONLY | O_SYNC)) < 0) {
         LOG(DEBUG, "Error opening device </dev/flow>. Error <" << errno
@@ -326,7 +326,7 @@ bool KSyncFlowMemory::AuditProcess() {
 }
 
 void KSyncFlowMemory::GetFlowTableSize() {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nl_client *cl;
     vr_flow_req req;
     int attr_len;
@@ -334,7 +334,7 @@ void KSyncFlowMemory::GetFlowTableSize() {
 
     assert((cl = nl_register_client()) != NULL);
     cl->cl_genl_family_id = KSyncSock::GetNetlinkFamilyId();
-    //WINDOWS-TEMP assert(nl_build_nlh(cl, cl->cl_genl_family_id, NLM_F_REQUEST) == 0);
+    //WINDOWS-OLD assert(nl_build_nlh(cl, cl->cl_genl_family_id, NLM_F_REQUEST) == 0);
     assert(nl_build_genlh(cl, SANDESH_REQUEST, 0) == 0);
 
     attr_len = nl_get_attr_hdr_size();
@@ -386,7 +386,7 @@ void KSyncFlowMemory::GetFlowTableSize() {
 }
 
 void KSyncFlowMemory::MapSharedMemory() {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     GetFlowTableSize();
 
     int fd;

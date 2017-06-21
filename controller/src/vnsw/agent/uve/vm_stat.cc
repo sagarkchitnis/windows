@@ -82,7 +82,7 @@ void VmStat::ExecCmd(std::string cmd, DoneCb cb) {
     argv[3] = 0;
 
     int out[2];
-    ////WINDOWS-TEMP if (pipe(out) < 0) {
+    //// WINDOWS-TEMP if (pipe(out) < 0) {
   ////WINDOWS-TEMP      return;
   ////WINDOWS-TEMP  }
 

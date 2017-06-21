@@ -5,7 +5,7 @@
 #include <assert.h>
 
 #include <bits/sockaddr.h>
-//WINDOWS-TEMP - change to named pipes
+//WINDOWS-OLD - change to named pipes
 
 #include <base/logging.h>
 #include <base/util.h>

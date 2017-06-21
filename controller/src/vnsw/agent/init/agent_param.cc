@@ -13,6 +13,7 @@
 #include <boost/asio.hpp>
 #include <windows.h>
 #include "AgentConstants.h"
+#include "TaskUtil.h"
 #endif
 
 #include "base/os.h"
@@ -677,7 +678,7 @@ void AgentParam::ParseNexthopServer() {
                            "NEXTHOP-SERVER.add_pid");
     if (nexthop_server_add_pid_) {
         std::stringstream ss;
-        ss << nexthop_server_endpoint_ << "." << getpid();
+        ss << nexthop_server_endpoint_ << "." << osspecific_getpid();
         nexthop_server_endpoint_ = ss.str();
     }
 }
@@ -920,7 +921,7 @@ void AgentParam::ParseNexthopServerArguments
                              "NEXTHOP-SERVER.add_pid");
     if (nexthop_server_add_pid_) {
         std::stringstream ss;
-        ss << nexthop_server_endpoint_ << "." << getpid();
+        ss << nexthop_server_endpoint_ << "." << osspecific_getpid();
         nexthop_server_endpoint_ = ss.str();
     }
 }

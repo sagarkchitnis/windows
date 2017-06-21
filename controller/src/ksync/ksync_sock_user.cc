@@ -87,7 +87,7 @@ void KSyncSockTypeMap::ProcessSandesh(const uint8_t *parse_buf, size_t buf_len,
 }
 
 void KSyncSockTypeMap::PurgeTxBuffer() {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     // All responses are stored in tx_buff_list_
     // Make io-vector of all responses and transmit them
     // If there are more than one responses, they are sent as NETLINK MULTI
@@ -139,7 +139,7 @@ void KSyncSockTypeMap::PurgeTxBuffer() {
 }
 
 void KSyncSockTypeMap::FlowNatResponse(uint32_t seq_num, vr_flow_req *req) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     int flow_error = sock->GetKSyncError(KSyncSockTypeMap::KSYNC_FLOW_ENTRY_TYPE);
     struct nl_client cl;
@@ -190,7 +190,7 @@ void KSyncSockTypeMap::FlowNatResponse(uint32_t seq_num, vr_flow_req *req) {
 
 void KSyncSockTypeMap::InitNetlinkDoneMsg(struct nlmsghdr *nlh,
                                           uint32_t seq_num) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     nlh->nlmsg_seq = seq_num;
     nlh->nlmsg_type = NLMSG_DONE;
     nlh->nlmsg_len = NLMSG_HDRLEN;
@@ -199,7 +199,7 @@ void KSyncSockTypeMap::InitNetlinkDoneMsg(struct nlmsghdr *nlh,
 }
 
 void KSyncSockTypeMap::SimulateResponse(uint32_t seq_num, int code, int flags) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nl_client cl;
     int encode_len, ret;
     uint8_t *buf;
@@ -508,7 +508,7 @@ int KSyncSockTypeMap::VxLanCount() {
 }
  
 uint32_t KSyncSockTypeMap::GetSeqno(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     return nlh->nlmsg_seq;
 #endif
@@ -516,7 +516,7 @@ uint32_t KSyncSockTypeMap::GetSeqno(char *data) {
 }
 
 bool KSyncSockTypeMap::IsMoreData(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
 
     return (nlh->nlmsg_flags & NLM_F_MULTI);
@@ -536,7 +536,7 @@ bool KSyncSockTypeMap::Decoder(char *data, AgentSandeshContext *context) {
 }
 
 bool KSyncSockTypeMap::Validate(char *data) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     struct nlmsghdr *nlh = (struct nlmsghdr *)data;
     if (nlh->nlmsg_type == NLMSG_ERROR) {
         LOG(ERROR, "Ignoring Netlink error for seqno " << nlh->nlmsg_seq 
@@ -1112,7 +1112,7 @@ void KSyncUserSockDropStatsContext::Process() {
 }
 
 void KSyncUserSockContext::DropStatsMsgHandler(vr_drop_stats_req *req) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     KSyncUserSockDropStatsContext *dropctx = new KSyncUserSockDropStatsContext(
                                                           GetSeqNum(), req);
@@ -1128,7 +1128,7 @@ void KSyncUserSockContext::DropStatsMsgHandler(vr_drop_stats_req *req) {
 }
 
 void MockDumpHandlerBase::SendDumpResponse(uint32_t seq_num, Sandesh *from_req) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     struct nl_client cl;
     int error = 0, ret;
@@ -1203,7 +1203,7 @@ void MockDumpHandlerBase::SendDumpResponse(uint32_t seq_num, Sandesh *from_req) 
 }
 
 void MockDumpHandlerBase::SendGetResponse(uint32_t seq_num, int idx) {
-#if 0 //WINDOWS-TEMP
+#if 0 //WINDOWS-OLD
 
     KSyncSockTypeMap *sock = KSyncSockTypeMap::GetKSyncSockTypeMap();
     struct nl_client cl;

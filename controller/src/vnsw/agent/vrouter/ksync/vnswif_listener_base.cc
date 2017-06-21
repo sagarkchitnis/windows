@@ -69,8 +69,8 @@ void VnswInterfaceListenerBase::Init() {
     sock_fd_ = CreateSocket();
 
     /* Assign native socket to boost asio */
-    //WINDOWS-TEMP boost::asio::generic::datagram_protocol protocol;
-    //WINDOWS-TEMP sock_.assign(protocol, sock_fd_);
+    //WINDOWS-OLD boost::asio::generic::datagram_protocol protocol;
+    //WINDOWS-OLD sock_.assign(protocol, sock_fd_);
 
     SyncCurrentState();
 

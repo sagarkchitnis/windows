@@ -33,7 +33,7 @@
 #include "vr_os.h"
 #endif
 
-//WINDOWS-TEMP move to header
+//WINDOWS-OLD move to header
 #define AF_BRIDGE 7
 
 RouteKSyncEntry::RouteKSyncEntry(RouteKSyncObject* obj, 
