@@ -11,6 +11,7 @@
 #define  IF_NAMESIZE	32
 
 #ifdef _WINDOWS
+# include "winnw.h"
 #include <Iphlpapi.h>
 #endif
 

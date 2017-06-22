@@ -3,7 +3,6 @@
 #include<windows.h>
 #include <stdlib.h>
 #include "sys/wintypes.h"
-
 int getloadavg(double loadavg[], int nelem);;
 
 #define CLOCK_REALTIME                  0

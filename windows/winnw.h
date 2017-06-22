@@ -1,7 +1,5 @@
 #pragma once
-#include "net/ethernet.h"
-#include <intrin.h> 
-#include <Iphlpapi.h>
+#
 #define ETHER_ADDR_LEN 6
 #define	ETHERTYPE_IP	0x0800		
 /* IP protocol */
@@ -15,3 +13,9 @@
 
 #define ETHERTYPE_IPV4  0x0800
 #define ETHERTYPE_IPV6  0x86dd
+
+struct if_nameindex;
+unsigned int  osspecific_if_nametoindex(char const * name);
+void  osspecific_if_freenameindex(struct if_nameindex *nameindex);
+struct if_nameindex *  osspecific_if_nameindex(void);
+char *osspecific_if_indextoname(unsigned int ifindex, char *ifname);

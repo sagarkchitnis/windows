@@ -43,6 +43,7 @@
 #include <sandesh/common/vns_types.h>
 #include <sandesh/common/vns_constants.h>
 #include <filter/acl.h>
+#include "winnw.h"
 
 using namespace std;
 using namespace boost::uuids;

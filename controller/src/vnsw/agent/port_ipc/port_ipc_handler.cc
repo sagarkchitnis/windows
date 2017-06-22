@@ -26,7 +26,7 @@
 #include "port_ipc/port_ipc_handler.h"
 #include "port_ipc/port_ipc_types.h"
 #include "AgentConstants.h"
-#include "winutils.h"
+#include "winnw.h"
 
 using namespace std;
 namespace fs = boost::filesystem;

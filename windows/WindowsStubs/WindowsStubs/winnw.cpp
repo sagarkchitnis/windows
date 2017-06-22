@@ -1,5 +1,8 @@
 #include "winutils.h"
 #include "winnw.h"
+#include "net/ethernet.h"
+#include <intrin.h> 
+#include <Iphlpapi.h>
 
 static inline int xdigit(char c) {
     unsigned d;
