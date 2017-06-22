@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-std::string WindowsTaskExecute(std::string execpath, bool usePipes=false, bool bWait=true);
+bool WindowsTaskExecute(std::string execpath, std::string *pOutput = nullptr, bool bWait = true);
 int osspecific_getpid(void);
 FILE *popen(const char *command, const char *type);
 int pclose(FILE *stream);

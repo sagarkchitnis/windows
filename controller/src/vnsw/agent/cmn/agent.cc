@@ -470,7 +470,7 @@ static bool interface_exist(string &name)
 	bool ret = false;
 	string tname = "";
 
-	ifs = if_nameindex();
+	ifs = osspecific_if_nameindex();
 	if (ifs == NULL) {
 		LOG(INFO, "No interface exists!");
 		return ret;

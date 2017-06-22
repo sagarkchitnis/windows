@@ -6,8 +6,9 @@
 #include <cctype>
 #include <algorithm>
 #include <process.h>
+#include <memory>
 
-
+/*
 std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 {
 	
@@ -105,16 +106,9 @@ std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 	output.erase(std::remove_if(output.begin(), output.end(), [](char c) { return std::isspace(c); }), output.end());
 	return output;
 }
+*/
 
 
-
-int system(const char * command)
-{
-	if (command == nullptr) return 0;
-	std::string ret = WindowsTaskExecute(command, false, true);
-	if (ret == "-1") return -1;
-	else return 0;
-}
 
 
 int osspecific_getpid(void)
@@ -147,7 +141,7 @@ struct ProcessInfoDeleter {
     }
 };
 
-bool TaskExecuteAndWait(std::string execpath, std::string *pOutput) {
+bool WindowsTaskExecute(std::string execpath, std::string *pOutput, bool bWait) {
     STARTUPINFO si;
     SECURITY_ATTRIBUTES securityAttr;
     HANDLE inputPipe, outputPipe;
@@ -180,7 +174,8 @@ bool TaskExecuteAndWait(std::string execpath, std::string *pOutput) {
         retval = false;
     }
 
-    if (retval && WaitForSingleObject(ppi->hProcess, INFINITE) == WAIT_FAILED) {
+    if(pOutput || bWait )
+    if (retval && (WaitForSingleObject(ppi->hProcess, INFINITE) == WAIT_FAILED) ) {
         DWORD le = GetLastError();
         std::cout << "WaitForSingleObject Failed. Error code:" << le << std::endl;
         retval = false;
@@ -208,3 +203,13 @@ bool TaskExecuteAndWait(std::string execpath, std::string *pOutput) {
 
     return retval;
 }
+
+/*
+int system(const char * command)
+{
+    if (command == nullptr) return 0;
+    bool bRet = WindowsTaskExecute(command, nullptr, true);
+    return 0;//fix this //WINDOWS-TEMP
+}
+
+*/

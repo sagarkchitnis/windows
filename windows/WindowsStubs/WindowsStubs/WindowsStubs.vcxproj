@@ -139,6 +139,7 @@
     <ClInclude Include="..\..\winutils.h" />
     <ClInclude Include="..\..\wmi.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="winnw.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\winutils.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="cpuinfo.cpp" />
     <ClCompile Include="TaskUtil.cpp" />
     <ClCompile Include="TimeUtils.cpp" />
+    <ClCompile Include="winnw.cpp" />
     <ClCompile Include="WMI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

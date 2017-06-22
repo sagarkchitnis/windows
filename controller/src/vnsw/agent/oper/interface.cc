@@ -470,7 +470,7 @@ void Interface::GetOsParams(Agent *agent) {
     mac_ = ifr.ifr_addr;
 #endif
 
-    int idx = if_nametoindex(name.c_str());
+    int idx = osspecific_if_nametoindex(name.c_str());
     if (idx)
         os_index_ = idx;
 }

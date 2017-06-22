@@ -26,6 +26,7 @@
 #include "port_ipc/port_ipc_handler.h"
 #include "port_ipc/port_ipc_types.h"
 #include "AgentConstants.h"
+#include "winutils.h"
 
 using namespace std;
 namespace fs = boost::filesystem;
@@ -499,12 +500,12 @@ bool PortIpcHandler::GetPortInfo(const string &uuid_str, string &info) const {
 }
 
 bool PortIpcHandler::InterfaceExists(const std::string &name) const {
-#if 0 //WINDOWS-TEMP
-    int indx  = if_nametoindex(name.c_str());
+
+    int indx  = osspecific_if_nametoindex(name.c_str());
     if (indx == 0) {
         return false;
     }
-#endif
+
     return true;
 }
 
