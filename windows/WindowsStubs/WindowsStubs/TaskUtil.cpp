@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <process.h>
 #include <memory>
-
+#include <tlhelp32.h>
 /*
 std::string WindowsTaskExecute(std::string execpath, bool usePipes, bool bWait)
 {
@@ -214,3 +214,51 @@ int system(const char * command)
 
 */
 
+
+//see https://msdn.microsoft.com/en-us/library/ms686852(v=VS.85).aspx
+
+int CountProcessThreads(DWORD id)
+{
+    HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
+    BOOL  retval = true;
+    PROCESSENTRY32 pe32 = { 0 };
+    int count = -1;
+    pe32.dwSize = sizeof(PROCESSENTRY32);
+
+    hThreadSnap = CreateToolhelp32Snapshot(TH32CS_SNAPALL, 0);
+
+    // get the first process info.
+  
+    retval = Process32First(hThreadSnap, &pe32);
+    do {
+        if (pe32.th32ProcessID == id) {
+            count = pe32.cntThreads; break;
+        }
+    } while (Process32Next(hThreadSnap, &pe32));
+
+    CloseHandle(hThreadSnap);
+    return count;
+}
+
+void printError(TCHAR* msg)
+{
+    DWORD eNum;
+    TCHAR sysMsg[256];
+    TCHAR* p;
+
+    eNum = GetLastError();
+    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL, eNum,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+        sysMsg, 256, NULL);
+
+    // Trim the end of the line and terminate it with a null
+    p = sysMsg;
+    while ((*p > 31) || (*p == 9))
+        ++p;
+    do { *p-- = 0; } while ((p >= sysMsg) &&
+        ((*p == '.') || (*p < 33)));
+
+    // Display the message
+    _tprintf(TEXT("\n  WARNING: %s failed with error %d (%s)"), msg, eNum, sysMsg);
+}
