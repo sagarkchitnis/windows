@@ -1144,7 +1144,7 @@ static bool ValidateInterface(bool test_mode, const std::string &ifname,
     if (test_mode) {
         return true;
     }
-#ifndef _WINDOWS
+#ifndef _WINDOWS //WINDOWS-TEMP
     int fd = socket(AF_LOCAL, SOCK_STREAM, 0);
     assert(fd >= 0);
 

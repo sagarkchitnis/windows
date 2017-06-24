@@ -44,3 +44,5 @@ int setrlimit(int resource, const struct rlimit *rlp);
 
 #define strncasecmp  _strnicmp
 #define strcasecmp  _stricmp
+
+void sync(void);

@@ -115,7 +115,7 @@ void PhysicalInterface::PostAdd() {
     if (ioctl(fd, SIOCGIFFLAGS, (void *)&ifr) < 0) {
         LOG(ERROR, "Error <" << errno << ": " << strerror(errno) <<
             "> setting promiscuous flag for interface <" << interface_name << ">");
-        //WINDOWS-TEMP close(fd);
+        closesocket(fd); //WINDOWS-CHECK
         return;
     }
 
@@ -123,11 +123,11 @@ void PhysicalInterface::PostAdd() {
     if (ioctl(fd, SIOCSIFFLAGS, (void *)&ifr) < 0) {
         LOG(ERROR, "Error <" << errno << ": " << strerror(errno) <<
             "> setting promiscuous flag for interface <" << interface_name << ">");
-        //WINDOWS-TEMP close(fd);
+        closesocket(fd);//WINDOWS-CHECK
         return;
     }
 
-   //WINDOWS-TEMP close(fd);
+    closesocket(fd); //WINDOWS-CHECK
 }
 
 /////////////////////////////////////////////////////////////////////////////

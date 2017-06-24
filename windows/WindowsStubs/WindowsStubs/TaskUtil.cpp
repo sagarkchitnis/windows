@@ -262,3 +262,9 @@ void printError(TCHAR* msg)
     // Display the message
     _tprintf(TEXT("\n  WARNING: %s failed with error %d (%s)"), msg, eNum, sysMsg);
 }
+
+
+void sync(void)
+{
+    _flushall(); //does it call FlushFileBuffers intenally for all files?
+}
