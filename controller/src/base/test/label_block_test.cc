@@ -157,8 +157,7 @@ static void *ConcurrencyThreadRun(void *objp) {
 
 TEST_F(LabelBlockTest, LocateBlockConcurrency) {
     std::vector<boost::thread*> thread_ids;
-	boost::thread *thd=nullptr;
-
+    boost::thread * thd = nullptr;
     int thread_count = 1024;
     char *str = getenv("THREAD_COUNT");
     if (str) thread_count = strtoul(str, NULL, 0);
@@ -168,7 +167,7 @@ TEST_F(LabelBlockTest, LocateBlockConcurrency) {
         thread_ids.push_back(thd);
     }
 
-    BOOST_FOREACH(boost::thread * tid, thread_ids) { thd->join(); delete thd; }
+    BOOST_FOREACH(boost::thread * tid, thread_ids) { tid->join(); delete tid; }
     EXPECT_EQ(0, BlockCount());
 }
 
