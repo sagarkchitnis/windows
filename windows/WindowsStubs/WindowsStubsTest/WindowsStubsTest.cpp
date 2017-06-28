@@ -15,11 +15,11 @@ int main()
 
 	//clock_getres(CLOCK_MONOTONIC, &ts);
 	//clock_gettime(CLOCK_MONOTONIC, &ts);
-	//GetprocessPerformance();
+	GetprocessPerformance();
 
 //	TaskExecuteAndWait("c:\\python27\\python.exe");
-	std::string str = TaskExecuteAndWait("where python", true);
-	TaskExecuteAndWait(str, false);
+	//std::string str = TaskExecuteAndWait("where python", true);
+	//TaskExecuteAndWait(str, false);
     return 0;
 }
 

@@ -3,6 +3,7 @@
  */
 
 #include <boost/foreach.hpp>
+#include <boost/thread.hpp>
 #include "base/label_block.h"
 #include "base/logging.h"
 #include "testing/gunit.h"
@@ -167,7 +168,7 @@ TEST_F(LabelBlockTest, LocateBlockConcurrency) {
         thread_ids.push_back(thd);
     }
 
-	BOOST_FOREACH(tid, thread_ids) { thd->join(); delete thd; }
+    BOOST_FOREACH(boost::thread * tid, thread_ids) { thd->join(); delete thd; }
     EXPECT_EQ(0, BlockCount());
 }
 
