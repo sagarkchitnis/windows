@@ -9,7 +9,7 @@
 #include <memory>
 #include <tlhelp32.h>
 #include <psapi.h>
-
+#include <cassert>
 
 
 int osspecific_getpid(void)
@@ -195,7 +195,7 @@ DWORD GetNumberOfCPUs()
 
 int getloadavg(double loadavg[], int nelem)
 {
-
+    assert(0);
     return 0;
    
 }
