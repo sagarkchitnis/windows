@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
  */
+#define TBB_PREVIEW_WAITING_FOR_WORKERS 1
 #include <boost/asio.hpp>
 #include <windows.h>
 #include <assert.h>
@@ -878,8 +879,18 @@ void TaskScheduler::Terminate() {
         usleep(1000);
     }
     assert(IsEmpty());
+#ifndef _WINDOWS
     singleton_->task_scheduler_.terminate();
     WaitForTerminateCompletion();
+#else
+    try {
+        singleton_->task_scheduler_.blocking_terminate();
+        // Intel TBB worker threads are terminated at this point.
+    }
+    catch (const std::runtime_error&) {
+        std::cerr << "Failed to terminate the worker threads." << std::endl;
+    }
+#endif
     singleton_.reset(NULL);
 }
 

@@ -4,6 +4,6 @@ bool WindowsTaskExecute(std::string execpath, std::string *pOutput = nullptr, bo
 int osspecific_getpid(void);
 FILE *popen(const char *command, const char *type);
 int pclose(FILE *stream);
-int CountProcessThreads(DWORD dwOwnerPID);
-DWORD GetNumberOfCPUs();
+int CountProcessThreads(unsigned long dwOwnerPID);
+unsigned long GetNumberOfCPUs();
 int getloadavg(double loadavg[], int nelem);

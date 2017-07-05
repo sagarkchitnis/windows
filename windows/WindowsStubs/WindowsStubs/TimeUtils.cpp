@@ -71,21 +71,23 @@ int clock_gettime_monotonic(struct timespec *ts) {
 unsigned __int64 jan_1_1970 = static_cast<unsigned __int64>(116444736000000000ULL);
 
 int clock_gettime_realtime(struct timespec *ts) {
-//	struct timeval  tv;
-    FILETIME    filetime;
-    SYSTEMTIME    systemtime;
-    ULARGE_INTEGER ulI;
+    int retval = -1;
+    if (ts != nullptr) {
+        FILETIME    filetime;
+        SYSTEMTIME    systemtime;
+        ULARGE_INTEGER ulI;
 
-    GetSystemTimeAsFileTime(&filetime);
-    FileTimeToSystemTime(&filetime, &systemtime);
+        GetSystemTimeAsFileTime(&filetime);
+        FileTimeToSystemTime(&filetime, &systemtime);
 
-    ulI.LowPart = filetime.dwLowDateTime;
-    ulI.HighPart = filetime.dwHighDateTime;
+        ulI.LowPart = filetime.dwLowDateTime;
+        ulI.HighPart = filetime.dwHighDateTime;
 
-    ts->tv_sec = static_cast<long>((ulI.QuadPart - jan_1_1970) / 10000000L);
-    ts->tv_nsec = static_cast<long>(systemtime.wMilliseconds * 1000000);
-
-    return 0;
+        ts->tv_sec = static_cast<long>((ulI.QuadPart - jan_1_1970) / 10000000L);
+        ts->tv_nsec = static_cast<long>(systemtime.wMilliseconds * 1000000);
+        retval = 0;
+    }
+    return retval;
 
 
 }
@@ -159,9 +161,24 @@ struct tm *  gmtime_r(__int64 const *, struct tm *) {
     return nullptr; 
 }
 
+int TimeSpecToTimeVal(struct timespec *pts, struct timeval *ptv) {
+    int retval = -1;
+    if (pts != nullptr && ptv != nullptr) {
+        ptv->tv_sec = pts->tv_sec;
+        ptv->tv_usec = pts->tv_nsec / 1000;
+        retval = 0;
+    }
+    return retval;
+}
 
-int gettimeofday(struct timeval *tv, struct timezone *tz) {
-    assert(0);
-    return 0;
+int gettimeofday(struct timeval *ptv, struct timezone *ptz) {
+    struct timespec ts;
+    int retval = -1;
+    if (clock_gettime_realtime(&ts) == 0) {
+        if (TimeSpecToTimeVal(&ts, ptv) == 0) {
+            retval = 0;
+        }
+    }
+    return retval;
 }
 
