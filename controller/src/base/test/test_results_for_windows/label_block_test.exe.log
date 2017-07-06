@@ -1,0 +1,28 @@
+[==========] Running 10 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 10 tests from LabelBlockTest
+[ RUN      ] LabelBlockTest.Noop
+[       OK ] LabelBlockTest.Noop (0 ms)
+[ RUN      ] LabelBlockTest.LocateBlockNew1
+[       OK ] LabelBlockTest.LocateBlockNew1 (0 ms)
+[ RUN      ] LabelBlockTest.LocateBlockNew2
+[       OK ] LabelBlockTest.LocateBlockNew2 (0 ms)
+[ RUN      ] LabelBlockTest.LocateBlockExisting1
+[       OK ] LabelBlockTest.LocateBlockExisting1 (0 ms)
+[ RUN      ] LabelBlockTest.LocateBlockExisting2
+[       OK ] LabelBlockTest.LocateBlockExisting2 (0 ms)
+[ RUN      ] LabelBlockTest.LocateBlockExisting3
+[       OK ] LabelBlockTest.LocateBlockExisting3 (0 ms)
+[ RUN      ] LabelBlockTest.AllocateReleaseLabel1
+[       OK ] LabelBlockTest.AllocateReleaseLabel1 (1 ms)
+[ RUN      ] LabelBlockTest.AllocateReleaseLabel2
+[       OK ] LabelBlockTest.AllocateReleaseLabel2 (1 ms)
+[ RUN      ] LabelBlockTest.AllocateReleaseLabel3
+[       OK ] LabelBlockTest.AllocateReleaseLabel3 (2 ms)
+[ RUN      ] LabelBlockTest.LocateBlockConcurrency
+[       OK ] LabelBlockTest.LocateBlockConcurrency (50 ms)
+[----------] 10 tests from LabelBlockTest (55 ms total)
+
+[----------] Global test environment tear-down
+[==========] 10 tests from 1 test case ran. (55 ms total)
+[  PASSED  ] 10 tests.

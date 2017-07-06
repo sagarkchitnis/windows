@@ -1,0 +1,52 @@
+[==========] Running 13 tests from 3 test cases.
+[----------] Global test environment set-up.
+[----------] 10 tests from QueueTaskTest
+[ RUN      ] QueueTaskTest.StartRunnerBasic
+[       OK ] QueueTaskTest.StartRunnerBasic (3 ms)
+[ RUN      ] QueueTaskTest.StartRunnerInternals
+[       OK ] QueueTaskTest.StartRunnerInternals (1 ms)
+[ RUN      ] QueueTaskTest.MaxIterationsTest
+[       OK ] QueueTaskTest.MaxIterationsTest (3 ms)
+[ RUN      ] QueueTaskTest.WaterMarkTest
+[       OK ] QueueTaskTest.WaterMarkTest (22 ms)
+[ RUN      ] QueueTaskTest.WaterMarkParallelTest
+[       OK ] QueueTaskTest.WaterMarkParallelTest (1007 ms)
+[ RUN      ] QueueTaskTest.OnExitParallelTest
+[       OK ] QueueTaskTest.OnExitParallelTest (2012 ms)
+[ RUN      ] QueueTaskTest.DisableEnableTest1
+[       OK ] QueueTaskTest.DisableEnableTest1 (3 ms)
+[ RUN      ] QueueTaskTest.DisableEnableTest2
+[       OK ] QueueTaskTest.DisableEnableTest2 (4 ms)
+[ RUN      ] QueueTaskTest.ScheduleShutdownTest
+[       OK ] QueueTaskTest.ScheduleShutdownTest (0 ms)
+[ RUN      ] QueueTaskTest.ProcessWaterMarksParallelTest
+
+wm_cb_type_=6
+  wm_cb_qsize_=2
+
+controller\src\base\test\queue_task_test.cc(778): error: Value of: (wm_cb_type_ == WaterMarkTestCbType::LWM3 && wm_cb_qsize_ == 5000) || (wm_cb_type_ == WaterMarkTestCbType::INVALID && wm_cb_qsize_ == 0)
+  Actual: false
+Expected: true
+[  FAILED  ] QueueTaskTest.ProcessWaterMarksParallelTest (1021 ms)
+[----------] 10 tests from QueueTaskTest (4080 ms total)
+
+[----------] 1 test from QueueTaskShutdownTest
+[ RUN      ] QueueTaskShutdownTest.ScheduleShutdown
+[       OK ] QueueTaskShutdownTest.ScheduleShutdown (103 ms)
+[----------] 1 test from QueueTaskShutdownTest (103 ms total)
+
+[----------] 2 tests from QueueTaskWaterMarkTest
+[ RUN      ] QueueTaskWaterMarkTest.Basic
+[       OK ] QueueTaskWaterMarkTest.Basic (22 ms)
+[ RUN      ] QueueTaskWaterMarkTest.Duplicates
+[       OK ] QueueTaskWaterMarkTest.Duplicates (0 ms)
+[----------] 2 tests from QueueTaskWaterMarkTest (22 ms total)
+
+[----------] Global test environment tear-down
+[==========] 13 tests from 3 test cases ran. (4205 ms total)
+[  PASSED  ] 12 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] QueueTaskTest.ProcessWaterMarksParallelTest
+
+ 1 FAILED TEST
+[  FAILED  ] Program returned 1

@@ -1,0 +1,222 @@
+[==========] Running 107 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 107 tests from BitSetTest
+[ RUN      ] BitSetTest.Basic
+[       OK ] BitSetTest.Basic (0 ms)
+[ RUN      ] BitSetTest.set1
+[       OK ] BitSetTest.set1 (1 ms)
+[ RUN      ] BitSetTest.set2
+[       OK ] BitSetTest.set2 (0 ms)
+[ RUN      ] BitSetTest.set3
+[       OK ] BitSetTest.set3 (4 ms)
+[ RUN      ] BitSetTest.set4
+[       OK ] BitSetTest.set4 (0 ms)
+[ RUN      ] BitSetTest.reset1
+[       OK ] BitSetTest.reset1 (0 ms)
+[ RUN      ] BitSetTest.reset2
+[       OK ] BitSetTest.reset2 (1 ms)
+[ RUN      ] BitSetTest.reset3
+[       OK ] BitSetTest.reset3 (4 ms)
+[ RUN      ] BitSetTest.reset4
+[       OK ] BitSetTest.reset4 (1 ms)
+[ RUN      ] BitSetTest.reset5
+[       OK ] BitSetTest.reset5 (0 ms)
+[ RUN      ] BitSetTest.reset6
+[       OK ] BitSetTest.reset6 (0 ms)
+[ RUN      ] BitSetTest.clear1
+[       OK ] BitSetTest.clear1 (0 ms)
+[ RUN      ] BitSetTest.clear2
+[       OK ] BitSetTest.clear2 (0 ms)
+[ RUN      ] BitSetTest.clear3
+[       OK ] BitSetTest.clear3 (0 ms)
+[ RUN      ] BitSetTest.test1
+[       OK ] BitSetTest.test1 (0 ms)
+[ RUN      ] BitSetTest.test2
+[       OK ] BitSetTest.test2 (4 ms)
+[ RUN      ] BitSetTest.test3
+[       OK ] BitSetTest.test3 (0 ms)
+[ RUN      ] BitSetTest.count1
+[       OK ] BitSetTest.count1 (0 ms)
+[ RUN      ] BitSetTest.count2
+[       OK ] BitSetTest.count2 (6 ms)
+[ RUN      ] BitSetTest.find_first1
+[       OK ] BitSetTest.find_first1 (0 ms)
+[ RUN      ] BitSetTest.find_first2
+[       OK ] BitSetTest.find_first2 (2 ms)
+[ RUN      ] BitSetTest.find_next1
+[       OK ] BitSetTest.find_next1 (0 ms)
+[ RUN      ] BitSetTest.find_next2
+[       OK ] BitSetTest.find_next2 (0 ms)
+[ RUN      ] BitSetTest.find_next3
+[       OK ] BitSetTest.find_next3 (0 ms)
+[ RUN      ] BitSetTest.find_next4
+[       OK ] BitSetTest.find_next4 (2 ms)
+[ RUN      ] BitSetTest.find_next5
+[       OK ] BitSetTest.find_next5 (1 ms)
+[ RUN      ] BitSetTest.find_last1
+[       OK ] BitSetTest.find_last1 (0 ms)
+[ RUN      ] BitSetTest.find_last2
+[       OK ] BitSetTest.find_last2 (3 ms)
+[ RUN      ] BitSetTest.find_first_clear1
+[       OK ] BitSetTest.find_first_clear1 (0 ms)
+[ RUN      ] BitSetTest.find_first_clear2
+[       OK ] BitSetTest.find_first_clear2 (8 ms)
+[ RUN      ] BitSetTest.find_next_clear1
+[       OK ] BitSetTest.find_next_clear1 (1 ms)
+[ RUN      ] BitSetTest.find_next_clear2
+[       OK ] BitSetTest.find_next_clear2 (0 ms)
+[ RUN      ] BitSetTest.find_next_clear3
+[       OK ] BitSetTest.find_next_clear3 (0 ms)
+[ RUN      ] BitSetTest.find_next_clear4
+[       OK ] BitSetTest.find_next_clear4 (2 ms)
+[ RUN      ] BitSetTest.find_next_clear5
+[       OK ] BitSetTest.find_next_clear5 (2 ms)
+[ RUN      ] BitSetTest.relational_equal1
+[       OK ] BitSetTest.relational_equal1 (0 ms)
+[ RUN      ] BitSetTest.relational_equal2
+[       OK ] BitSetTest.relational_equal2 (0 ms)
+[ RUN      ] BitSetTest.relational_equal3
+[       OK ] BitSetTest.relational_equal3 (0 ms)
+[ RUN      ] BitSetTest.relational_equal4
+[       OK ] BitSetTest.relational_equal4 (0 ms)
+[ RUN      ] BitSetTest.relational_equal5
+[       OK ] BitSetTest.relational_equal5 (0 ms)
+[ RUN      ] BitSetTest.bitwise_or1a
+[       OK ] BitSetTest.bitwise_or1a (0 ms)
+[ RUN      ] BitSetTest.bitwise_or1b
+[       OK ] BitSetTest.bitwise_or1b (0 ms)
+[ RUN      ] BitSetTest.bitwise_or2a
+[       OK ] BitSetTest.bitwise_or2a (0 ms)
+[ RUN      ] BitSetTest.bitwise_or2b
+[       OK ] BitSetTest.bitwise_or2b (1 ms)
+[ RUN      ] BitSetTest.bitwise_or3
+[       OK ] BitSetTest.bitwise_or3 (43 ms)
+[ RUN      ] BitSetTest.bitwise_or4a
+[       OK ] BitSetTest.bitwise_or4a (1 ms)
+[ RUN      ] BitSetTest.bittwise_or4b
+[       OK ] BitSetTest.bittwise_or4b (0 ms)
+[ RUN      ] BitSetTest.bitwise_or5
+[       OK ] BitSetTest.bitwise_or5 (3 ms)
+[ RUN      ] BitSetTest.bitwise_or6
+[       OK ] BitSetTest.bitwise_or6 (7 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and1a
+[       OK ] BitSetTest.assignment_bitwise_and1a (0 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and1b
+[       OK ] BitSetTest.assignment_bitwise_and1b (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and2a
+[       OK ] BitSetTest.assignment_bitwise_and2a (0 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and2b
+[       OK ] BitSetTest.assignment_bitwise_and2b (0 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and3
+[       OK ] BitSetTest.assignment_bitwise_and3 (64 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and4
+[       OK ] BitSetTest.assignment_bitwise_and4 (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and5
+[       OK ] BitSetTest.assignment_bitwise_and5 (4 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_and6
+[       OK ] BitSetTest.assignment_bitwise_and6 (8 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or1a
+[       OK ] BitSetTest.assignment_bitwise_or1a (0 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or1b
+[       OK ] BitSetTest.assignment_bitwise_or1b (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or2a
+[       OK ] BitSetTest.assignment_bitwise_or2a (0 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or2b
+[       OK ] BitSetTest.assignment_bitwise_or2b (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or3
+[       OK ] BitSetTest.assignment_bitwise_or3 (89 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or4a
+[       OK ] BitSetTest.assignment_bitwise_or4a (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or4b
+[       OK ] BitSetTest.assignment_bitwise_or4b (1 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or5
+[       OK ] BitSetTest.assignment_bitwise_or5 (7 ms)
+[ RUN      ] BitSetTest.assignment_bitwise_or6
+[       OK ] BitSetTest.assignment_bitwise_or6 (15 ms)
+[ RUN      ] BitSetTest.Reset1a
+[       OK ] BitSetTest.Reset1a (0 ms)
+[ RUN      ] BitSetTest.Reset1b
+[       OK ] BitSetTest.Reset1b (1 ms)
+[ RUN      ] BitSetTest.Reset2a
+[       OK ] BitSetTest.Reset2a (0 ms)
+[ RUN      ] BitSetTest.Reset2b
+[       OK ] BitSetTest.Reset2b (0 ms)
+[ RUN      ] BitSetTest.Reset3
+[       OK ] BitSetTest.Reset3 (74 ms)
+[ RUN      ] BitSetTest.Reset4a
+[       OK ] BitSetTest.Reset4a (1 ms)
+[ RUN      ] BitSetTest.Reset4b
+[       OK ] BitSetTest.Reset4b (0 ms)
+[ RUN      ] BitSetTest.Reset5
+[       OK ] BitSetTest.Reset5 (8 ms)
+[ RUN      ] BitSetTest.Reset6
+[       OK ] BitSetTest.Reset6 (18 ms)
+[ RUN      ] BitSetTest.BuildComplement1a
+[       OK ] BitSetTest.BuildComplement1a (0 ms)
+[ RUN      ] BitSetTest.BuildComplement1b
+[       OK ] BitSetTest.BuildComplement1b (1 ms)
+[ RUN      ] BitSetTest.BuildComplement2a
+[       OK ] BitSetTest.BuildComplement2a (0 ms)
+[ RUN      ] BitSetTest.BuildComplement2b
+[       OK ] BitSetTest.BuildComplement2b (0 ms)
+[ RUN      ] BitSetTest.BuildComplement3
+[       OK ] BitSetTest.BuildComplement3 (72 ms)
+[ RUN      ] BitSetTest.BuildComplement4a
+[       OK ] BitSetTest.BuildComplement4a (1 ms)
+[ RUN      ] BitSetTest.BuildComplement4b
+[       OK ] BitSetTest.BuildComplement4b (1 ms)
+[ RUN      ] BitSetTest.BuildComplement5
+[       OK ] BitSetTest.BuildComplement5 (8 ms)
+[ RUN      ] BitSetTest.BuildComplement6
+[       OK ] BitSetTest.BuildComplement6 (15 ms)
+[ RUN      ] BitSetTest.BuildIntersection1a
+[       OK ] BitSetTest.BuildIntersection1a (1 ms)
+[ RUN      ] BitSetTest.BuildIntersection1b
+[       OK ] BitSetTest.BuildIntersection1b (0 ms)
+[ RUN      ] BitSetTest.BuildIntersection2a
+[       OK ] BitSetTest.BuildIntersection2a (0 ms)
+[ RUN      ] BitSetTest.BuildIntersection2b
+[       OK ] BitSetTest.BuildIntersection2b (1 ms)
+[ RUN      ] BitSetTest.BuildIntersection3
+[       OK ] BitSetTest.BuildIntersection3 (73 ms)
+[ RUN      ] BitSetTest.BuildIntersection4a
+[       OK ] BitSetTest.BuildIntersection4a (1 ms)
+[ RUN      ] BitSetTest.BuildIntersection4b
+[       OK ] BitSetTest.BuildIntersection4b (0 ms)
+[ RUN      ] BitSetTest.BuildIntersection5
+[       OK ] BitSetTest.BuildIntersection5 (3 ms)
+[ RUN      ] BitSetTest.BuildIntersection6
+[       OK ] BitSetTest.BuildIntersection6 (6 ms)
+[ RUN      ] BitSetTest.Contains1a
+[       OK ] BitSetTest.Contains1a (0 ms)
+[ RUN      ] BitSetTest.Contains1b
+[       OK ] BitSetTest.Contains1b (0 ms)
+[ RUN      ] BitSetTest.Contains2a
+[       OK ] BitSetTest.Contains2a (0 ms)
+[ RUN      ] BitSetTest.Contains2b
+[       OK ] BitSetTest.Contains2b (1 ms)
+[ RUN      ] BitSetTest.Contains4a
+[       OK ] BitSetTest.Contains4a (0 ms)
+[ RUN      ] BitSetTest.Contains4b
+[       OK ] BitSetTest.Contains4b (0 ms)
+[ RUN      ] BitSetTest.Contains5a
+[       OK ] BitSetTest.Contains5a (2 ms)
+[ RUN      ] BitSetTest.Contains5b
+[       OK ] BitSetTest.Contains5b (1 ms)
+[ RUN      ] BitSetTest.Contains6a
+[       OK ] BitSetTest.Contains6a (5 ms)
+[ RUN      ] BitSetTest.Contains6b
+[       OK ] BitSetTest.Contains6b (3 ms)
+[ RUN      ] BitSetTest.String1
+[       OK ] BitSetTest.String1 (0 ms)
+[ RUN      ] BitSetTest.String2
+[       OK ] BitSetTest.String2 (6 ms)
+[ RUN      ] BitSetTest.NumberedString1
+[       OK ] BitSetTest.NumberedString1 (0 ms)
+[ RUN      ] BitSetTest.NumberedString2
+[       OK ] BitSetTest.NumberedString2 (1 ms)
+[----------] 107 tests from BitSetTest (597 ms total)
+
+[----------] Global test environment tear-down
+[==========] 107 tests from 1 test case ran. (597 ms total)
+[  PASSED  ] 107 tests.

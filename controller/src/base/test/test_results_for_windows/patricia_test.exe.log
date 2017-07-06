@@ -1,0 +1,31 @@
+[==========] Running 10 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 3 tests from PatriciaBaseTest
+[ RUN      ] PatriciaBaseTest.Core
+[       OK ] PatriciaBaseTest.Core (0 ms)
+[ RUN      ] PatriciaBaseTest.iterator
+[       OK ] PatriciaBaseTest.iterator (1 ms)
+[ RUN      ] PatriciaBaseTest.RandomInsert
+[       OK ] PatriciaBaseTest.RandomInsert (0 ms)
+[----------] 3 tests from PatriciaBaseTest (1 ms total)
+
+[----------] 7 tests from PatriciaTest
+[ RUN      ] PatriciaTest.Find
+[       OK ] PatriciaTest.Find (0 ms)
+[ RUN      ] PatriciaTest.FindNext
+[       OK ] PatriciaTest.FindNext (0 ms)
+[ RUN      ] PatriciaTest.FindNext1
+[       OK ] PatriciaTest.FindNext1 (0 ms)
+[ RUN      ] PatriciaTest.FindNextAll
+[       OK ] PatriciaTest.FindNextAll (1 ms)
+[ RUN      ] PatriciaTest.FindnRemove
+[       OK ] PatriciaTest.FindnRemove (1 ms)
+[ RUN      ] PatriciaTest.Reinsert
+[       OK ] PatriciaTest.Reinsert (1 ms)
+[ RUN      ] PatriciaTest.LPMFind1
+[       OK ] PatriciaTest.LPMFind1 (0 ms)
+[----------] 7 tests from PatriciaTest (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 10 tests from 2 test cases ran. (5 ms total)
+[  PASSED  ] 10 tests.

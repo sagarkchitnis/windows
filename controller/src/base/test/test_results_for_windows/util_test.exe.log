@@ -1,0 +1,13 @@
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from UtilTest
+[ RUN      ] UtilTest.UTCCorrectness
+[       OK ] UtilTest.UTCCorrectness (0 ms)
+[----------] 1 test from UtilTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+  YOU HAVE 6 DISABLED TESTS
+
