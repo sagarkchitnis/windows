@@ -142,13 +142,12 @@
     <ClInclude Include="winnw.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\winutils.cpp" />
-    <ClCompile Include="AgentConstants.cpp" />
-    <ClCompile Include="cpuinfo.cpp" />
-    <ClCompile Include="TaskUtil.cpp" />
-    <ClCompile Include="TimeUtils.cpp" />
-    <ClCompile Include="winnw.cpp" />
-    <ClCompile Include="WMI.cpp" />
+    <ClCompile Include="agentconstants.cc" />
+    <ClCompile Include="cpuinfo.cc" />
+    <ClCompile Include="taskutil.cc" />
+    <ClCompile Include="timeutils.cc" />
+    <ClCompile Include="winnw.cc" />
+    <ClCompile Include="wmi.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
