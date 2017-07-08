@@ -91,10 +91,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..</AdditionalIncludeDirectories>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Lib>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -123,12 +127,16 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..</AdditionalIncludeDirectories>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -142,12 +150,13 @@
     <ClInclude Include="winnw.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="agentconstants.cc" />
-    <ClCompile Include="cpuinfo.cc" />
-    <ClCompile Include="taskutil.cc" />
-    <ClCompile Include="timeutils.cc" />
-    <ClCompile Include="winnw.cc" />
-    <ClCompile Include="wmi.cc" />
+    <ClCompile Include="..\..\src\agentconstants.cc" />
+    <ClCompile Include="..\..\src\cpuinfo.cc" />
+    <ClCompile Include="..\..\src\taskutil.cc" />
+    <ClCompile Include="..\..\src\timeutils.cc" />
+    <ClCompile Include="..\..\src\winnw.cc" />
+    <ClCompile Include="..\..\src\winutils.cc" />
+    <ClCompile Include="..\..\src\wmi.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
