@@ -38,7 +38,6 @@
 #include <tbb/mutex.h>
 #include <tbb/reader_writer_lock.h>
 #include <tbb/task.h>
-
 #include <tbb/task_scheduler_init.h>
 #include "base/util.h"
 #ifdef _WINDOWS

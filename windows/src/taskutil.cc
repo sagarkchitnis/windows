@@ -1,8 +1,8 @@
 #include <windows.h>
-#include <stdio.h>
+#include <cstdio>
 #include <tchar.h>
 #include <iostream>
-#include<string>
+#include <string>
 #include <cctype>
 #include <algorithm>
 #include <process.h>
@@ -12,31 +12,27 @@
 #include <cassert>
 
 
-int osspecific_getpid(void)
-{
+int osspecific_getpid(void) {
     return _getpid();
 }
 
 
-FILE *popen(const char *command, const char *type)
-{
+FILE *popen(const char *command, const char *type) {
     return _popen(command, type);
 }
 
-int pclose(FILE *stream)
-{
+int pclose(FILE *stream) {
     return _pclose(stream);
 }
 
 
 struct ProcessInfoDeleter {
     void operator()(PROCESS_INFORMATION* ppi) {
-        if (ppi)
-        {
-            if (ppi->hProcess)
-                CloseHandle(ppi->hProcess);
-            if (ppi->hThread)
-                CloseHandle(ppi->hThread);
+        if (ppi) {
+            if(ppi->hProcess)
+            CloseHandle(ppi->hProcess);
+            if(ppi->hThread)
+            CloseHandle(ppi->hThread);
             delete ppi;
         }
     }
@@ -45,10 +41,14 @@ struct ProcessInfoDeleter {
 bool WindowsTaskExecute(std::string execpath, std::string *pOutput, bool bWait) {
     STARTUPINFO si;
     SECURITY_ATTRIBUTES securityAttr;
-    HANDLE inputPipe, outputPipe;
+    HANDLE inputPipe = INVALID_HANDLE_VALUE, outputPipe = INVALID_HANDLE_VALUE;
     bool retval = true;
-    std::unique_ptr< PROCESS_INFORMATION, ProcessInfoDeleter > upi(new PROCESS_INFORMATION);
-    PROCESS_INFORMATION *ppi = upi.get();//only for clarity purposes, ownership is not relinquished
+    std::unique_ptr<PROCESS_INFORMATION,ProcessInfoDeleter>
+        upi(new PROCESS_INFORMATION);
+
+    // only for clarity purposes, ownership is not relinquished
+    PROCESS_INFORMATION *ppi = upi.get();
+
     ZeroMemory(&si, sizeof(si));
     si.cb = sizeof(si);
     ZeroMemory(ppi, sizeof(PROCESS_INFORMATION));
@@ -57,16 +57,25 @@ bool WindowsTaskExecute(std::string execpath, std::string *pOutput, bool bWait) 
     securityAttr.bInheritHandle = TRUE;
     int len;
     int slength = (int)execpath.length() + 1;
+
+    // CP_ACP instructs the API to use the currently set default Windows
+    // ANSI codepage
     len = MultiByteToWideChar(CP_ACP, 0, execpath.c_str(), slength, 0, 0);
-    auto ubuf = std::unique_ptr< wchar_t[]>{ new wchar_t[len] };
-    wchar_t *pbuf = ubuf.get(); //only for clarity
+
+    auto ubuf = std::unique_ptr<wchar_t[]>{ new wchar_t[len] };
+    wchar_t *pbuf = ubuf.get(); // only for clarity
     MultiByteToWideChar(CP_ACP, 0, execpath.c_str(), slength, pbuf, len);
     if (pOutput) {
-        CreatePipe(&inputPipe, &outputPipe, &securityAttr, 0);
-        si.dwFlags = STARTF_USESTDHANDLES;
-        si.hStdInput = NULL;
-        si.hStdOutput = outputPipe;
-        si.hStdError = outputPipe;
+        if (CreatePipe(&inputPipe, &outputPipe, &securityAttr, 0) != 0) {
+            si.dwFlags = STARTF_USESTDHANDLES;
+            si.hStdInput = NULL;
+            si.hStdOutput = outputPipe;
+            si.hStdError = outputPipe;
+        } else {
+            // Set it to null so that later the pipe related functionality
+            // is skipped. Allow other functionality to execute.
+            pOutput = nullptr;
+        }
     }
 
     if (!CreateProcess(NULL, pbuf, NULL, NULL, TRUE, 0, NULL, NULL, &si, ppi)) {
@@ -74,41 +83,41 @@ bool WindowsTaskExecute(std::string execpath, std::string *pOutput, bool bWait) 
         std::cout << "CreateProcess Failed. Error code:" << le << std::endl;
         retval = false;
     }
-
-    if(pOutput || bWait )
-    if (retval && (WaitForSingleObject(ppi->hProcess, INFINITE) == WAIT_FAILED) ) {
+    
+    if (bWait && retval && WaitForSingleObject(ppi->hProcess, INFINITE) == WAIT_FAILED) {
         DWORD le = GetLastError();
         std::cout << "WaitForSingleObject Failed. Error code:" << le << std::endl;
         retval = false;
     }
 
-    if (retval && pOutput) {
+    if (outputPipe != INVALID_HANDLE_VALUE)
         CloseHandle(outputPipe);
+
+    if (retval && pOutput) {
         const int BUFFER_SIZE = 200;
         DWORD nNumberOfBytesToRead = 0;
         do {
             char localbuf[BUFFER_SIZE + 1];
-
             if (::ReadFile(inputPipe, localbuf, BUFFER_SIZE, &nNumberOfBytesToRead, 0)) {
                 if (nNumberOfBytesToRead == 0)
                     break;
-
                 localbuf[nNumberOfBytesToRead] = '\0';
-
                 *pOutput += localbuf;
-            }
+         }
 
         } while (nNumberOfBytesToRead != 0);
-        CloseHandle(inputPipe);
     }
+
+    if (inputPipe != INVALID_HANDLE_VALUE)
+        CloseHandle(inputPipe);
 
     return retval;
 }
 
 /*
-int system(const char * command)
-{
-    if (command == nullptr) return 0;
+int system(const char * command) {
+    if (command == nullptr)
+        return 0;
     bool bRet = WindowsTaskExecute(command, nullptr, true);
     return 0;//fix this //WINDOWS-TEMP
 }
@@ -118,8 +127,7 @@ int system(const char * command)
 
 //see https://msdn.microsoft.com/en-us/library/ms686852(v=VS.85).aspx
 
-int CountProcessThreads(DWORD id)
-{
+int CountProcessThreads(DWORD id) {
     HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
     BOOL  retval = true;
     PROCESSENTRY32 pe32 = { 0 };
@@ -141,61 +149,30 @@ int CountProcessThreads(DWORD id)
     return count;
 }
 
-void printError(TCHAR* msg)
-{
-    DWORD eNum;
-    TCHAR sysMsg[256];
-    TCHAR* p;
-
-    eNum = GetLastError();
-    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL, eNum,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-        sysMsg, 256, NULL);
-
-    // Trim the end of the line and terminate it with a null
-    p = sysMsg;
-    while ((*p > 31) || (*p == 9))
-        ++p;
-    do { *p-- = 0; } while ((p >= sysMsg) &&
-        ((*p == '.') || (*p < 33)));
-
-    // Display the message
-    _tprintf(TEXT("\n  WARNING: %s failed with error %d (%s)"), msg, eNum, sysMsg);
-}
 
 
-void sync(void)
-{
+
+void sync(void) {
     _flushall(); //does it call FlushFileBuffers internally for all files?
 }
 
 
-void GetCurrentProcessMemoryInfo(uint32_t& virt, uint32_t& peakvirt, uint32_t& res)
-{
+BOOL GetCurrentProcessMemoryInfo(uint32_t& virt, uint32_t& peakvirt, uint32_t& res) {
     virt = peakvirt = res = 0;
     PROCESS_MEMORY_COUNTERS_EX pmc;
-    if (GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)))
-    {//return in KB, need to verify the mapping 
+    BOOL bRet = 0;
+    if (bRet = GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc))) {
+        //return in KB, need to verify the mapping 
         //may need to convert back to non-kb.
         virt = pmc.PrivateUsage/1024;
         peakvirt = pmc.PeakWorkingSetSize/1024;
         res = pmc.WorkingSetSize/1024;
-       
     }
-
+    return bRet;
 }
 
-DWORD GetNumberOfCPUs()
-{
-    SYSTEM_INFO siSysInfo;
-    GetSystemInfo(&siSysInfo);
-    return siSysInfo.dwNumberOfProcessors;
-}
-
-int getloadavg(double loadavg[], int nelem)
-{
-    assert(0);
+int getloadavg(double loadavg[], int nelem) {
+    //windows-temp assert(0);
     return 0;
    
 }

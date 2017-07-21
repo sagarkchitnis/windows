@@ -13,7 +13,10 @@
 
 #include <boost/format.hpp>
 #include <boost/algorithm/string/predicate.hpp>
-#include <taskutil.h>
+#ifdef _WINDOWS
+  #include "taskutil.h"
+#endif
+
 using namespace log4cplus;
 
 static bool disabled_;
@@ -61,11 +64,9 @@ void LoggingInit(const std::string &filename, long maxFileSize, int maxBackupInd
 
     if (useSyslog) {
         helpers::Properties props;
-		std::string syslogident;
-        boost::format fmt;
-        fmt = boost::format("%1%[%2%]") % ident % osspecific_getpid();
-        syslogident = fmt.str();
-        //divided above into two lines for readability only
+        std::string syslogident;
+        syslogident = 	boost::str( boost::format("%1%[%2%]") % ident % osspecific_getpid());
+
         props.setProperty(LOG4CPLUS_TEXT("facility"),
                           boost::starts_with(syslogFacility, "LOG_")
                         ? syslogFacility.substr(4)

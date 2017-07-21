@@ -1,10 +1,11 @@
 #include "winutils.h"
 #include <winsock2.h> //for timeval
-#include<time.h>
+#include <time.h>
 
 #include <iomanip>
 #include <sstream>
 #include <sys/time.h>
+#include <sys/times.h>
 #include <cassert>
 
 #define BUF_SIZE 128
@@ -22,8 +23,9 @@ int clock_getres_monotonic( struct timespec *res) {
         LARGE_INTEGER frequency;
         if (QueryPerformanceFrequency(&frequency) != 0) {
             double nanosecdbl = 1000000000.0 / frequency.QuadPart;
-            res->tv_nsec = static_cast<long>(nanosecdbl) % 1000000000;
-            res->tv_sec = static_cast<long>(nanosecdbl) / 1000000000;
+            long long nanosecll = static_cast<long long> (nanosecdbl);
+            res->tv_nsec = static_cast<long>((nanosecll) % 1000000000);
+            res->tv_sec = static_cast<long>((nanosecll) / 1000000000);
             return 0;
         }
     }
@@ -61,8 +63,9 @@ int clock_gettime_monotonic(struct timespec *ts) {
     t.QuadPart -= starttime.QuadPart;
 
     nanoseconds = (double)t.QuadPart / TicksPerNanosecond;
-    ts->tv_nsec = static_cast<long>(nanoseconds) % 1000000000;
-    ts->tv_sec = static_cast<long>(nanoseconds) / 1000000000;
+    long long nanosecondsll = static_cast<long long> (nanoseconds);
+    ts->tv_nsec = static_cast<long>((nanosecondsll) % 1000000000);
+    ts->tv_sec = static_cast<long>((nanosecondsll) / 1000000000);
 
     return 0;
 }
@@ -124,14 +127,11 @@ LARGE_INTEGER getFILETIMEoffset() {
 char *ctime_r(const time_t *timep, char buf[]) {
     if (timep == nullptr || buf == nullptr)
         return nullptr;
-    char buffer[100];
+    char buffer[101];
     errno_t e = ctime_s(buffer, 100, timep);
     if (e == 0)
     {
-#pragma warning(disable:4996)
-        //assuming buf has enough space
-        strcpy(buf, buffer);
-
+        strncpy(buf, buffer,100);
         return buf;
     }
     else
@@ -140,7 +140,7 @@ char *ctime_r(const time_t *timep, char buf[]) {
 
 
 
-char* strptime(const char* str,const char* format,	struct tm* tm) {
+char* strptime(const char* str,const char* format, struct tm* tm) {
     std::istringstream input(str);
     input.imbue(std::locale(setlocale(LC_ALL, nullptr)));
     input >> std::get_time(tm, format);
@@ -153,11 +153,11 @@ char* strptime(const char* str,const char* format,	struct tm* tm) {
 
 
 __int64  timegm(struct tm *) {
-    assert(0);
+    //windows-temp assert(0);
     return 0;
 }
 struct tm *  gmtime_r(__int64 const *, struct tm *) {
-    assert(0);
+    //windows-temp assert(0);
     return nullptr; 
 }
 
@@ -171,7 +171,7 @@ int TimeSpecToTimeVal(struct timespec *pts, struct timeval *ptv) {
     return retval;
 }
 
-int gettimeofday(struct timeval *ptv, struct timezone *ptz) {
+int gettimeofday(struct timeval *ptv, struct timezone *) {
     struct timespec ts;
     int retval = -1;
     if (clock_gettime_realtime(&ts) == 0) {
@@ -180,5 +180,15 @@ int gettimeofday(struct timeval *ptv, struct timezone *ptz) {
         }
     }
     return retval;
+}
+
+clock_t times(struct tms *buf) {
+
+    if (buf != nullptr) {
+        buf->tms_utime = clock();
+        buf->tms_stime = buf->tms_cutime = buf->tms_cstime = 0;
+    }
+
+    return buf->tms_stime;
 }
 

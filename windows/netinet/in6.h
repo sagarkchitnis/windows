@@ -36,7 +36,6 @@ struct linux_in6_addr {
 };
 //#endif /* __UAPI_DEF_IN6_ADDR */
 
-
 #if __UAPI_DEF_SOCKADDR_IN6
 struct sockaddr_in6 {
 	unsigned short int	sin6_family;    /* AF_INET6 */

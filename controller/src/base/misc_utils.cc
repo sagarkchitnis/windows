@@ -8,9 +8,7 @@
 #include <stdlib.h> 
 #include <base/misc_utils.h>
 #include <base/logging.h>
-#ifndef _WINDOWS
-#include <netdb.h>
-#endif
+//WINDOWSFIX #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "boost/filesystem/operations.hpp"
@@ -20,15 +18,18 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#include "AgentConstants.h"
 #ifdef _WINDOWS
-#include "TaskUtil.h"
+#include "vnsw/agent/contrail/windows/resource.h"
 #endif
 
 using namespace std;
 namespace fs = boost::filesystem;
-const std::string MiscUtils::ContrailVersionCmd = "/usr/bin/contrail-version";
-const std::string MiscUtils::CoreFileDir = AgentConstants::var_directory+"/crashes/";
+const std::string MiscUtils::ContrailVersionCmd = "/usr/bin/contrail-version";//not used in windows
+#ifndef _WINDOWS
+const std::string MiscUtils::CoreFileDir = "/var/crashes/";
+#else
+const std::string MiscUtils::CoreFileDir = "crashes/";
+#endif
 const int MiscUtils::MaxCoreFiles = 5;
 const map<MiscUtils::BuildModule, string> MiscUtils::BuildModuleNames = 
     MiscUtils::MapInit();
@@ -81,22 +82,24 @@ void MiscUtils::GetCoreFileList(string prog, vector<string> &list) {
     }
 }
 
+//will not be called for windows
 bool MiscUtils::GetVersionInfoInternal(const string &cmd, string &rpm_version,
                                        string &build_num) {
+#ifdef _WINDOWS
+    assert(0);
+    return false;
+#else
     FILE *fp=NULL;
     char line[512];
-    //WINDOWS-CHECK
     fp = popen(cmd.c_str(), "r");
     if (fp == NULL) {
         return false;
     }
     char *ptr = fgets(line, sizeof(line), fp);
     if (ptr == NULL) {
-    //WINDOWS-CHECK
     pclose(fp);
         return false;
     }
-    //WINDOWS-CHECK
     pclose(fp);
     ptr = strchr(line, '\n');
     if (ptr != NULL) {
@@ -115,16 +118,17 @@ bool MiscUtils::GetVersionInfoInternal(const string &cmd, string &rpm_version,
     }
 
     return true;
+#endif
 }
 
-bool MiscUtils::GetContrailVersionInfo(BuildModule id, string &rpm_version, 
-                                       string &build_num) {
+bool MiscUtils::GetContrailVersionInfo(BuildModule id, string &rpm_version,
+    string &build_num) {
     bool ret;
     stringstream cmd;
     //Initialize the version info here. Overide its value on finding version
     rpm_version.assign("unknown");
     build_num.assign("unknown");
-
+#ifndef _WINDOWS
     ifstream f(ContrailVersionCmd.c_str());
     if (!f.good()) {
         f.close();
@@ -134,6 +138,22 @@ bool MiscUtils::GetContrailVersionInfo(BuildModule id, string &rpm_version,
     cmd << ContrailVersionCmd << " " << BuildModuleNames.at(id)
         << " | tail -1 | awk '{ print $2 \" \" $3 }'";
     ret = GetVersionInfoInternal(cmd.str(), rpm_version, build_num);
+#else //getting it from the binary resources as discussed(for now)
+    ret = false;
+    const UINT bufsize = 1024;
+    char buffer[bufsize];
+    HMODULE hModule = GetModuleHandle(NULL);
+    if (hModule) {
+        if (LoadString(hModule, IDS_CONTRAIL_RPM_VERSION, buffer, 1024) > 0) {
+            rpm_version = buffer;
+            ret = true;//even if one rc string is read, we return true
+        }
+        if (LoadString(hModule, IDS_CONTRAIL_BUILD_NUM, buffer, 1024) > 0) {
+            build_num = buffer;
+            ret = false;
+        }
+    }
+#endif
     return ret;
 }
 
@@ -153,9 +173,9 @@ bool MiscUtils::GetBuildInfo(BuildModule id, const string &build_info,
         result = build_info;
         return false;
     }
-	//WINDOWS-CHECK
-	rapidjson::Value str1("build-id"), str2("build-number");
-	rapidjson::Value str11(rpm_version.c_str(), d.GetAllocator()), str22(build_num.c_str(), d.GetAllocator());
+
+    rapidjson::Value str1("build-id"), str2("build-number");
+    rapidjson::Value str11(rpm_version.c_str(), d.GetAllocator()), str22(build_num.c_str(), d.GetAllocator());
 
     fields[0u].AddMember(str1, str11, d.GetAllocator());
     fields[0u].AddMember(str2, str22, d.GetAllocator());
@@ -168,6 +188,10 @@ bool MiscUtils::GetBuildInfo(BuildModule id, const string &build_info,
 }
 
 bool MiscUtils::GetPlatformInfo(std::string &distro, std::string &code_name) {
+#ifdef _WINDOWS //as per discussion for now. May change to different values in the future.
+    distro = "windows";
+    code_name = GetWindowsVersionString();
+#else
     FILE *fp=NULL;
     char line[512];
     fp = popen("cat /etc/*release", "r");
@@ -203,5 +227,6 @@ bool MiscUtils::GetPlatformInfo(std::string &distro, std::string &code_name) {
     } else {
         return false;
     }
+#endif
     return true;
 }

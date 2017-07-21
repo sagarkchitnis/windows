@@ -1,8 +1,6 @@
-
-
 #include<iostream>
-using namespace std;
 #include "cpuinfo.h"
+using namespace std;
 
 DWORD GetWindowsOSProcessorCount()
 {

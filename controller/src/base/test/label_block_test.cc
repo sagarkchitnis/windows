@@ -163,7 +163,7 @@ TEST_F(LabelBlockTest, LocateBlockConcurrency) {
     if (str) thread_count = strtoul(str, NULL, 0);
 
     for (int i = 0; i < thread_count; i++) {
-		thd = new boost::thread(ConcurrencyThreadRun, this);
+        thd = new boost::thread(ConcurrencyThreadRun, this);
         thread_ids.push_back(thd);
     }
 

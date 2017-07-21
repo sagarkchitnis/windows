@@ -78,8 +78,8 @@ def GetTestEnvironment(test):
     return env
 
 def RunUnitTest(env, target, source, timeout = 300):
-#WINDOWS-TEMP    if env['ENV'].has_key('BUILD_ONLY'):
-    return
+    if env['ENV'].has_key('BUILD_ONLY'):
+        return
     import subprocess
 
     if env['ENV'].has_key('CONTRAIL_UT_TEST_TIMEOUT'):

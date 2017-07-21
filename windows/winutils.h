@@ -2,7 +2,10 @@
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include<windows.h>
 #include <stdlib.h>
-#include "sys/wintypes.h"
+
+#include <string> // TODO: JW-522 Refactor
+#include <sstream>
+
 int getloadavg(double loadavg[], int nelem);;
 
 #define CLOCK_REALTIME                  0
@@ -45,4 +48,8 @@ int setrlimit(int resource, const struct rlimit *rlp);
 #define strncasecmp  _strnicmp
 #define strcasecmp  _stricmp
 
+std::string GetFormattedWindowsErrorMsg(); // TODO: JW-522 Refactor
+
 void sync(void);
+bool GetCallStack(std::string & callstack);
+std::string GetWindowsVersionString();
