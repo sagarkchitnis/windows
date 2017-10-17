@@ -1,4 +1,12 @@
-M	README.md
+
+
+summary of changes
+----------------------------------------
+controller: 459 files (most modified, a few new)
+tools(build and sandesh): 40 files(modified)
+vrouter: 18 files modified for fixing windows build errors
+windows repo: 55 files added
+
 M	SConstruct
 M	controller/SConscript
 M	controller/lib/SConscript
@@ -63,7 +71,6 @@ A	controller/lib/thrift/msvc15/0_8_0/lib/cpp/libthriftnb.vcxproj
 A	controller/lib/thrift/msvc15/0_8_0/lib/cpp/src/Thrift.h
 A	controller/lib/thrift/msvc15/0_8_0/lib/cpp/src/windows/TWinsockSingleton.h
 A	controller/lib/thrift/msvc15/0_8_0/lib/cpp/src/windows/config.h
-A	controller/lib/thrift/msvc15/0_8_0/paths.bat
 A	controller/lib/thrift/msvc15/compiler/compiler.sln
 A	controller/lib/thrift/msvc15/compiler/compiler.vcxproj
 A	controller/lib/thrift/msvc15/lib/libthrift.vcxproj
